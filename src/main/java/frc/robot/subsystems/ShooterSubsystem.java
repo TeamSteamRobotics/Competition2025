@@ -31,11 +31,16 @@ public class ShooterSubsystem extends SubsystemBase {
   PIDController topShooterPid = new PIDController(Shooter.kP, Shooter.kI, Shooter.kD);
   PIDController bottomShooterPid = new PIDController(Shooter.kP, Shooter.kI, Shooter.kD);
 
+  double m_targetSpeed;
+
+  public boolean overrideDefault;
+
   /**
    * Constructor: Sets up the shooter subsystem.
    * This includes initializing the encoders and configuring the PID controllers with a tolerance.
    */
   public ShooterSubsystem() {
+    overrideDefault = false;
     // Configure the PID controllers to stop adjusting when close enough to the target.
     topShooterPid.setTolerance(Shooter.tolerance);
     bottomShooterPid.setTolerance(Shooter.tolerance);
@@ -52,6 +57,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * @return True if both motors are at the target speed, false otherwise.
    */
   public boolean ShootPID(double targetSpeed) {
+    m_targetSpeed = targetSpeed;
     // Calculate how much to adjust the motor speed to reach the target.
     double pidOutputTop = topShooterPid.calculate(topShooterEncoder.getVelocity(), targetSpeed);
     double pidOutputBottom = bottomShooterPid.calculate(bottomShooterEncoder.getVelocity(), targetSpeed);
@@ -64,6 +70,7 @@ public class ShooterSubsystem extends SubsystemBase {
     return (topShooterPid.atSetpoint() && bottomShooterPid.atSetpoint());
   }
 
+  
   /**
    * Stops the motors completely. This is used when the shooter is no longer needed.
    */
@@ -81,4 +88,5 @@ public class ShooterSubsystem extends SubsystemBase {
     double[] speeds = {topShooterMotor.get(), bottomShooterMotor.get()};
     return speeds;
   }
+  public double getTargetSpeed(){ return m_targetSpeed; }
 }

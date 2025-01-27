@@ -18,7 +18,7 @@ public class PrimeShooter extends Command {
   private ShooterSubsystem m_Shooter; // The subsystem this command controls.
   private double speed; // The calculated speed for the shooter.
   private double inputSpeed; // A fixed speed provided directly.
-  private Supplier<Double> distanceSupplier; // A function that gives the distance to the target.
+  private Supplier<Double> distanceSupplier = () -> null; // A function that gives the distance to the target.
   private boolean hasDistanceSupplier; // Indicates whether distance-based speed calculation is used.
 
   /**
@@ -28,6 +28,7 @@ public class PrimeShooter extends Command {
    */
   public PrimeShooter(ShooterSubsystem shooter, Supplier<Double> distanceSupplier) {
     m_Shooter = shooter;
+    m_Shooter.overrideDefault = true;
     this.distanceSupplier = distanceSupplier;
     hasDistanceSupplier = true; // Enable distance-based speed calculation.
 
@@ -42,7 +43,8 @@ public class PrimeShooter extends Command {
    */
   public PrimeShooter(ShooterSubsystem shooter, double speed) {
     m_Shooter = shooter;
-    inputSpeed = speed;
+    inputSpeed = m_Shooter.overrideDefault ? m_Shooter.getTargetSpeed() : speed;
+    
     hasDistanceSupplier = false; // Use the fixed speed instead of calculating from distance.
 
     // Declare that this command requires the shooter subsystem.
@@ -75,8 +77,19 @@ public class PrimeShooter extends Command {
    */
   @Override
   public void end(boolean interrupted) {
+    //TODO: CHANGE THIS
+    
+    if(interrupted){
+
     m_Shooter.StopMotor();
+      if(!hasDistanceSupplier){
+        m_Shooter.overrideDefault = false;
+      }
+    }
+    
   }
+
+  
 
   /**
    * Determines when the command should stop running.
@@ -84,7 +97,12 @@ public class PrimeShooter extends Command {
    */
   @Override
   public boolean isFinished() {
-    return m_Shooter.ShootPID(speed);
+
+    //     If a distance supplier is being used (indicated by hasDistanceSupplier being true),
+    //      the command also ends if the distance supplier provides a null value.
+    //    - This handles cases where the distance sensor might fail or is unavailable,
+    //      ensuring the command terminates safely.
+    return (hasDistanceSupplier && (distanceSupplier.get() == null || distanceSupplier == null));
   }
 
   /**

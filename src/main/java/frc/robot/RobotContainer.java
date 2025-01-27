@@ -6,8 +6,10 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.Shooter;
-import frc.robot.commands.Shooter.ShootAutomatic;
+import frc.robot.commands.Shooter.PrimeShooter;
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -49,7 +51,13 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
 
-    m_driverController.b().toggleOnTrue(new ShootAutomatic(m_shooterSubsystem, Shooter.defaultSpeed));
+    
+    //Starts motor at default speed(from constants)/Stops motors
+    m_driverController.b().toggleOnTrue(new PrimeShooter(m_shooterSubsystem, Shooter.defaultSpeed));
+    m_driverController.a().toggleOnTrue(new PrimeShooter(m_shooterSubsystem, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
+
+    m_driverController.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> m_shooterSubsystem.ShootPID(m_shooterSubsystem.getTargetSpeed() + Shooter.speedIncrement))));
+    m_driverController.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> m_shooterSubsystem.ShootPID(m_shooterSubsystem.getTargetSpeed() - Shooter.speedIncrement))));
 
 
   }
