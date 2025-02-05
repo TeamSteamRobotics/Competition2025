@@ -11,19 +11,21 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ArmClimberSim extends SubsystemBase {
+public class ShooterSim extends SubsystemBase {
   double currentAngle;
   double anglePerIteration;
   double maxAngle;
   double minAngle;
+  int iterationDirection;
 
   /** Creates a new ArmClimber. */
-  public ArmClimberSim() {
+  public ShooterSim() {
 
-    currentAngle = 90;
+    currentAngle = 0;
     maxAngle = 90;
-    minAngle = 0;
-    anglePerIteration = 10;
+    minAngle = -90;
+    anglePerIteration = 1;
+    iterationDirection = 1;
   }
 
   Rotation3d armRotation = new Rotation3d(0, 0, 0);
@@ -35,17 +37,21 @@ public class ArmClimberSim extends SubsystemBase {
     // Logger.recordOutput("FinalComponentPoses", new Pose3d[]{
     //   new Pose3d(-0.309, -0.015, 0.135, new Rotation3d(0.0, Math.sin(Timer.getTimestamp()) - 1.0, 0.0))
     // });
-    Logger.recordOutput("FinalComponentPoses", new Pose3d[]{
-      new Pose3d(-0.309, -0.015, 0.135, new Rotation3d(0.0, Math.toRadians(currentAngle), 0.0))
+    Logger.recordOutput("Shooter/FinalComponentPoses", new Pose3d[]{
+      new Pose3d(-0.18, 0.25, 0.15, new Rotation3d(Math.toRadians(currentAngle), 0.0, Math.toRadians(0)))
     });
-    //runArmMotor();
+    if(currentAngle + (anglePerIteration * iterationDirection) > maxAngle || currentAngle + (anglePerIteration * iterationDirection) < minAngle){
+      iterationDirection = -iterationDirection;
+    }
+    runArmMotor();
+
+   
     // This method will be called once per scheduler run
   }
 
   public void runArmMotor(){
-    currentAngle += Math.min(Math.max(currentAngle + anglePerIteration, minAngle), maxAngle);
-      
-
+    currentAngle = Math.min(Math.max(currentAngle +(anglePerIteration * iterationDirection), minAngle), maxAngle) ;
+    
 
   }
 }

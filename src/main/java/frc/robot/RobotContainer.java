@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.ArmClimberSim;
+import frc.robot.subsystems.ShooterSim;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -46,7 +46,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
-  private final ArmClimberSim armClimberSim;
+  private final ShooterSim shooterSim;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
 
@@ -57,7 +57,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    armClimberSim = new ArmClimberSim();
+    shooterSim = new ShooterSim();
     switch (Constants.currentMode) {
        
       case REAL:
