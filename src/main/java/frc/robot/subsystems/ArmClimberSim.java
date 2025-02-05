@@ -23,8 +23,8 @@ public class ArmClimberSim extends SubsystemBase {
 
     currentAngle = 90;
     maxAngle = 90;
-    minAngle = 0;
-    anglePerIteration = 0.5;
+    minAngle = -90;
+    anglePerIteration = 1;
     iterationDirection = 1;
   }
 
