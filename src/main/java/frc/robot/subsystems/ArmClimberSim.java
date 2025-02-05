@@ -16,6 +16,7 @@ public class ArmClimberSim extends SubsystemBase {
   double anglePerIteration;
   double maxAngle;
   double minAngle;
+  int iterationDirection;
 
   /** Creates a new ArmClimber. */
   public ArmClimberSim() {
@@ -23,7 +24,8 @@ public class ArmClimberSim extends SubsystemBase {
     currentAngle = 90;
     maxAngle = 90;
     minAngle = 0;
-    anglePerIteration = 10;
+    anglePerIteration = 0.5;
+    iterationDirection = 1;
   }
 
   Rotation3d armRotation = new Rotation3d(0, 0, 0);
@@ -31,21 +33,25 @@ public class ArmClimberSim extends SubsystemBase {
 
   @Override
   public void periodic() {
-    Logger.recordOutput("ZeroedComponentPoses", new Pose3d[] {new Pose3d()});
+   
     // Logger.recordOutput("FinalComponentPoses", new Pose3d[]{
     //   new Pose3d(-0.309, -0.015, 0.135, new Rotation3d(0.0, Math.sin(Timer.getTimestamp()) - 1.0, 0.0))
     // });
-    Logger.recordOutput("FinalComponentPoses", new Pose3d[]{
+    Logger.recordOutput("Climber/FinalComponentPoses", new Pose3d[]{
       new Pose3d(-0.309, -0.015, 0.135, new Rotation3d(0.0, Math.toRadians(currentAngle), 0.0))
     });
-    //runArmMotor();
+    if(currentAngle + (anglePerIteration * iterationDirection) > maxAngle || currentAngle + (anglePerIteration * iterationDirection) < minAngle){
+      iterationDirection = -iterationDirection;
+    }
+    runArmMotor();
+
+   
     // This method will be called once per scheduler run
   }
 
   public void runArmMotor(){
-    currentAngle += Math.min(Math.max(currentAngle + anglePerIteration, minAngle), maxAngle);
-      
-
+    currentAngle = Math.min(Math.max(currentAngle +(anglePerIteration * iterationDirection), minAngle), maxAngle) ;
+    
 
   }
 }
