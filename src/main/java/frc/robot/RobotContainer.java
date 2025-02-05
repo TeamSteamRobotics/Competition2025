@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.ArmClimber;
+import frc.robot.subsystems.ArmClimberSim;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -57,7 +57,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    armClimber = new ArmClimber();
+    armClimberSim = new ArmClimberSim();
     switch (Constants.currentMode) {
        
       case REAL:
