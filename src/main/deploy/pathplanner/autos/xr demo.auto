@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "circlely loop thang"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "circlely loop thang"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "circlely loop thang"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "circlely loop thang"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "circlely loop thang"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "circlely loop thang"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "circlely loop thang"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "circlely loop thang"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
