@@ -29,6 +29,7 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ArmClimberSim;
+import frc.robot.subsystems.IntakeSim;
 import frc.robot.subsystems.ShooterSim;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -49,6 +50,7 @@ public class RobotContainer {
   private final Drive drive;
   private final ShooterSim shooterSim;
   private final ArmClimberSim armSim;
+  private final IntakeSim intakeSim;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
 
@@ -61,6 +63,8 @@ public class RobotContainer {
   public RobotContainer() {
     shooterSim = new ShooterSim();
     armSim = new ArmClimberSim();
+    intakeSim = new IntakeSim();
+    
     switch (Constants.currentMode) {
        
       case REAL:

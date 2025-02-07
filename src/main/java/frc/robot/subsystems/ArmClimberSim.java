@@ -38,7 +38,7 @@ public class ArmClimberSim extends SubsystemBase {
     //   new Pose3d(-0.309, -0.015, 0.135, new Rotation3d(0.0, Math.sin(Timer.getTimestamp()) - 1.0, 0.0))
     // });
     Logger.recordOutput("Climber/FinalComponentPoses", new Pose3d[]{
-      new Pose3d(-0.309, -0.015, 0.135, new Rotation3d(0.0, Math.toRadians(currentAngle), 0.0))
+      new Pose3d(-0.32, 0.03, 0.1, new Rotation3d(0.0, Math.toRadians(currentAngle), 0.0))
     });
     if(currentAngle + (anglePerIteration * iterationDirection) > maxAngle || currentAngle + (anglePerIteration * iterationDirection) < minAngle){
       iterationDirection = -iterationDirection;

@@ -54,7 +54,7 @@ public class ShooterSim extends SubsystemBase {
 
      // Define the shooter arm base (it rotates)
     Pose3d shooterPose = new Pose3d(
-        -0.18, 0.25, 0.15,  // Base arm position
+        -0.18, 0.30, 0.11,  // Base arm position
         new Rotation3d(Math.toRadians(currentAngle), 0.0, 0.0) // Arm rotation
     );
 
