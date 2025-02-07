@@ -141,8 +141,10 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    double lNum = LimelightHelpers.getFiducialID("");
-    if(lNum == 8)
+    //LLResult result = LimelightHelpers.getLatestResults("");
+    double lNum = LimelightHelpers.getTA("");
+    System.out.println(lNum);
+    if(lNum > 0.5) // try less than 50
     {
       LimelightHelpers.setLEDMode_ForceBlink("");
     } else {
