@@ -31,7 +31,8 @@ public class VisionSubsystem extends SubsystemBase {
     }
     for(int i = 0; i < temp.length; i++)
     {
-      AprilTags[(int) temp[i].fiducialID] = temp[i];
+      AprilTags[(int) temp[i].fiducialID - 1] = temp[i];
+      // If Apriltag data is ending up in the wrong place, use Math.round before typecasting
     }
     // This method will be called once per scheduler run
   }
@@ -43,7 +44,7 @@ public class VisionSubsystem extends SubsystemBase {
     RawFiducial[] orderedRawFiducial = new RawFiducial[22];
     for(int i = 0; i < tempRawFiducial.length; i++)
     {
-      orderedRawFiducial[tempRawFiducial[i].id] = tempRawFiducial[i];
+      orderedRawFiducial[tempRawFiducial[i].id - 1] = tempRawFiducial[i];
     }
     double[] orderedDistances = new double[22];
     for(int i = 0; i < 22; i++)
