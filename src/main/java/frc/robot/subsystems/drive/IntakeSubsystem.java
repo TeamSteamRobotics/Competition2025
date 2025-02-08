@@ -7,6 +7,7 @@ package frc.robot.subsystems.drive;
 import static edu.wpi.first.units.Units.Newton;
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -21,7 +22,7 @@ public class IntakeSubsystem extends SubsystemBase {
   SparkFlex pivotMotor = new SparkFlex(0, MotorType.kBrushless);
   
   AbsoluteEncoder rollerEncoder;
-  AbsoluteEncoder pivotEncoder;
+  RelativeEncoder pivotEncoder;
 
   PIDController rollerPid = new PIDController(0, 0, 0);
   PIDController pivotPid = new PIDController(0, 0, 0);
@@ -34,7 +35,9 @@ public class IntakeSubsystem extends SubsystemBase {
     pivotPid.setTolerance(0);
 
     rollerEncoder = rollerMotor.getAbsoluteEncoder();
-    pivotEncoder = pivotMotor.getAbsoluteEncoder();
+    pivotEncoder = pivotMotor.getEncoder();
+
+
   }
 
   public boolean rollerPID(double targetrollerSpeed) {
