@@ -17,7 +17,7 @@ public class VisionSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(!LimelightHelpers.getTV("")){
+    if(!LimelightHelpers.getTV("")){ //getTV returns true if there is a valid target
         AprilTag = null; // TODO: Better error case
         return;
     }
