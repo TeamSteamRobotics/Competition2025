@@ -12,7 +12,8 @@ import frc.robot.LimelightHelpers.RawFiducial;
 
 public class VisionSubsystem extends SubsystemBase {
 
-  public LimelightHelpers.LimelightTarget_Fiducial[] AprilTags;
+  public LimelightHelpers.LimelightTarget_Fiducial[] AprilTags; // List of all apriltags on the field
+  // Seen ones are non-null, indexed by Apriltag ID - 1
   
   public VisionSubsystem() {
     AprilTags = new LimelightHelpers.LimelightTarget_Fiducial[22];
