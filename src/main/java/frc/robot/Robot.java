@@ -141,7 +141,7 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    //LLResult result = LimelightHelpers.getLatestResults("");
+    /*//LLResult result = LimelightHelpers.getLatestResults("");
     double lNum = LimelightHelpers.getTA("");
     System.out.println(lNum);
     if(lNum > 0.5) // try less than 50
@@ -149,7 +149,7 @@ public class Robot extends LoggedRobot {
       LimelightHelpers.setLEDMode_ForceBlink("");
     } else {
       LimelightHelpers.setLEDMode_ForceOn("");
-    }
+    }*/
   }
 
   /** This function is called once when test mode is enabled. */
