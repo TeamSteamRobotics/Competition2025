@@ -27,14 +27,14 @@ public class VisionSubsystem extends SubsystemBase {
   public void periodic() {
     LimelightHelpers.LimelightTarget_Fiducial[] temp = LimelightHelpers.getLatestResults("").targets_Fiducials;
     for(int i = 0; i < 22; i++){
-      AprilTags[i] = null; // screw you
+      AprilTags[i] = null; // You make me very unhappy. Please stop it. What could go wrong?
     }
     if(!LimelightHelpers.getTV("")){
       return;
     }
     for(int i = 0; i < temp.length; i++)
     {
-      AprilTags[(int) temp[i].fiducialID - 1] = temp[i];
+      AprilTags[(int) temp[i].fiducialID - 1] = temp[i]; // Reorders the temp array such that all Apriltags are in the array index correspondingly to their ID
       // If Apriltag data is ending up in the wrong place, use Math.round before typecasting
       // Wrong place specifically being 1 slot before it should be
       // If Java C-style typecasting works like C typecasting, it's weird.
