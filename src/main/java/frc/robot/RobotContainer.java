@@ -56,7 +56,12 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    SmartDashboard.putNumber("speedMod", .8);
+
+    SmartDashboard.putNumber("test", 3);
+    double test = SmartDashboard.getNumber("test", -1);
+    SmartDashboard.putNumber("test_2", test);
+
+
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations

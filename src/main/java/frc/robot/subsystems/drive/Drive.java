@@ -70,7 +70,8 @@ public class Drive extends SubsystemBase {
               Math.hypot(TunerConstants.BackLeft.LocationX, TunerConstants.BackLeft.LocationY),
               Math.hypot(TunerConstants.BackRight.LocationX, TunerConstants.BackRight.LocationY)));
 
-  public static double test = 2;
+
+   double test = SmartDashboard.getNumber("test", 3);
 
 
   // PathPlanner config constants

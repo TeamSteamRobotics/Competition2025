@@ -23,6 +23,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
@@ -57,7 +58,9 @@ public class DriveCommands {
       double speedMod = SmartDashboard.getNumber("speedMod",.80);
       double linearMagnitude = MathUtil.applyDeadband(Math.hypot(x*speedMod, y*speedMod), DEADBAND);
       Rotation2d linearDirection = new Rotation2d(Math.atan2(y, x));
-  
+      SmartDashboard.putNumber("speedMod", .80);
+      //SmartDashboard.putNumber("Limelight Distance", orderedDistance);
+      //orderedDistance = SmartDashboard.getNumber("Limelight Distance", 0);
       // Square magnitude for more precise control
       linearMagnitude = linearMagnitude * linearMagnitude;
   
