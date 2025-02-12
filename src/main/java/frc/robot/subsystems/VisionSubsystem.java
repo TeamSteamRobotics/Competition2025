@@ -34,6 +34,8 @@ public class VisionSubsystem extends SubsystemBase {
     {
       AprilTags[(int) temp[i].fiducialID - 1] = temp[i];
       // If Apriltag data is ending up in the wrong place, use Math.round before typecasting
+      // Wrong place specifically being 1 slot before it should be
+      // If Java C-style typecasting works like C typecasting, it's weird.
     }
     // This method will be called once per scheduler run
   }
