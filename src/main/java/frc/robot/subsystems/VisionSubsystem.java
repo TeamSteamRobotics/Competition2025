@@ -40,7 +40,7 @@ public class VisionSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   
-  public double[] getFiducialDistanceToCamera()
+  public static double[] getFiducialDistanceToCamera()
   {
 
     RawFiducial[] tempRawFiducial = LimelightHelpers.getRawFiducials("");
