@@ -6,6 +6,8 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.util.struct.Struct;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 import frc.robot.LimelightHelpers.RawFiducial;
@@ -40,7 +42,7 @@ public class VisionSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   
-  public double[] getFiducialDistanceToCamera()
+  public static double[] getFiducialDistanceToCamera()
   {
 
     RawFiducial[] tempRawFiducial = LimelightHelpers.getRawFiducials("");
@@ -52,8 +54,13 @@ public class VisionSubsystem extends SubsystemBase {
     double[] orderedDistances = new double[22];
     for(int i = 0; i < 22; i++)
     {
+      if(orderedRawFiducial[i] == null){
+        continue;
+      }
       orderedDistances[i] = orderedRawFiducial[i].distToCamera;
     }
+    
     return orderedDistances;
   }
+  //SmartDashboard.putNumber("Limelight Distance", orderedDistances);
 }
