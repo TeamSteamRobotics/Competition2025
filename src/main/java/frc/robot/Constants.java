@@ -27,20 +27,30 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
 
-    }
-    public static class motorIdConstants {
-      public static final int topRollerMotorId = 0;
-      public static final int bottomRollerMotorId = 1;
-    }
-    public static class Intake{ 
+  }
+  public static class motorIdConstants {
+    public static final int rollerId = 0;
+    public static final int pivotId = 1;
+  }
+  public static class Intake {
+    public static class Roller{ 
       public static final double kP = 0;
       public static final double kI = 0;
       public static final double kD = 0;
       public static final double tolerance = 0;     
       
       public static final double defaultSpeed = 0;
-      //public static final double speedIncrement = 0;
     }
+    public static class Pivot{ 
+      public static final double kP = 0;
+      public static final double kI = 0;
+      public static final double kD = 0;
+      public static final double tolerance = 0;     
+      
+      public static final double initialPostion = 0;
+      public static final double finalPostion = 0;
+    }
+  }
   public static enum Mode {
     /** Running on a real robot. */
     REAL,
