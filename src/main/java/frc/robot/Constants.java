@@ -23,7 +23,24 @@ import edu.wpi.first.wpilibj.RobotBase;
 public final class Constants {
   public static final Mode simMode = Mode.SIM;
   public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
+ 
+  public static class OperatorConstants {
+    public static final int kDriverControllerPort = 0;
 
+    }
+    public static class motorIdConstants {
+      public static final int topRollerMotorId = 0;
+      public static final int bottomRollerMotorId = 1;
+    }
+    public static class Intake{ 
+      public static final double kP = 0;
+      public static final double kI = 0;
+      public static final double kD = 0;
+      public static final double tolerance = 0;     
+      
+      public static final double defaultSpeed = 0;
+      //public static final double speedIncrement = 0;
+    }
   public static enum Mode {
     /** Running on a real robot. */
     REAL,

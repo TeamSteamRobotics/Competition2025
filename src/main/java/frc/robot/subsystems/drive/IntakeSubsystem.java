@@ -22,8 +22,8 @@ public class IntakeSubsystem extends SubsystemBase {
   SparkFlex pivotMotor = new SparkFlex(0, MotorType.kBrushless);
   
   // Encoders for tracking the position and speed of the motors
-  AbsoluteEncoder rollerEncoder;
-  RelativeEncoder pivotEncoder;
+  RelativeEncoder rollerEncoder;
+  AbsoluteEncoder pivotEncoder;
 
   // PID controllers for controlling the roller and pivot speeds
   PIDController rollerPid = new PIDController(0, 0, 0);
@@ -39,8 +39,8 @@ public class IntakeSubsystem extends SubsystemBase {
     pivotPid.setTolerance(0);
 
     // Initializing encoders from motor controllers
-    rollerEncoder = rollerMotor.getAbsoluteEncoder();
-    pivotEncoder = pivotMotor.getEncoder();
+    rollerEncoder = rollerMotor.getEncoder();
+    pivotEncoder = pivotMotor.getAbsoluteEncoder();
   }
 
   /**
