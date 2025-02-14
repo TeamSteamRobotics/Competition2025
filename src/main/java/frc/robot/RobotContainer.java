@@ -150,7 +150,8 @@ public class RobotContainer {
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    controller.a().whileTrue(new VisionDistanceTester(vis, drive));
+    //controller.a().whileTrue(new VisionDistanceTester(vis, drive)); // test command, stalled because of
+    // mechanical working on swerve drivetrain
 
     // Reset gyro to 0° when B button is pressed
     controller
