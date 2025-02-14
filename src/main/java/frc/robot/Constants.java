@@ -34,4 +34,8 @@ public final class Constants {
     /** Replaying from a log file. */
     REPLAY
   }
+  public static class ClimbConsts {
+    public static final int climbMotorID = 9; // random value for now
+    public static final double climbSpeed = 0.5;
+  }
 }
