@@ -5,35 +5,50 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.drive.Drive;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class VisionDistanceTester extends InstantCommand {
-  VisionSubsystem m_vis;
-  Drive m_drive;
-  public VisionDistanceTester(VisionSubsystem vis, Drive driveSub) {
-    // screw this
-    m_vis = vis;
-    m_drive = driveSub;
-
-    addRequirements(m_drive);
-    addRequirements(m_vis);
-
+/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+public class VisionDistanceTester extends Command {
+  /** Creates a new VisionDistanceTester. */
+  public VisionSubsystem m_vis;
+  public Drive m_drive;
+  double propOffset;
+  public VisionDistanceTester(VisionSubsystem vis, Drive drive) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_vis = vis;
+    m_drive = drive;
+    addRequirements(m_vis);
+    addRequirements(m_drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    double fidEightDist = m_vis.getFiducialDistanceToCamera()[7];
-    if(fidEightDist == 0.0d){
-      return;
+  public void initialize() {}
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    double distToAprilTagEight = m_vis.getFiducialDistanceToCamera()[7];
+    propOffset = ProportionalVelControlBasedOnDistance(distToAprilTagEight);
+    m_drive.runVelocity(new ChassisSpeeds(Math.max(Math.min(propOffset, 1), -1), 0, 0));
+  }
+
+  private double ProportionalVelControlBasedOnDistance(double dist){
+    double offset = dist - 1;
+    return offset * 0.35; // who knows what this constant should be
+  }
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {}
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    if(propOffset < 0.1 || propOffset > -0.1){
+      return true;
     }
-    m_drive.runVelocity(new ChassisSpeeds(Math.min(fidEightDist, 1), 0, 0)); //what
-    return;
+    return false;
   }
 }

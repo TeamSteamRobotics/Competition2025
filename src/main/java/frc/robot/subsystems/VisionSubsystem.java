@@ -13,12 +13,19 @@ import frc.robot.LimelightHelpers;
 import frc.robot.LimelightHelpers.RawFiducial;
 
 public class VisionSubsystem extends SubsystemBase {
-
-  public LimelightHelpers.LimelightTarget_Fiducial[] AprilTags; // List of all apriltags on the field
+  public class FusedFiducialType {
+    public LimelightHelpers.LimelightTarget_Fiducial processedAprilTag;
+    public RawFiducial rawAprilTag;
+    public FusedFiducialType(){
+      processedAprilTag = null;
+      rawAprilTag = null;
+    }
+  }
+  public FusedFiducialType[] AprilTags; // List of all apriltags on the field
   // Seen ones are non-null, indexed by Apriltag ID - 1
   
   public VisionSubsystem() {
-    AprilTags = new LimelightHelpers.LimelightTarget_Fiducial[22];
+    AprilTags = new FusedFiducialType[22];
     LimelightHelpers.setPipelineIndex("", 0); // 0 is 2D Fiducials, 1 is 3D fiducials
   }
 
@@ -34,30 +41,25 @@ public class VisionSubsystem extends SubsystemBase {
     }
     for(int i = 0; i < temp.length; i++)
     {
-      AprilTags[(int) temp[i].fiducialID - 1] = temp[i]; // Reorders the temp array such that all Apriltags are in the array index correspondingly to their ID
+      
+      AprilTags[(int) temp[i].fiducialID - 1].processedAprilTag = temp[i]; // Reorders the temp array such that all Apriltags are in the array index correspondingly to their ID
       // If Apriltag data is ending up in the wrong place, use Math.round before typecasting
       // Wrong place specifically being 1 slot before it should be
       // If Java C-style typecasting works like C typecasting, it's weird.
+      AprilTags[(int) temp[i].fiducialID - 1].rawAprilTag = LimelightHelpers.getRawFiducials("")[i];
     }
     // This method will be called once per scheduler run
   }
   
-  public static double[] getFiducialDistanceToCamera()
+  public double[] getFiducialDistanceToCamera()
   {
-
-    RawFiducial[] tempRawFiducial = LimelightHelpers.getRawFiducials("");
-    RawFiducial[] orderedRawFiducial = new RawFiducial[22];
-    for(int i = 0; i < tempRawFiducial.length; i++)
-    {
-      orderedRawFiducial[tempRawFiducial[i].id - 1] = tempRawFiducial[i];
-    }
     double[] orderedDistances = new double[22];
     for(int i = 0; i < 22; i++)
     {
-      if(orderedRawFiducial[i] == null){
+      if(AprilTags[i].rawAprilTag == null){
         continue;
       }
-      orderedDistances[i] = orderedRawFiducial[i].distToCamera;
+      orderedDistances[i] = AprilTags[i].rawAprilTag.distToCamera;
     }
     
     return orderedDistances;

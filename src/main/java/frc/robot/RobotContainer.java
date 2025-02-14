@@ -97,6 +97,7 @@ public class RobotContainer {
                 new ModuleIO() {});
         break;
     }
+    vis = new VisionSubsystem();
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -149,7 +150,7 @@ public class RobotContainer {
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    //controller.a().onTrue(new VisionDistanceTester(new VisionSubsystem(), drive).repeatedly());
+    controller.a().whileTrue(new VisionDistanceTester(vis, drive));
 
     // Reset gyro to 0° when B button is pressed
     controller
