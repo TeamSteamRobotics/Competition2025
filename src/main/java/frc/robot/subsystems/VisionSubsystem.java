@@ -1,26 +1,22 @@
 package frc.robot.subsystems;
 
-import java.util.function.ToIntFunction;
 
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.util.struct.Struct;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 import frc.robot.LimelightHelpers.RawFiducial;
 
 public class VisionSubsystem extends SubsystemBase {
+
   public class FusedFiducialType {
     public LimelightHelpers.LimelightTarget_Fiducial processedAprilTag;
     public RawFiducial rawAprilTag;
-    public FusedFiducialType(){
+    public FusedFiducialType() {
       processedAprilTag = null;
       rawAprilTag = null;
     }
-  }
+    // there is more then one data type and this is why we are packing them together here
+    // It was exceedingly inconvenient to have to use both of them in different places
+  } 
   public FusedFiducialType[] AprilTags; // List of all apriltags on the field
   // Seen ones are non-null, indexed by Apriltag ID - 1
   
@@ -38,7 +34,7 @@ public class VisionSubsystem extends SubsystemBase {
     }
     if(!LimelightHelpers.getTV("")){
       return;
-    }
+    } // Early return to skip the below code if there is no valid target. Shouldn't be important, but may as well have it.
     for(int i = 0; i < temp.length; i++)
     {
       
@@ -51,13 +47,15 @@ public class VisionSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   
-  public double[] getFiducialDistanceToCamera()
+  public double[] getFiducialDistanceToCamera() 
   {
+    // this is supposed to return the ordered distances to the Apriltags as an array
+    // indexed by AprilTag ID - 1
     double[] orderedDistances = new double[22];
     for(int i = 0; i < 22; i++)
     {
-      if(AprilTags[i].rawAprilTag == null){
-        continue;
+      if(AprilTags[i] == null){
+        continue; // Avoids errors for unseen apriltags
       }
       orderedDistances[i] = AprilTags[i].rawAprilTag.distToCamera;
     }
