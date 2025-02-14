@@ -25,10 +25,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.Constants.Intake.Roller;
+import frc.robot.Constants.Intake.*;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
 import frc.robot.commands.Roll;
+import frc.robot.commands.Pivots;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -160,8 +161,14 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
                     drive)
                 .ignoringDisable(true));
-           
+    //IntakeButton
+    controller.leftBumper().onTrue(new Pivots(intake, Pivot.finalPosition).andThen(new Roll(intake, Roller.defaultSpeed)));    
+    //RetreatButton
+    controller.rightBumper().onTrue(new Roll(intake, 0).andThen(new Pivots(intake, Pivot.initialPosition)));
+    //VomitButton
+    controller.rightTrigger().onTrue(new Roll(intake, -Roller.defaultSpeed));
   }
+  
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

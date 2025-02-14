@@ -47,8 +47,8 @@ public final class Constants {
       public static final double kD = 0;
       public static final double tolerance = 0;     
       
-      public static final double initialPostion = 0;
-      public static final double finalPostion = 0;
+      public static final double initialPosition = 0;
+      public static final double finalPosition = 0;
     }
   }
   public static enum Mode {
