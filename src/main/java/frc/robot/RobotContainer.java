@@ -27,7 +27,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
+import frc.robot.commands.Climb.RaiseClimb;
+import frc.robot.commands.Climb.RetractClimb;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -47,7 +50,7 @@ public class RobotContainer {
   private final Drive drive;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
-
+  private final ClimbSubsystem climb;
  
 
   // Dashboard inputs
@@ -55,6 +58,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    climb = new ClimbSubsystem();
     switch (Constants.currentMode) {
        
       case REAL:
@@ -142,7 +146,8 @@ public class RobotContainer {
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-
+    controller.y().onTrue(new RaiseClimb(climb));
+    controller.y().onFalse(new RetractClimb(climb)); //wtf
     // Reset gyro to 0° when B button is pressed
     controller
         .b()
