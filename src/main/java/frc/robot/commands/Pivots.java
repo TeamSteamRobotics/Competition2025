@@ -15,9 +15,6 @@ public class Pivots extends Command {
   public Pivots(IntakeSubsystem intakeSubsystem, double targetPosition) {
     m_IntakeSubsystem = intakeSubsystem;
     m_targetPosition = targetPosition;
-
-    addRequirements(m_IntakeSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -37,6 +34,6 @@ public class Pivots extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_IntakeSubsystem.rollerPID(m_targetPosition);;
+    return m_IntakeSubsystem.rollerPID(m_targetPosition);
   }
 }

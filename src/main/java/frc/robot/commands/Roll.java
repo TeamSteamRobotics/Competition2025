@@ -17,9 +17,6 @@ public class Roll extends Command {
   public Roll(IntakeSubsystem intakeSubsystem, double targetSpeed) {
     m_IntakeSubsystem = intakeSubsystem;
     m_targetSpeed = targetSpeed;
-
-    addRequirements(m_IntakeSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
