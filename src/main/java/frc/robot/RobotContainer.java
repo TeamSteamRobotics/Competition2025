@@ -20,6 +20,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -27,15 +28,22 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.commands.ButtonTest;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
 import frc.robot.generated.TunerConstants;
+import frc.robot.commands.Test.Calculate;
+import frc.robot.commands.Test.Add;
+import frc.robot.commands.Test.Sub;
+import frc.robot.commands.Test.Mult;
+import frc.robot.commands.Test.Div;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import frc.robot.subsystems.Test.ButtonTest;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -45,9 +53,21 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+<<<<<<< HEAD
+  
+  
+
+    // Subsystems
+  private final Drive drive;
+  private final ButtonTest m_test = new ButtonTest();
+  
+  private SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+=======
   // Subsystems
   private final Drive drive;
-  
+  //ButtonTest test = new ButtonTest();
+>>>>>>> fc28bc1793cf13a3a7e5145fa6210a2fb7f53522
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
 
@@ -56,11 +76,13 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+<<<<<<< HEAD
 
-    SmartDashboard.putNumber("test", 3);
-    double test = SmartDashboard.getNumber("test", -1);
-    SmartDashboard.putNumber("test_2", test);
-
+    SmartDashboard.putData("Test Command", new Calculate(m_test));
+=======
+    SmartDashboard.putNumber("test", 2);
+    SmartDashboard.putData("ButtonTest", new InstantCommand( ()-> ButtonTest.Calculate()));
+>>>>>>> fc28bc1793cf13a3a7e5145fa6210a2fb7f53522
 
     switch (Constants.currentMode) {
       case REAL:
@@ -151,6 +173,7 @@ public class RobotContainer {
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
 
+    
     // Reset gyro to 0° when B button is pressed
     controller
         .b()

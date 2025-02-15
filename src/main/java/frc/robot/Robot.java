@@ -81,6 +81,14 @@ public class Robot extends LoggedRobot {
       }
     }
 
+    // Initialize SmartDashboard Values
+    // Test code
+    SmartDashboard.putNumber("test", 0);
+    SmartDashboard.putNumber("test_add", 0);
+    SmartDashboard.putNumber("test_sub", 0);
+    SmartDashboard.putNumber("test_mult", 0);
+    SmartDashboard.putNumber("test-div", 0);
+
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
