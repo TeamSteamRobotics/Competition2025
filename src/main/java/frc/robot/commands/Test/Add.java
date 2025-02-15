@@ -4,11 +4,8 @@
 
 package frc.robot.commands.Test;
 
-<<<<<<< HEAD:src/main/java/frc/robot/commands/Test/Add.java
 import frc.robot.subsystems.Test.ButtonTest;
-=======
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
->>>>>>> fc28bc1793cf13a3a7e5145fa6210a2fb7f53522:src/main/java/frc/robot/commands/ButtonTest.java
 import edu.wpi.first.wpilibj2.command.Command;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
