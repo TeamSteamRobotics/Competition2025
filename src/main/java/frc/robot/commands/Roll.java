@@ -12,11 +12,12 @@ import frc.robot.subsystems.drive.IntakeSubsystem;
 public class Roll extends Command {
   private  IntakeSubsystem m_IntakeSubsystem; // The subsystem this command controls.
   private double m_targetSpeed;
-  
+  //private int counter;
   /** Creates a new Intake. */
   public Roll(IntakeSubsystem intakeSubsystem, double targetSpeed) {
     m_IntakeSubsystem = intakeSubsystem;
     m_targetSpeed = targetSpeed;
+    
   }
 
   // Called when the command is initially scheduled.
@@ -27,15 +28,17 @@ public class Roll extends Command {
   @Override
   public void execute() {
     m_IntakeSubsystem.rollerPID(m_targetSpeed);
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_IntakeSubsystem.rollerPID(m_targetSpeed);
+    return true;
   }
 }

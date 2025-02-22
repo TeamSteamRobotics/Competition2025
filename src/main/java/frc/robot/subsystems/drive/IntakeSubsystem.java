@@ -6,6 +6,10 @@ package frc.robot.subsystems.drive;
 
 import static edu.wpi.first.units.Units.Newton;
 
+import com.ctre.phoenix6.CANBus;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkFlex;
@@ -21,7 +25,9 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   
   // Motor controllers for the intake roller and pivot mechanism
-  SparkFlex rollerMotor = new SparkFlex(motorIdConstants.rollerId, MotorType.kBrushless);
+  private final CANBus kCANBus = new CANBus("rio");
+
+  TalonFX rollerMotor = new TalonFX(motorIdConstants.rollerId, kCANBus);
   SparkFlex pivotMotor = new SparkFlex(motorIdConstants.pivotId, MotorType.kBrushless);
   
   // Encoders for tracking the position and speed of the motors
@@ -38,12 +44,15 @@ public class IntakeSubsystem extends SubsystemBase {
   double m_targetPivotPosition;
 
   public IntakeSubsystem() {
+
+     var rollerConfig = new TalonFXConfiguration();
+    
     // Setting initial PID tolerances
     rollerPid.setTolerance(Roller.tolerance);
     pivotPid.setTolerance(Pivot.tolerance);
 
+    rollerMotor.getConfigurator().apply(rollerConfig);
     // Initializing encoders from motor controllers
-    rollerEncoder = rollerMotor.getEncoder();
     pivotEncoder = pivotMotor.getAbsoluteEncoder();
   }
 
@@ -56,13 +65,13 @@ public class IntakeSubsystem extends SubsystemBase {
     m_targetRollerSpeed = targetRollerSpeed;
 
     // Compute the PID output for the roller motor based on encoder velocity feedback
-    double pidOutputRoller = rollerPid.calculate(rollerEncoder.getVelocity(), targetRollerSpeed);
+    double pidOutputRoller = 0.2;
     
     // Apply the computed PID output to the roller motor
-    rollerMotor.set(pidOutputRoller);
-
+    rollerMotor.setControl(new DutyCycleOut(pidOutputRoller));
+  
     // Return whether the PID controller has reached the setpoint
-    return (rollerPid.atSetpoint());
+    return false;
   }
   
   /**

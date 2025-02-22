@@ -29,8 +29,8 @@ public final class Constants {
 
   }
   public static class motorIdConstants {
-    public static final int rollerId = 0;
-    public static final int pivotId = 1;
+    public static final int rollerId = 14;
+    public static final int pivotId = 13;
   }
   public static class Intake {
     public static class Roller{ 

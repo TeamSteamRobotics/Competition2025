@@ -137,7 +137,7 @@ public class RobotContainer {
             () -> -controller.getLeftX(),
             () -> -controller.getRightX()));
     //TODO: Bind to button
-    intake.setDefaultCommand(new Roll(intake, Roller.defaultSpeed));
+    //intake.setDefaultCommand(new Roll(intake, Roller.defaultSpeed));
     // Lock to 0° when A button is held
     controller
         .a()
@@ -162,7 +162,7 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
     //IntakeButton
-    controller.leftBumper().onTrue(new Pivots(intake, Pivot.finalPosition).andThen(new Roll(intake, Roller.defaultSpeed)));    
+    controller.leftBumper().onTrue(new Roll(intake, Roller.defaultSpeed));    
     //RetreatButton
     controller.rightBumper().onTrue(new Roll(intake, 0).andThen(new Pivots(intake, Pivot.initialPosition)));
     //VomitButton
