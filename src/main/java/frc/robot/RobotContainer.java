@@ -23,6 +23,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.MotorExamples.RunMotor;
+import frc.robot.subsystems.Motors.GenericMotor;
+import frc.robot.subsystems.Motors.SparkFlexMotor;
+import frc.robot.subsystems.Motors.TalonFXMotor;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.Intake.*;
@@ -40,6 +45,7 @@ import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
+public class RobotContainer {
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -58,9 +64,10 @@ public class RobotContainer {
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  GenericMotor talonExampleMotor;
+  GenericMotor revExampleMotor;
+  
   public RobotContainer() {
-
     intake = new IntakeSubsystem();
     switch (Constants.currentMode) {
        
@@ -167,9 +174,9 @@ public class RobotContainer {
     controller.rightBumper().onTrue(new Roll(intake, 0).andThen(new Pivots(intake, Pivot.initialPosition)));
     //VomitButton
     controller.rightTrigger().onTrue(new Roll(intake, -Roller.defaultSpeed));
+
   }
   
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

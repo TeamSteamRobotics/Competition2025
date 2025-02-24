@@ -33,6 +33,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
+
 public class Robot extends LoggedRobot {
   private Command autonomousCommand;
   private RobotContainer robotContainer;
@@ -120,6 +121,7 @@ public class Robot extends LoggedRobot {
       autonomousCommand.schedule();
     }
   }
+
 
   /** This function is called periodically during autonomous. */
   @Override
