@@ -21,8 +21,8 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.motorIdConstants;
-import frc.robot.Constants.Intake.*;
+import frc.robot.Constants;
+import frc.robot.Constants.IntakeMotors.PivotPid;
 import frc.robot.subsystems.Motors.GenericMotor;
 import frc.robot.subsystems.Motors.TalonFXMotor;
 import frc.robot.subsystems.Motors.SparkFlexMotor;
@@ -37,20 +37,22 @@ public class IntakeSubsystem extends SubsystemBase {
   GenericMotor pivotMotor;
   
   // PID controllers for controlling the roller and pivot speeds
-  PIDController rollerPid = new PIDController(Roller.kP, Roller.kI, Roller.kD);
-  PIDController pivotPid = new PIDController(Pivot.kP, Pivot.kI, Pivot.kD);
+  //PIDController rollerPid = new PIDController(Roller.kP, Roller.kI, Roller.kD);
+  PIDController pivotPid = new PIDController(PivotPid.kP, PivotPid.kI, PivotPid.kD);
 
   // Variables to store target speeds
   double m_targetRollerSpeed;
   double m_targetPivotPosition;
 
   public IntakeSubsystem() {
-    rollerMotor = new TalonFXMotor(motorIdConstants.rollerId, "rio");
-    pivotMotor = new SparkFlexMotor(motorIdConstants.pivotId);
+    rollerMotor = new TalonFXMotor(Constants.IntakeMotors.rollerId, "rio");
+    pivotMotor = new SparkFlexMotor(Constants.IntakeMotors.pivotId);
+
+    pivotMotor.setPosition(0);
     
     // Setting initial PID tolerances
-    rollerPid.setTolerance(Roller.tolerance);
-    pivotPid.setTolerance(Pivot.tolerance);
+    //rollerPid.setTolerance(Roller.tolerance);
+    pivotPid.setTolerance(Constants.IntakeMotors.PivotPid.tolerance);
 
   }
 
@@ -59,20 +61,21 @@ public class IntakeSubsystem extends SubsystemBase {
    * @param targetRollerSpeed The desired speed for the roller motor.
    * @return true if the roller motor speed is at the target setpoint.
    */
-  public boolean rollerPID(double targetRollerSpeed) {
-    m_targetRollerSpeed = targetRollerSpeed;
+  // public boolean rollerPID(double targetRollerSpeed) {
+  //   m_targetRollerSpeed = targetRollerSpeed;
 
-    // Compute the PID output for the roller motor based on encoder velocity feedback
-    double pidOutputRoller = rollerPid.calculate(rollerMotor.getVelocity(), m_targetRollerSpeed);
+  //   // Compute the PID output for the roller motor based on encoder velocity feedback
+  //   double pidOutputRoller = rollerPid.calculate(rollerMotor.getVelocity(), m_targetRollerSpeed);
     
-    // Apply the computed PID output to the roller motor
-    rollerMotor.set(pidOutputRoller);
+  //   // Apply the computed PID output to the roller motor
+  //   rollerMotor.set(pidOutputRoller);
   
-    // Return whether the PID controller has reached the setpoint
-    return pivotPid.atSetpoint();
-  }
+  //   // Return whether the PID controller has reached the setpoint
+  //   return pivotPid.atSetpoint();
+  // }
 
   public void roller(double rollerSpeed){
+    Logger.recordOutput("Intake/RollerSpeed", rollerMotor.getVelocity());
     m_targetRollerSpeed = rollerSpeed;
     rollerMotor.set(m_targetRollerSpeed);
   }
@@ -86,8 +89,8 @@ public class IntakeSubsystem extends SubsystemBase {
   public boolean pivotPID(double targetPivotPosition) {
     m_targetPivotPosition = targetPivotPosition;
 
-    // Compute the PID output for the pivot motor based on encoder velocity feedback
-    double pidOutputPivot = pivotPid.calculate(pivotMotor.getAbsolutePosition(), m_targetPivotPosition);
+    // Compute the PID output for the pivot motor based on encoder
+    double pidOutputPivot = pivotPid.calculate(pivotMotor.getPosition() / Constants.IntakeMotors.pivotGearboxRatio, m_targetPivotPosition);
     
     // Apply the computed PID output to the pivot motor
     pivotMotor.set(pidOutputPivot);
@@ -103,7 +106,7 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     Logger.recordOutput("Intake/FinalComponentPoses", new Pose3d[]{
-      new Pose3d(-0.25, -0.3, 0.16, new Rotation3d(Math.toRadians((pivotMotor.getPosition() / 9)* 360), 0.0, 0.0))
+      new Pose3d(-0.25, -0.3, 0.16, new Rotation3d(Math.toRadians((pivotMotor.getPosition() / Constants.IntakeMotors.pivotGearboxRatio)* 360), 0.0, 0.0))
     });
     // This method will be called once per scheduler run
   }
