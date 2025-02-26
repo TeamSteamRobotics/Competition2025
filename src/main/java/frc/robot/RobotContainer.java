@@ -28,7 +28,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.commands.ButtonTest;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
 import frc.robot.generated.TunerConstants;
@@ -53,7 +52,6 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-<<<<<<< HEAD
   
   
 
@@ -63,11 +61,6 @@ public class RobotContainer {
   
   private SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-=======
-  // Subsystems
-  private final Drive drive;
-  //ButtonTest test = new ButtonTest();
->>>>>>> fc28bc1793cf13a3a7e5145fa6210a2fb7f53522
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
 
@@ -76,13 +69,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-<<<<<<< HEAD
 
     SmartDashboard.putData("Test Command", new Calculate(m_test));
-=======
-    SmartDashboard.putNumber("test", 2);
-    SmartDashboard.putData("ButtonTest", new InstantCommand( ()-> ButtonTest.Calculate()));
->>>>>>> fc28bc1793cf13a3a7e5145fa6210a2fb7f53522
 
     switch (Constants.currentMode) {
       case REAL:
