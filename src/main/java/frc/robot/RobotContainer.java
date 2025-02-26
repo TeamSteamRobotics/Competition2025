@@ -61,7 +61,7 @@ public class RobotContainer {
   private final ShooterSubsystem shooter;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
-  private final ClimbSubsystem climb;
+  //private final ClimbSubsystem climb;
  
 
   // Dashboard inputs
@@ -69,7 +69,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    climb = new ClimbSubsystem();
+    //climb = new ClimbSubsystem();
 
     intake = new IntakeSubsystem();
     shooter = new ShooterSubsystem();
@@ -161,7 +161,7 @@ public class RobotContainer {
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    controller.y().toggleOnTrue(new RaiseClimb(climb));
+    //controller.y().toggleOnTrue(new RaiseClimb(climb));
     //controller.y().onFalse(new RetractClimb(climb)); //wtf
     // Reset gyro to 0° when B button is pressed
     controller
