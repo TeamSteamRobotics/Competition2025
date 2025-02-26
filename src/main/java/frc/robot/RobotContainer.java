@@ -23,19 +23,34 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.Constants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
+import frc.robot.commands.Climb.RaiseClimb;
+import frc.robot.commands.Climb.RetractClimb;
 import frc.robot.generated.TunerConstants;
+<<<<<<< HEAD
 import frc.robot.commands.Test.Calculate;
 import frc.robot.commands.Test.Add;
 import frc.robot.commands.Test.Sub;
 import frc.robot.commands.Test.Mult;
 import frc.robot.commands.Test.Div;
+=======
+import frc.robot.subsystems.ClimbSubsystem;
+import frc.robot.commands.Intake.Pivots;
+import frc.robot.commands.Intake.Roll;
+import frc.robot.commands.Intake.Tests.PivotTest;
+import frc.robot.commands.Shooter.PrimeShooter;
+import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+>>>>>>> upstream/develop
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -57,22 +72,39 @@ public class RobotContainer {
 
     // Subsystems
   private final Drive drive;
+<<<<<<< HEAD
   private final ButtonTest m_test = new ButtonTest();
   
   private SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
+=======
+  private final IntakeSubsystem intake;
+  private final ShooterSubsystem shooter;
+  // Controller
+  private final CommandXboxController controller = new CommandXboxController(0);
+  private final ClimbSubsystem climb;
+ 
+>>>>>>> upstream/develop
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+<<<<<<< HEAD
 
     SmartDashboard.putData("Test Command", new Calculate(m_test));
 
+=======
+    climb = new ClimbSubsystem();
+
+    intake = new IntakeSubsystem();
+    shooter = new ShooterSubsystem();
+>>>>>>> upstream/develop
     switch (Constants.currentMode) {
+       
       case REAL:
         // Real robot, instantiate hardware IO implementations
         drive =
@@ -147,7 +179,8 @@ public class RobotContainer {
             () -> -controller.getLeftY(),
             () -> -controller.getLeftX(),
             () -> -controller.getRightX()));
-
+    //TODO: Bind to button
+    //intake.setDefaultCommand(new Roll(intake, Roller.defaultSpeed));
     // Lock to 0° when A button is held
     controller
         .a()
@@ -160,8 +193,13 @@ public class RobotContainer {
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+<<<<<<< HEAD
 
     
+=======
+    controller.y().toggleOnTrue(new RaiseClimb(climb));
+    //controller.y().onFalse(new RetractClimb(climb)); //wtf
+>>>>>>> upstream/develop
     // Reset gyro to 0° when B button is pressed
     controller
         .b()
@@ -172,8 +210,24 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
                     drive)
                 .ignoringDisable(true));
-           
+
+    //DeployButton
+    controller.leftBumper().onTrue(new Pivots(intake, Constants.IntakeMotors.pivotFinalPosition));  
+    //RetreatButton
+    controller.rightBumper().onTrue(new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));
+    //IntakeButton
+    controller.leftTrigger().whileTrue(new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed));     
+    //VomitButton
+    controller.rightTrigger().whileTrue(new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
+
+     //Starts motor at default speed(from constants)/Stops motors
+     controller.b().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
+     controller.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
+ 
+     controller.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
+     controller.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
   }
+  
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

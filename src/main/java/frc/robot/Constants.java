@@ -34,4 +34,66 @@ public final class Constants {
     /** Replaying from a log file. */
     REPLAY
   }
+
+  //TODO: CHECK AND PROGRAM ALL IDS ACCORDING TO THIS CONSTANTS FILE!!!!
+  public class DriveMotors {
+    public class FrontLeft {
+      public static final int driveId = 1;
+      public static final int steerId = 2;
+    }
+    public class FrontRight {
+      public static final int driveId = 3;
+      public static final int steerId = 4;
+    }
+    public class BackLeft {
+      public static final int driveId = 5;
+      public static final int steerId = 6;
+    }
+    public class BackRight {
+      public static final int driveId = 7;
+      public static final int steerId = 8;
+      }
+  }
+
+  public class AgitatorMotors {
+    public static final int rotateId = 9;
+    public static final int wheelId = 10;
+    public static final int elevatorId = 11;
+  }
+
+  public class ClimbMotors {
+    public static final int climb = 12;
+    public static double climbSpeed = 0.45;
+  }
+
+  public class IntakeMotors{
+    public static final int pivotId = 13;
+    public static final int pivotGearboxRatio = 9;
+    public static final double pivotInitialPosition = 0.0;
+    //TODO: FINAL POSITION
+    public static final double pivotFinalPosition = 0.0;
+
+    public class PivotPid{
+      public static final double tolerance = 0.5;
+      public static final double kP = 0.5;
+      public static final double kI = 0.001;
+      public static final double kD= 3.0;
+    }
+    public static final int rollerId = 14;
+    public static final double defaultRollerSpeed = 0.45;
+  }
+
+  public class Shooter{ 
+    public static final int frontRollerId = 15;
+    public static final int backRollerId = 16;
+    public static final double defaultSpeed = 0.35;
+    public static final double speedIncrement = 0.1;
+
+    public class ShooterPid{
+      public static final double kP = 0.08;
+      public static final double kI = 0.001;
+      public static final double kD = 3.0;
+      public static final double tolerance = 0.1;     
+    }
+  }
 }
