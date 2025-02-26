@@ -27,6 +27,8 @@ import frc.robot.subsystems.VisionSubsystem;
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
@@ -42,7 +44,6 @@ public class Robot extends LoggedRobot {
   private RobotContainer robotContainer;
 
   public Robot() {
-
     // Set up data receivers & replay source
     switch (Constants.currentMode) {
       case REAL:
@@ -83,6 +84,14 @@ public class Robot extends LoggedRobot {
             "You are using an unsupported swerve configuration, which this template does not support without manual customization. The 2025 release of Phoenix supports some swerve configurations which were not available during 2025 beta testing, preventing any development and support from the AdvantageKit developers.");
       }
     }
+
+    // Initialize SmartDashboard Values
+    // Test code
+    SmartDashboard.putNumber("test", 0);
+    SmartDashboard.putNumber("test_add", 0);
+    SmartDashboard.putNumber("test_sub", 0);
+    SmartDashboard.putNumber("test_mult", 0);
+    SmartDashboard.putNumber("test-div", 0);
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.
