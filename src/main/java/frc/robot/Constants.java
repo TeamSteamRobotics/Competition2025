@@ -71,7 +71,7 @@ public final class Constants {
     public static final int pivotGearboxRatio = 9;
     public static final double pivotInitialPosition = 0.0;
     //TODO: FINAL POSITION
-    public static final double pivotFinalPosition = 0.0;
+    public static final double pivotFinalPosition = 1.0;
 
     public class PivotPid{
       public static final double tolerance = 0.5;
@@ -84,8 +84,9 @@ public final class Constants {
   }
 
   public class Shooter{ 
-    public static final int frontRollerId = 15;
-    public static final int backRollerId = 16;
+    public static final int greenRollerId = 15;
+    public static final int frontRollerId = 16;
+    public static final int backRollerId = 17;
     public static final double defaultSpeed = 0.35;
     public static final double speedIncrement = 0.1;
 
