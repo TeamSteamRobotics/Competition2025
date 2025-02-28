@@ -27,6 +27,7 @@ import frc.robot.Constants.IntakeMotors.PivotPid;
 import frc.robot.subsystems.Motors.GenericMotor;
 import frc.robot.subsystems.Motors.TalonFXMotor;
 import frc.robot.subsystems.Motors.SparkFlexMotor;
+import frc.robot.subsystems.Motors.SparkMaxMotor;
 
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -47,7 +48,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public IntakeSubsystem() {
     rollerMotor = new TalonFXMotor(Constants.IntakeMotors.rollerId, "rio");
-    pivotMotor = new SparkFlexMotor(Constants.IntakeMotors.pivotId);
+    pivotMotor = new SparkMaxMotor(Constants.IntakeMotors.pivotId);
 
     pivotMotor.setPosition(0);
     
