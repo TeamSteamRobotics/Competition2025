@@ -69,9 +69,9 @@ public final class Constants {
   public class IntakeMotors{
     public static final int pivotId = 13;
     public static final int pivotGearboxRatio = 9;
-    public static final double pivotInitialPosition = 0.0;
+    public static final double pivotInitialPosition = 0.095; // CHECK, Non-Zero Zero
     //TODO: FINAL POSITION
-    public static final double pivotFinalPosition = 1.0;
+    public static final double pivotFinalPosition = 2.857141; // CHECK, Intake Height
 
     public class PivotPid{
       public static final double tolerance = 0.5;
