@@ -16,6 +16,12 @@ public class ButtonTest extends SubsystemBase {
     test = SmartDashboard.getNumber("test", -1);
   }
 
+  public void rollerSpeed() {
+    test = SmartDashboard.getNumber("Roller", 1);
+  }
+
+
+
   public void add() {
     SmartDashboard.putNumber("test_add", test + 2);
   }

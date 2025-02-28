@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -69,6 +70,11 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+   // SmartDashboard.getnum
+
+
+
     //climb = new ClimbSubsystem();
 
     intake = new IntakeSubsystem();
@@ -179,9 +185,9 @@ public class RobotContainer {
     //RetreatButton
     controller.rightBumper().onTrue(new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));
     //IntakeButton
-    controller.leftTrigger().whileTrue(new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed));     
+    controller.leftTrigger().whileTrue(new Roll(intake, SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));     
     //VomitButton
-    controller.rightTrigger().whileTrue(new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
+    controller.rightTrigger().whileTrue(new Roll(intake, -SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));
 
      //Starts motor at default speed(from constants)/Stops motors
      controller.b().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
