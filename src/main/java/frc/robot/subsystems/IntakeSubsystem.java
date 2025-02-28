@@ -20,6 +20,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeMotors.PivotPid;
@@ -108,6 +109,7 @@ public class IntakeSubsystem extends SubsystemBase {
     Logger.recordOutput("Intake/FinalComponentPoses", new Pose3d[]{
       new Pose3d(-0.25, -0.3, 0.16, new Rotation3d(Math.toRadians((pivotMotor.getPosition() / Constants.IntakeMotors.pivotGearboxRatio)* 360), 0.0, 0.0))
     });
+    SmartDashboard.putNumber("Intake Encoder", pivotMotor.getPosition());
     // This method will be called once per scheduler run
   }
 }

@@ -101,6 +101,7 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically during all modes. */
   @Override
   public void robotPeriodic() {
+
     // Switch thread to high priority to improve loop timing
     Threads.setCurrentThreadPriority(true, 99);
 
@@ -153,6 +154,8 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+
+
   
     /*//LLResult result = LimelightHelpers.getLatestResults("");
     double lNum = LimelightHelpers.getTA("");
