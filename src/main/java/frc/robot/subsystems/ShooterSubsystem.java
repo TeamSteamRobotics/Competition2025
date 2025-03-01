@@ -92,12 +92,13 @@ public class ShooterSubsystem extends SubsystemBase {
   public void StopMotor() {
     frontShooterMotor.set(0); // Stop the top motor.
     backShooterMotor.set(0); // Stop the bottom motor.
+    greenShooterMotor.set(0); // Stop the green motor.
   }
 
-  public double[] getVelocities(){
+  /*public double[] getVelocities(){
     double[] returnValues = {greenShooterMotor.getVelocity(), frontShooterMotor.getVelocity(), backShooterMotor.getVelocity()};
     return returnValues;
-  }
+  }*/
 
   /**
    * Retrieves the current speeds of both motors.

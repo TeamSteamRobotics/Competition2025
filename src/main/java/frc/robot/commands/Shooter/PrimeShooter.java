@@ -46,6 +46,7 @@ public class PrimeShooter extends Command {
    */
   public PrimeShooter(ShooterSubsystem shooter, double speed) {
     m_Shooter = shooter;
+    //sets speed based on smartdashboard value
     inputSpeed = SmartDashboard.getNumber("shooterSpeed", inputSpeed);
   //  inputSpeed = m_Shooter.overrideDefault ? m_Shooter.getTargetSpeed() : speed;
     
@@ -74,7 +75,7 @@ public class PrimeShooter extends Command {
 
     // Command the shooter subsystem to run at the calculated speed.
     m_Shooter.ShootPID(speed);
-    double[] velArray = m_Shooter.getVelocities();
+    double[] velArray = m_Shooter.getSpeeds();
     SmartDashboard.putNumber("greenShooterSpeed", velArray[0]);
     SmartDashboard.putNumber("frontShooterSpeed", velArray[1]);
     SmartDashboard.putNumber("backShooterSpeed", velArray[2]);
