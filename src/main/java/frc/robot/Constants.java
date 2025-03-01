@@ -16,4 +16,9 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+public static int ledPWM = 0;
+public static int ledCount = 150;
+public static int ledsPerMeter = 30;
+public static int ledDefaultBrightness = 128;
 }
