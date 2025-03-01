@@ -19,10 +19,12 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -62,6 +64,7 @@ public class RobotContainer {
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
   private final CommandXboxController operator = new CommandXboxController(1);
+
   //private final ClimbSubsystem climb;
  
 
@@ -70,6 +73,11 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+   // SmartDashboard.getnum
+
+
+
     //climb = new ClimbSubsystem();
 
     intake = new IntakeSubsystem();
@@ -79,6 +87,7 @@ public class RobotContainer {
       case REAL:
         // Real robot, instantiate hardware IO implementations
         drive =
+        //TODO: Change 'TunerConstants' to 'Constants' (After we update the values on the motors as needed)
             new Drive(
                 new GyroIOPigeon2(),
                 new ModuleIOTalonFX(TunerConstants.FrontLeft),
@@ -180,9 +189,9 @@ public class RobotContainer {
     //RetreatButton
     controller.rightBumper().onTrue(new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));
     //IntakeButton
-    controller.leftTrigger().whileTrue(new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed));     
+    controller.leftTrigger().whileTrue(new Roll(intake, SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));     
     //VomitButton
-    controller.rightTrigger().whileTrue(new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
+    controller.rightTrigger().whileTrue(new Roll(intake, -SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));
 
      //Starts motor at default speed(from constants)/Stops motors
     operator.rightTrigger().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));

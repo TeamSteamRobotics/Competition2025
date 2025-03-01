@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Intake;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -19,7 +20,9 @@ public class Roll extends Command {
     m_targetSpeed = targetSpeed;
     
   }
-
+  //public Roll(IntakeSubsystem intakeSubsystem) {
+   // m_IntakeSubsystem = intakeSubsystem;
+   // m_targetSpeed = SmartDashboard.getNumber(getName(), m_targetSpeed);
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
