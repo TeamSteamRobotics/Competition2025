@@ -64,6 +64,7 @@ public final class Constants {
   public class ClimbMotors {
     public static final int climb = 12;
     public static double climbSpeed = 0.45;
+    public static final int climbGearRatio = 80; //80:1
   }
 
   public class IntakeMotors{
