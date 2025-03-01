@@ -30,6 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
   // These are motor controllers for the shooter. They control the front and back motors.
   GenericMotor frontShooterMotor = new SparkFlexMotor(Constants.Shooter.frontRollerId);
   GenericMotor backShooterMotor = new SparkFlexMotor(Constants.Shooter.backRollerId);
+  GenericMotor greenShooterMotor = new SparkFlexMotor(Constants.Shooter.greenRollerId);
 
   // These are encoders that measure the rotation speed of the motors.
   AbsoluteEncoder topShooterEncoder;
@@ -38,6 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
   // PID controllers adjust motor speed to match the desired target speed.
   PIDController topShooterPid = new PIDController(ShooterPid.kP, ShooterPid.kI, ShooterPid.kD);
   PIDController bottomShooterPid = new PIDController(ShooterPid.kP, ShooterPid.kI, ShooterPid.kD);
+  PIDController greenShooterPid = new PIDController(ShooterPid.kP, ShooterPid.kI, ShooterPid.kD);
 
   double m_targetSpeed;
 
@@ -67,7 +69,10 @@ public class ShooterSubsystem extends SubsystemBase {
     //FIXME: MAY BE THE OTHER WAY ARROUNDDD
     double pidOutputBack = bottomShooterPid.calculate(backShooterMotor.getVelocity(), -m_targetSpeed);
 
+    double pidGreenOutput = topShooterPid.calculate(greenShooterMotor.getVelocity(), m_targetSpeed);
+
     // Set the motors to the calculated speeds.
+    greenShooterMotor.set(pidGreenOutput);
     frontShooterMotor.set(pidOutputFront);
     backShooterMotor.set(pidOutputBack);
 

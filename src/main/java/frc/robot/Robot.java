@@ -23,10 +23,15 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.LimelightHelpers.LimelightResults;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.subsystems.Test.ButtonTest;
+
+import java.util.Calendar;
 
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
@@ -40,10 +45,11 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 public class Robot extends LoggedRobot {
   private Command autonomousCommand;
   private RobotContainer robotContainer;
+  
 
   public Robot() {
-
     // Set up data receivers & replay source
+    //calculator = new ButtonTest();
     switch (Constants.currentMode) {
       case REAL:
         // Running on a real robot, log to a USB stick ("/U/logs")
@@ -84,6 +90,15 @@ public class Robot extends LoggedRobot {
       }
     }
 
+    // Initialize SmartDashboard Values
+    // Test code
+    SmartDashboard.putNumber("test", 0);
+    SmartDashboard.putNumber("test_add", 0);
+    SmartDashboard.putNumber("test_sub", 0);
+    SmartDashboard.putNumber("test_mult", 0);
+    SmartDashboard.putNumber("test-div", 0);
+    SmartDashboard.putNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed);
+
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
@@ -95,12 +110,19 @@ public class Robot extends LoggedRobot {
     // Switch thread to high priority to improve loop timing
     Threads.setCurrentThreadPriority(true, 99);
 
+    ButtonTest calculator = new ButtonTest();
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled commands, running already-scheduled commands, removing
     // finished or interrupted commands, and running subsystem periodic() methods.
     // This must be called from the robot's periodic block in order for anything in
     // the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    calculator.add();
+    calculator.sub();
+    calculator.mult();
+    calculator.div();
+
+    calculator = null;
 
     // Return to normal thread priority
     Threads.setCurrentThreadPriority(false, 10);
