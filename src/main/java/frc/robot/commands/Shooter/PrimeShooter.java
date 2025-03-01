@@ -7,6 +7,7 @@ package frc.robot.commands.Shooter;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -32,6 +33,8 @@ public class PrimeShooter extends Command {
     this.distanceSupplier = distanceSupplier;
     hasDistanceSupplier = true; // Enable distance-based speed calculation.
 
+  
+
     // Declare that this command requires the shooter subsystem.
     addRequirements(shooter);
   }
@@ -43,13 +46,16 @@ public class PrimeShooter extends Command {
    */
   public PrimeShooter(ShooterSubsystem shooter, double speed) {
     m_Shooter = shooter;
-    inputSpeed = m_Shooter.overrideDefault ? m_Shooter.getTargetSpeed() : speed;
+    //sets speed based on smartdashboard value
+    inputSpeed = SmartDashboard.getNumber("shooterSpeed", inputSpeed);
+  //  inputSpeed = m_Shooter.overrideDefault ? m_Shooter.getTargetSpeed() : speed;
     
     hasDistanceSupplier = false; // Use the fixed speed instead of calculating from distance.
 
     // Declare that this command requires the shooter subsystem.
     addRequirements(shooter);
   }
+// change shooter speed in smart dashboard
 
   /**
    * This method runs once when the command is first scheduled.
@@ -69,6 +75,10 @@ public class PrimeShooter extends Command {
 
     // Command the shooter subsystem to run at the calculated speed.
     m_Shooter.ShootPID(speed);
+    double[] velArray = m_Shooter.getSpeeds();
+    SmartDashboard.putNumber("greenShooterSpeed", velArray[0]);
+    SmartDashboard.putNumber("frontShooterSpeed", velArray[1]);
+    SmartDashboard.putNumber("backShooterSpeed", velArray[2]);
   }
 
   /**

@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.Shooter;
 import frc.robot.LimelightHelpers.LimelightResults;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.VisionSubsystem;
@@ -97,7 +98,13 @@ public class Robot extends LoggedRobot {
     SmartDashboard.putNumber("test_sub", 0);
     SmartDashboard.putNumber("test_mult", 0);
     SmartDashboard.putNumber("test-div", 0);
+    SmartDashboard.putNumber("greenShooterSpeed", 0);
+    SmartDashboard.putNumber("frontShooterSpeed", 0);
+    SmartDashboard.putNumber("backShooterSpeed", 0);
+    SmartDashboard.putNumber("shooterSpeed", Constants.Shooter.defaultSpeed);
+
     SmartDashboard.putNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed);
+
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.

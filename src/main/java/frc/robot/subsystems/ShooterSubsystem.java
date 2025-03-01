@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.Motors.GenericMotor;
 import frc.robot.subsystems.Motors.TalonFXMotor;
@@ -72,12 +73,16 @@ public class ShooterSubsystem extends SubsystemBase {
     double pidGreenOutput = topShooterPid.calculate(greenShooterMotor.getVelocity(), m_targetSpeed);
 
     // Set the motors to the calculated speeds.
-    greenShooterMotor.set(pidGreenOutput);
-    frontShooterMotor.set(pidOutputFront);
-    backShooterMotor.set(pidOutputBack);
+    //greenShooterMotor.set(pidGreenOutput);
+    //frontShooterMotor.set(pidOutputFront);
+    //backShooterMotor.set(pidOutputBack);
+    greenShooterMotor.set(-m_targetSpeed);
+    frontShooterMotor.set(-m_targetSpeed);
+    backShooterMotor.set(m_targetSpeed);
 
     // Check if both motors have reached the desired speed.
     return (topShooterPid.atSetpoint() && bottomShooterPid.atSetpoint());
+    
   }
 
   
@@ -87,7 +92,13 @@ public class ShooterSubsystem extends SubsystemBase {
   public void StopMotor() {
     frontShooterMotor.set(0); // Stop the top motor.
     backShooterMotor.set(0); // Stop the bottom motor.
+    greenShooterMotor.set(0); // Stop the green motor.
   }
+
+  /*public double[] getVelocities(){
+    double[] returnValues = {greenShooterMotor.getVelocity(), frontShooterMotor.getVelocity(), backShooterMotor.getVelocity()};
+    return returnValues;
+  }*/
 
   /**
    * Retrieves the current speeds of both motors.
@@ -104,6 +115,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     Logger.recordOutput("Shooter/FrontMotorSpeed", frontShooterMotor.getVelocity());
     Logger.recordOutput("Shooter/BackMotorSpeed", backShooterMotor.getVelocity());
+
+ 
     // This method will be called once per scheduler run
   }
 }

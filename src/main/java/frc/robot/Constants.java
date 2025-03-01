@@ -41,6 +41,7 @@ public final class Constants {
       public static final int driveId = 1;
       public static final int steerId = 2;
       public static final int encoderId = 3;
+
     }
     public class FrontRight {
       public static final int driveId = 4;
@@ -70,13 +71,14 @@ public final class Constants {
     public static double climbSpeed = 0.45;
   }
 
-  public class IntakeMotors{
-    public static final int pivotId = 17;
-    public static final int pivotGearboxRatio = 9;
-    public static final double pivotInitialPosition = 0.095; // CHECK, Non-Zero Zero
-    //TODO: FINAL POSITION
-    public static final double pivotFinalPosition = 2.857141; // CHECK, Intake Height
 
+    public class IntakeMotors{
+      public static final int pivotId = 17;
+      public static final int pivotGearboxRatio = 9;
+      public static final double pivotInitialPosition = 0.095; // CHECK, Non-Zero Zero
+      //TODO: FINAL POSITION
+      public static final double pivotFinalPosition = 2.857141; // CHECK, Intake Height
+      
     public class PivotPid{
       public static final double tolerance = 0.5;
       public static final double kP = 0.5;

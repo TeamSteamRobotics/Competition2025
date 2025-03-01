@@ -63,7 +63,8 @@ public class RobotContainer {
   private final ShooterSubsystem shooter;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
-  private final CommandPS5Controller psController = new CommandPS5Controller(0);
+  private final CommandXboxController operator = new CommandXboxController(1);
+
   //private final ClimbSubsystem climb;
  
 
@@ -193,11 +194,11 @@ public class RobotContainer {
     controller.rightTrigger().whileTrue(new Roll(intake, -SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));
 
      //Starts motor at default speed(from constants)/Stops motors
-     controller.b().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
-     controller.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
+    operator.rightTrigger().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
+    //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
  
-     controller.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
-     controller.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
+    operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
+    operator.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
   }
   
 
