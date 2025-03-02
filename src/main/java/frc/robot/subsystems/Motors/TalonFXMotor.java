@@ -16,7 +16,7 @@ public class TalonFXMotor implements GenericMotor {
         TalonFXConfiguration config = new TalonFXConfiguration();
         motor.getConfigurator().apply(config);
     }
-
+    
     @Override
     public void set(double output) {
         motor.setControl(new DutyCycleOut(output));
@@ -46,5 +46,10 @@ public class TalonFXMotor implements GenericMotor {
     public double getAbsolutePosition() {
         //FIXME: REQUIRES ADDITIONAL SETUP ON TALONFX HARDWARE
        return motor.getPosition().getValueAsDouble();
+    }
+
+    @Override
+    public void overridePosition(double rotations) {
+        motor.setPosition(rotations);
     }
 }

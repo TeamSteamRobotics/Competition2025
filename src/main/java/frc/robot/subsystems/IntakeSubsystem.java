@@ -39,7 +39,7 @@ public class IntakeSubsystem extends SubsystemBase {
   
   // PID controllers for controlling the roller and pivot speeds
   //PIDController rollerPid = new PIDController(Roller.kP, Roller.kI, Roller.kD);
-  PIDController pivotPid = new PIDController(PivotPid.kP, PivotPid.kI, PivotPid.kD);
+  //PIDController pivotPid = new PIDController(PivotPid.kP, PivotPid.kI, PivotPid.kD);
 
   // Variables to store target speeds
   double m_targetRollerSpeed;
@@ -49,13 +49,13 @@ public class IntakeSubsystem extends SubsystemBase {
   
   public IntakeSubsystem() {
     rollerMotor = new TalonFXMotor(Constants.IntakeMotors.rollerId, "rio");
-    pivotMotor = new SparkMaxMotor(Constants.IntakeMotors.pivotId);
+    pivotMotor = new SparkMaxMotor(Constants.IntakeMotors.pivotId, Constants.IntakeMotors.PivotPid.kP, Constants.IntakeMotors.PivotPid.kI, Constants.IntakeMotors.PivotPid.kD, -Constants.IntakeMotors.PivotPid.maxPower, Constants.IntakeMotors.PivotPid.kP);
 
-    pivotMotor.setPosition(0);
+    pivotMotor.overridePosition(0);
     
     // Setting initial PID tolerances
     //rollerPid.setTolerance(Roller.tolerance);
-    pivotPid.setTolerance(Constants.IntakeMotors.PivotPid.tolerance);
+    //pivotPid.setTolerance(Constants.IntakeMotors.PivotPid.tolerance);
 
   }
 
@@ -91,14 +91,15 @@ public class IntakeSubsystem extends SubsystemBase {
   public boolean pivotPID(double targetPivotPosition) {
     m_targetPivotPosition = targetPivotPosition;
 
+    pivotMotor.setPosition(m_targetPivotPosition);
     //* Constants.IntakeMotors.pivotGearboxRatio
     // Compute the PID output for the pivot motor based on encoder
-    double pidOutputPivot = pivotPid.calculate(pivotMotor.getPosition(), m_targetPivotPosition);
+    // double pidOutputPivot = pivotPid.calculate(pivotMotor.getPosition(), m_targetPivotPosition);
     
     
     // Apply the computed PID output to the pivot motor
-    m_lastSpeed = pidOutputPivot;
-    pivotMotor.set(pidOutputPivot * 0.1);
+    // m_lastSpeed = pidOutputPivot;
+    // pivotMotor.set(pidOutputPivot * 0.1);
 
     // Return whether the PID controller has reached the setpoint
     return false;
@@ -116,7 +117,7 @@ public class IntakeSubsystem extends SubsystemBase {
     });
     
     Logger.recordOutput("Intake/EncoderWithoutRatio", pivotMotor.getPosition());
-    Logger.recordOutput("Intake/Currentspeed", m_lastSpeed);
+    Logger.recordOutput("Intake/Currentspeed", pivotMotor.getVelocity());
     Logger.recordOutput("Intake/RollerSpeed", rollerMotor.getVelocity());
     
     // This method will be called once per scheduler run
