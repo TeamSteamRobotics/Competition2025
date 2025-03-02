@@ -74,16 +74,16 @@ public final class Constants {
 
     public class IntakeMotors{
       public static final int pivotId = 17;
-      public static final int pivotGearboxRatio = 9;
+      public static final int pivotGearboxRatio = 17;
       public static final double pivotInitialPosition = 0.095; // CHECK, Non-Zero Zero
       //TODO: FINAL POSITION
-      public static final double pivotFinalPosition = 2.857141; // CHECK, Intake Height
+      public static final double pivotFinalPosition = 3.357140064239502; // CHECK, Intake Height
       
     public class PivotPid{
-      public static final double tolerance = 0.5;
-      public static final double kP = 0.5;
-      public static final double kI = 0.001;
-      public static final double kD= 3.0;
+      public static final double tolerance = 0.05;
+      public static final double kP = 0.1;
+      public static final double kI = 0.0;
+      public static final double kD= 0.0;
     }
     public static final int rollerId = 18;
     public static final double defaultRollerSpeed = 0.45;

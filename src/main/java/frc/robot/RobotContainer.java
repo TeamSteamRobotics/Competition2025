@@ -63,7 +63,7 @@ public class RobotContainer {
   private final ShooterSubsystem shooter;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
-  private final CommandXboxController operator = new CommandXboxController(1);
+  //private final CommandXboxController operator = new CommandXboxController(1);
 
   //private final ClimbSubsystem climb;
  
@@ -185,20 +185,20 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
     //DeployButton
-    controller.leftBumper().onTrue(new Pivots(intake, Constants.IntakeMotors.pivotFinalPosition));  
+    controller.leftBumper().toggleOnTrue(new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));  
     //RetreatButton
-    controller.rightBumper().onTrue(new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));
+    controller.rightBumper().toggleOnTrue(new Pivots(intake, Constants.IntakeMotors.pivotFinalPosition));
     //IntakeButton
     controller.leftTrigger().whileTrue(new Roll(intake, SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));     
     //VomitButton
     controller.rightTrigger().whileTrue(new Roll(intake, -SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));
 
      //Starts motor at default speed(from constants)/Stops motors
-    operator.rightTrigger().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
-    //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
+    // operator.rightTrigger().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
+    // //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
  
-    operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
-    operator.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
+    // operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
+    // operator.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
   }
   
 

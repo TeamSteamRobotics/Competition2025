@@ -45,6 +45,8 @@ public class IntakeSubsystem extends SubsystemBase {
   double m_targetRollerSpeed;
   double m_targetPivotPosition;
 
+  double m_lastSpeed;
+  
   public IntakeSubsystem() {
     rollerMotor = new TalonFXMotor(Constants.IntakeMotors.rollerId, "rio");
     pivotMotor = new SparkMaxMotor(Constants.IntakeMotors.pivotId);
@@ -89,25 +91,32 @@ public class IntakeSubsystem extends SubsystemBase {
   public boolean pivotPID(double targetPivotPosition) {
     m_targetPivotPosition = targetPivotPosition;
 
+    //* Constants.IntakeMotors.pivotGearboxRatio
     // Compute the PID output for the pivot motor based on encoder
-    double pidOutputPivot = pivotPid.calculate(pivotMotor.getPosition() / Constants.IntakeMotors.pivotGearboxRatio, m_targetPivotPosition);
+    double pidOutputPivot = pivotPid.calculate(pivotMotor.getPosition(), m_targetPivotPosition);
+    
     
     // Apply the computed PID output to the pivot motor
-    pivotMotor.set(pidOutputPivot);
+    m_lastSpeed = pidOutputPivot;
+    pivotMotor.set(pidOutputPivot * 0.1);
 
     // Return whether the PID controller has reached the setpoint
-    return pivotPid.atSetpoint();
+    return false;
   }
 
   public void pivot(double pivotSpeed){
+    m_lastSpeed = pivotSpeed;
     pivotMotor.set(pivotSpeed);
   }
 
   @Override
   public void periodic() {
     Logger.recordOutput("Intake/FinalComponentPoses", new Pose3d[]{
-      new Pose3d(-0.25, -0.3, 0.16, new Rotation3d(Math.toRadians((pivotMotor.getPosition() / Constants.IntakeMotors.pivotGearboxRatio)* 360), 0.0, 0.0))
+      new Pose3d(-0.25, -0.3, 0.16, new Rotation3d(Math.toRadians(((pivotMotor.getPosition() / Constants.IntakeMotors.pivotGearboxRatio)* 360)), 0, 0))
     });
+    
+    Logger.recordOutput("Intake/EncoderWithoutRatio", pivotMotor.getPosition());
+    Logger.recordOutput("Intake/Currentspeed", m_lastSpeed);
     Logger.recordOutput("Intake/RollerSpeed", rollerMotor.getVelocity());
     
     // This method will be called once per scheduler run

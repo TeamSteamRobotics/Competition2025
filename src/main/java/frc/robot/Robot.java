@@ -93,17 +93,17 @@ public class Robot extends LoggedRobot {
 
     // Initialize SmartDashboard Values
     // Test code
-    SmartDashboard.putNumber("test", 0);
-    SmartDashboard.putNumber("test_add", 0);
-    SmartDashboard.putNumber("test_sub", 0);
-    SmartDashboard.putNumber("test_mult", 0);
-    SmartDashboard.putNumber("test-div", 0);
-    SmartDashboard.putNumber("greenShooterSpeed", 0);
-    SmartDashboard.putNumber("frontShooterSpeed", 0);
-    SmartDashboard.putNumber("backShooterSpeed", 0);
-    SmartDashboard.putNumber("shooterSpeed", Constants.Shooter.defaultSpeed);
+    // SmartDashboard.putNumber("test", 0);
+    // SmartDashboard.putNumber("test_add", 0);
+    // SmartDashboard.putNumber("test_sub", 0);
+    // SmartDashboard.putNumber("test_mult", 0);
+    // SmartDashboard.putNumber("test-div", 0);
+    // SmartDashboard.putNumber("greenShooterSpeed", 0);
+    // SmartDashboard.putNumber("frontShooterSpeed", 0);
+    // SmartDashboard.putNumber("backShooterSpeed", 0);
+    // SmartDashboard.putNumber("shooterSpeed", Constants.Shooter.defaultSpeed);
 
-    SmartDashboard.putNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed);
+    // SmartDashboard.putNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed);
 
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
@@ -117,19 +117,19 @@ public class Robot extends LoggedRobot {
     // Switch thread to high priority to improve loop timing
     Threads.setCurrentThreadPriority(true, 99);
 
-    ButtonTest calculator = new ButtonTest();
+    // ButtonTest calculator = new ButtonTest();
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled commands, running already-scheduled commands, removing
     // finished or interrupted commands, and running subsystem periodic() methods.
     // This must be called from the robot's periodic block in order for anything in
     // the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    calculator.add();
-    calculator.sub();
-    calculator.mult();
-    calculator.div();
+    // calculator.add();
+    // calculator.sub();
+    // calculator.mult();
+    // calculator.div();
 
-    calculator = null;
+    // calculator = null;
 
     // Return to normal thread priority
     Threads.setCurrentThreadPriority(false, 10);
