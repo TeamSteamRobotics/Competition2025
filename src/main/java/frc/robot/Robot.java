@@ -116,8 +116,8 @@ public class Robot extends LoggedRobot {
   public void robotPeriodic() {
     // Switch thread to high priority to improve loop timing
     Threads.setCurrentThreadPriority(true, 99);
-
-    ButtonTest calculator = new ButtonTest();
+    /* 
+    ButtonTest calculator = new ButtonTest(); // FIXME: remove
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled commands, running already-scheduled commands, removing
     // finished or interrupted commands, and running subsystem periodic() methods.
@@ -130,7 +130,7 @@ public class Robot extends LoggedRobot {
     calculator.div();
 
     calculator = null;
-
+    */
     // Return to normal thread priority
     Threads.setCurrentThreadPriority(false, 10);
   }
