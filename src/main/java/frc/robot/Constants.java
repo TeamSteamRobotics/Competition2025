@@ -77,11 +77,11 @@ public final class Constants {
       public static final int pivotGearboxRatio = 17;
       public static final double pivotInitialPosition = 0.0; //MAY NEED UPDATED?
       //TODO: FINAL POSITION
-      public static final double pivotFinalPosition = 3.357140064239502; // CHECK, Intake Height
+      public static final double pivotFinalPosition = 2.8047601222991943; // CHECK, Intake Height
       public static final double maxMarginOfError = pivotFinalPosition - pivotInitialPosition;
       
     public class PivotPid{
-      public static final double maxPower = 0.8;
+      public static final double maxPower = 0.5;
       public static final double tolerance = 0.05;
       public static final double kP = maxPower / maxMarginOfError;
       public static final double kI = 0.0;

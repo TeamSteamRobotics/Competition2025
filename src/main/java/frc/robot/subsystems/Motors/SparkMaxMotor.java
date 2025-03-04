@@ -1,5 +1,7 @@
 package frc.robot.subsystems.Motors;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -11,15 +13,20 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-public class SparkMaxMotor implements GenericMotor {
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class SparkMaxMotor extends SubsystemBase implements GenericMotor {
     private final SparkMax motor;
     private final RelativeEncoder relativeEncoder;
     private final AbsoluteEncoder absoluteEncoder;
     SparkClosedLoopController sparkPid;
 
+    int m_canId;
+
     SparkMaxConfig pidConfig;
 
     public SparkMaxMotor(int canID) {
+        m_canId = canID;
         motor = new SparkMax(canID, MotorType.kBrushless);
         relativeEncoder = motor.getEncoder();
         absoluteEncoder = motor.getAbsoluteEncoder();
@@ -27,7 +34,7 @@ public class SparkMaxMotor implements GenericMotor {
 
     public SparkMaxMotor(int canID, double kP, double kI, double kD, double minPower, double maxPower) {
         motor = new SparkMax(canID, MotorType.kBrushless);
-
+        pidConfig = new SparkMaxConfig();
         pidConfig.closedLoop
             .p(kP)
             .i(kI)
@@ -78,5 +85,10 @@ public class SparkMaxMotor implements GenericMotor {
     @Override
     public void overridePosition(double rotations) {
         relativeEncoder.setPosition(rotations);
+    }
+
+    @Override
+    public void periodic() {
+        Logger.recordOutput("MotorOutputs/MOTOR_" + m_canId + "_Output", motor.get());
     }
 }

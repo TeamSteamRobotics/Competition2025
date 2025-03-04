@@ -160,14 +160,14 @@ public class RobotContainer {
     //TODO: Bind to button
     //intake.setDefaultCommand(new Roll(intake, Roller.defaultSpeed));
     // Lock to 0° when A button is held
-    controller
-        .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -controller.getLeftY(),
-                () -> -controller.getLeftX(),
-                () -> new Rotation2d()));
+    // controller
+    //     .a()
+    //     .whileTrue(
+    //         DriveCommands.joystickDriveAtAngle(
+    //             drive,
+    //             () -> -controller.getLeftY(),
+    //             () -> -controller.getLeftX(),
+    //             () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -194,7 +194,7 @@ public class RobotContainer {
     controller.rightTrigger().whileTrue(new Roll(intake, -SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));
 
      //Starts motor at default speed(from constants)/Stops motors
-    // operator.rightTrigger().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
+    controller.a().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
     // //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
  
     // operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));

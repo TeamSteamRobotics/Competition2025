@@ -1,15 +1,25 @@
 package frc.robot.subsystems.Motors;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.ctre.phoenix6.controls.*;
+
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.*;
 
-public class TalonFXMotor implements GenericMotor {
+public class TalonFXMotor extends SubsystemBase implements GenericMotor {
     private final TalonFX motor;
     private CANBus m_canBus;
     
+    int m_canId;
+
     public TalonFXMotor(int canID, String canBus) {
+        m_canId = canID;
+
         m_canBus = new CANBus(canBus);
         motor = new TalonFX(canID, m_canBus);
         // Configure PID or settings if needed
@@ -51,5 +61,10 @@ public class TalonFXMotor implements GenericMotor {
     @Override
     public void overridePosition(double rotations) {
         motor.setPosition(rotations);
+    }
+
+    @Override
+    public void periodic() {
+       Logger.recordOutput("MotorOutputs/MOTOR_" + m_canId + "_Output", motor.get());
     }
 }
