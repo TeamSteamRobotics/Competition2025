@@ -15,6 +15,8 @@ package frc.robot;
 
 import com.ctre.phoenix6.swerve.SwerveModule;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -138,6 +140,14 @@ public class RobotContainer {
         "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    // Pathplanner command registering
+    NamedCommands.registerCommand("IntakeDeploy", new Pivots(intake, Constants.IntakeMotors.pivotFinalPosition));
+    NamedCommands.registerCommand("IntakeRetract", new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));
+    NamedCommands.registerCommand("RollerIn", new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed));
+    NamedCommands.registerCommand("IntakeOut", new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
+
+    NamedCommands.registerCommand("ShooterDefault", new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
+    NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -189,9 +199,10 @@ public class RobotContainer {
     //RetreatButton
     controller.rightBumper().toggleOnTrue(new Pivots(intake, Constants.IntakeMotors.pivotFinalPosition));
     //IntakeButton
-    controller.leftTrigger().whileTrue(new Roll(intake, SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));     
+    controller.leftTrigger().whileTrue(new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed)); // smartdashboard has brought nothing but pain to this codebase     
     //VomitButton
-    controller.rightTrigger().whileTrue(new Roll(intake, -SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));
+    //controller.rightTrigger().whileTrue(new Roll(intake, -SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));
+    controller.rightTrigger().whileTrue(new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
 
      //Starts motor at default speed(from constants)/Stops motors
     controller.a().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
