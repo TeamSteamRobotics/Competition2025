@@ -76,7 +76,7 @@ public class ShooterSubsystem extends SubsystemBase {
     //greenShooterMotor.set(pidGreenOutput);
     //frontShooterMotor.set(pidOutputFront);
     //backShooterMotor.set(pidOutputBack);
-    greenShooterMotor.set(-m_targetSpeed);
+
     frontShooterMotor.set(-m_targetSpeed);
     backShooterMotor.set(m_targetSpeed);
 
@@ -84,7 +84,10 @@ public class ShooterSubsystem extends SubsystemBase {
     return (topShooterPid.atSetpoint() && bottomShooterPid.atSetpoint());
     
   }
-
+  public void setGreenMotorSpeed(double targetSpeed) {
+    m_targetSpeed = targetSpeed;
+    greenShooterMotor.set(-m_targetSpeed);
+  }
   
   /**
    * Stops the motors completely. This is used when the shooter is no longer needed.
