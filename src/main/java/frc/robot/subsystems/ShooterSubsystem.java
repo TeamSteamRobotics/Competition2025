@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.Motors.GenericMotor;
@@ -46,11 +47,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public boolean overrideDefault;
 
+  DigitalInput beamBreak;
+
   /**
    * Constructor: Sets up the shooter subsystem.
    * This includes initializing the encoders and configuring the PID controllers with a tolerance.
    */
   public ShooterSubsystem() {
+    beamBreak = new DigitalInput(4);
     overrideDefault = false;
     // Configure the PID controllers to stop adjusting when close enough to the target.
     topShooterPid.setTolerance(ShooterPid.tolerance);
@@ -85,6 +89,9 @@ public class ShooterSubsystem extends SubsystemBase {
     
   }
 
+  public void RunGreenRoller(double speed){
+    greenShooterMotor.set(-speed);
+  }
   
   /**
    * Stops the motors completely. This is used when the shooter is no longer needed.
@@ -93,6 +100,10 @@ public class ShooterSubsystem extends SubsystemBase {
     frontShooterMotor.set(0); // Stop the top motor.
     backShooterMotor.set(0); // Stop the bottom motor.
     greenShooterMotor.set(0); // Stop the green motor.
+  }
+
+  public boolean beamBroken(){
+    return !beamBreak.get();
   }
 
   /*public double[] getVelocities(){
@@ -116,6 +127,7 @@ public class ShooterSubsystem extends SubsystemBase {
     Logger.recordOutput("Shooter/FrontMotorSpeed", frontShooterMotor.getVelocity());
     Logger.recordOutput("Shooter/BackMotorSpeed", backShooterMotor.getVelocity());
 
+    Logger.recordOutput("Shooter/Beambreak", beamBroken());
  
     // This method will be called once per scheduler run
   }

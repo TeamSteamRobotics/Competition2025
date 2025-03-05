@@ -41,6 +41,7 @@ import frc.robot.commands.Intake.Pivots;
 import frc.robot.commands.Intake.Roll;
 import frc.robot.commands.Intake.Tests.PivotTest;
 import frc.robot.commands.Shooter.PrimeShooter;
+import frc.robot.commands.Shooter.RollGreen;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -180,19 +181,19 @@ public class RobotContainer {
     //             () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
-    controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    //controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     //controller.y().toggleOnTrue(new RaiseClimb(climb));
     //controller.y().onFalse(new RetractClimb(climb)); //wtf
     // Reset gyro to 0° when B button is pressed
-    controller
-        .b()
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-                    drive)
-                .ignoringDisable(true));
+    // //controller
+    //     .b()
+    //     .onTrue(
+    //         Commands.runOnce(
+    //                 () ->
+    //                     drive.setPose(
+    //                         new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
+    //                 drive)
+    //             .ignoringDisable(true));
 
     //DeployButton
     controller.leftBumper().toggleOnTrue(new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));  
@@ -206,6 +207,7 @@ public class RobotContainer {
 
      //Starts motor at default speed(from constants)/Stops motors
     controller.a().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
+    controller.x().toggleOnTrue(new RollGreen(shooter, 0.2));
     // //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
  
     // operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));

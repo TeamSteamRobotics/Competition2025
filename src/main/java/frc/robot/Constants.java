@@ -81,22 +81,22 @@ public final class Constants {
       public static final double maxMarginOfError = pivotFinalPosition - pivotInitialPosition;
       
     public class PivotPid{
-      public static final double maxPower = 0.5;
+      public static final double maxPower = 0.25;
       public static final double tolerance = 0.05;
       public static final double kP = maxPower / maxMarginOfError;
       public static final double kI = 0.0;
-      public static final double kD= 0.0;
+      public static final double kD= 0.5;
     }
     public static final int rollerId = 18;
-    public static final double defaultRollerSpeed = 0.45;
+    public static final double defaultRollerSpeed = 0.2;
   }
 
   public class Shooter{ 
     public static final int greenRollerId = 19;
     public static final int frontRollerId = 20;
     public static final int backRollerId = 21;
-    public static final double defaultSpeed = 0.35;
-    public static final double speedIncrement = 0.1;
+    public static final double defaultSpeed = 0.4;
+    public static final double speedIncrement = 0.0;
 
     public class ShooterPid{
       public static final double kP = 0.08;

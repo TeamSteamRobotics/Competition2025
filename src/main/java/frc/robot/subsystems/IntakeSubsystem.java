@@ -20,6 +20,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeMotors.PivotPid;
@@ -47,7 +48,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
   double m_lastSpeed;
   
+
+
   public IntakeSubsystem() {
+
     rollerMotor = new TalonFXMotor(Constants.IntakeMotors.rollerId, "rio");
     pivotMotor = new SparkMaxMotor(Constants.IntakeMotors.pivotId, Constants.IntakeMotors.PivotPid.kP, Constants.IntakeMotors.PivotPid.kI, Constants.IntakeMotors.PivotPid.kD, -Constants.IntakeMotors.PivotPid.maxPower, Constants.IntakeMotors.PivotPid.kP);
 
@@ -104,6 +108,7 @@ public class IntakeSubsystem extends SubsystemBase {
     // Return whether the PID controller has reached the setpoint
     return false;
   }
+
 
   public void pivot(double pivotSpeed){
     m_lastSpeed = pivotSpeed;
