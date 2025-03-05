@@ -34,15 +34,15 @@ public final class Constants {
     /** Replaying from a log file. */
     REPLAY
   }
-  public static class KickerConsts {
-    public static int KrakenID = 9; // placeholder values for all
-    public static int TopNeoID = 10;
-    public static int MidNeoID = 11;
-    public static double KickerRaiseSpeed = 0.5; // placeholder
-    public static double KickerWheelSpinSpeed = 0.5;
-    public static double KickerRotateSpeed = 0.5;
+  public static class AgitatorConsts {
+    public static int KrakenID = 9;
+    public static int WheelNeoID = 10;
+    public static int ElevatorNeoID = 11;
+    public static double AgitatorRaiseSpeed = 0.2; // placeholder speeds
+    public static double AgitatorWheelSpinSpeed = 0.2;
+    public static double AgitatorRotateSpeed = 0.2;
     
     // for commands
-    public static double KickerMaxHeight = 1; //TODO: Set atual value
+    public static double AgitatorMaxHeight = 1; //TODO: Set atual value; Need agitator for this
   }
 }

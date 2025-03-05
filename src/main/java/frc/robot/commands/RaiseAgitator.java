@@ -5,19 +5,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.KickerConsts;
-import frc.robot.subsystems.AlgaeKicker;
+import frc.robot.Constants.AgitatorConsts;
+import frc.robot.subsystems.AgitatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class KickAlgae extends Command {
-  AlgaeKicker m_kicker;
+public class RaiseAgitator extends Command {
+  private AgitatorSubsystem agitator;
   boolean atMaxHeight;
   /** Creates a new KickAlgae. */
-  public KickAlgae(AlgaeKicker kicker) {
+  public RaiseAgitator(AgitatorSubsystem m_agitator) {
     atMaxHeight = false;
     // Use addRequirements() here to declare subsystem dependencies.
-    m_kicker = kicker;
-    addRequirements(m_kicker);
+    m_agitator = agitator;
+    addRequirements(agitator);
   }
 
   // Called when the command is initially scheduled.
@@ -29,12 +29,12 @@ public class KickAlgae extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_kicker.getKickerHeight() >= KickerConsts.KickerMaxHeight){
-      m_kicker.runKickerRaiseMotor(0);
+    if(agitator.getAgitatorHeight() >= AgitatorConsts.AgitatorMaxHeight){
+      agitator.runAgitatorRaiseMotor(0);
       atMaxHeight = true;
       return;
     }
-    m_kicker.raiseKicker();
+    agitator.raiseAgitator();
   }
 
   // Called once the command ends or is interrupted.
