@@ -33,7 +33,7 @@ public class PrimeShooter extends Command {
     this.distanceSupplier = distanceSupplier;
     hasDistanceSupplier = true; // Enable distance-based speed calculation.
 
-  
+    
 
     // Declare that this command requires the shooter subsystem.
     addRequirements(shooter);
@@ -47,7 +47,7 @@ public class PrimeShooter extends Command {
   public PrimeShooter(ShooterSubsystem shooter, double speed) {
     m_Shooter = shooter;
     //sets speed based on smartdashboard value
-    inputSpeed = speed;
+    inputSpeed = SmartDashboard.getNumber("Shooter Speed", 0.45);
   //  inputSpeed = m_Shooter.overrideDefault ? m_Shooter.getTargetSpeed() : speed;
     
     hasDistanceSupplier = false; // Use the fixed speed instead of calculating from distance.

@@ -59,6 +59,8 @@ public class ShooterSubsystem extends SubsystemBase {
     // Configure the PID controllers to stop adjusting when close enough to the target.
     topShooterPid.setTolerance(ShooterPid.tolerance);
     bottomShooterPid.setTolerance(ShooterPid.tolerance);
+
+    SmartDashboard.putNumber("Shooter Speed", 0.45);
   }
 
   /**
@@ -80,9 +82,9 @@ public class ShooterSubsystem extends SubsystemBase {
     //greenShooterMotor.set(pidGreenOutput);
     //frontShooterMotor.set(pidOutputFront);
     //backShooterMotor.set(pidOutputBack);
-    greenShooterMotor.set(-m_targetSpeed);
+    //greenShooterMotor.set(-m_targetSpeed);
     frontShooterMotor.set(-m_targetSpeed);
-    backShooterMotor.set(m_targetSpeed);
+    backShooterMotor.set(-m_targetSpeed);
 
     // Check if both motors have reached the desired speed.
     return (topShooterPid.atSetpoint() && bottomShooterPid.atSetpoint());

@@ -95,7 +95,7 @@ public final class Constants {
     public static final int greenRollerId = 19;
     public static final int frontRollerId = 20;
     public static final int backRollerId = 21;
-    public static final double defaultSpeed = 0.4;
+    public static final double defaultSpeed = 0.45;
     public static final double speedIncrement = 0.0;
 
     public class ShooterPid{
