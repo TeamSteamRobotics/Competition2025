@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {}
-
+  LEDPattern Test;
   @Override
   public void teleopInit() {
     // This makes sure that the autonomous stops running when
@@ -83,30 +83,42 @@ public class Robot extends TimedRobot {
 
     // PWM port 9
     // Must be a PWM header, not MXP or DIO
-    m_led = new AddressableLED(0);
+    m_led = new AddressableLED(7);
+    //m_led.setBitTiming(300, 700, 700, 300);
+    //m_led.setSyncTime(0);
 
     // Reuse buffer
     // Default to a length of 60, start empty output
     // Length is expensive to set, so only set it once, then just update data
-    m_ledBuffer = new AddressableLEDBuffer(300);
+    m_ledBuffer = new AddressableLEDBuffer(100);
+    for(int i = 0; i < 100; i++){
+      m_ledBuffer.setRGB(i, 0, 0, 255);
+    }
     m_led.setLength(m_ledBuffer.getLength());
 
+    
     // Set the data
     m_led.setData(m_ledBuffer);
     m_led.start();
-    LEDPattern firstBlue = LEDPattern.solid(new Color("#FFFFFF"));
+    //Test = LEDPattern.solid(new Color("#0000FF"));
 
 // Apply the LED pattern to the data buffer
-    firstBlue.applyTo(m_ledBuffer);
-    System.out.println(firstBlue.toString());
+    //Test.applyTo(m_ledBuffer);
+    //System.out.println(firstBlue.toString());
 
 // Write the data to the LED strip
-    m_led.setData(m_ledBuffer);
+    //m_led.setData(m_ledBuffer);
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    //Test.applyTo(m_ledBuffer);
+    //System.out.println(firstBlue.toString());
+
+// Write the data to the LED strip
+    //m_led.setData(m_ledBuffer);
+   
    
         // PWM port 9
     // Must be a PWM header, not MXP or DIO
