@@ -101,7 +101,7 @@ public class Robot extends LoggedRobot {
     // SmartDashboard.putNumber("greenShooterSpeed", 0);
     // SmartDashboard.putNumber("frontShooterSpeed", 0);
     // SmartDashboard.putNumber("backShooterSpeed", 0);
-    // SmartDashboard.putNumber("shooterSpeed", Constants.Shooter.defaultSpeed);
+    SmartDashboard.putNumber("shooterSpeed", Constants.Shooter.defaultSpeed);
 
     // SmartDashboard.putNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed);
 
