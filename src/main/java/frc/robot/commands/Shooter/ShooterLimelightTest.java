@@ -31,7 +31,7 @@ public class ShooterLimelightTest extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    double distance = m_vis.getFiducialDistanceToCamera()[4];
+    double distance = m_vis.getFiducialDistanceToCamera()[4]; // curse you zero-indexing in this one particular case
     SmartDashboard.putNumber("Distance", (distance != 0) ? distance : -1d ); // should fetch the distance to Apriltag 5 if it is seen, and give -1 otherwise
   }
 
