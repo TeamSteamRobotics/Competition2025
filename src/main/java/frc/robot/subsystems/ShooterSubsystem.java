@@ -5,6 +5,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.TreeMap;
+
 import org.littletonrobotics.junction.Logger;
 
 import com.revrobotics.AbsoluteEncoder;
@@ -23,7 +25,7 @@ import frc.robot.subsystems.Motors.SparkFlexMotor;
 import frc.robot.Constants;
 import frc.robot.Constants.Shooter;
 import frc.robot.Constants.Shooter.ShooterPid;
-
+import java.util.Map.Entry;
 /**
  * ShooterSubsystem manages the motors and control logic for the robot's shooter.
  * It includes PID (Proportional-Integral-Derivative) controllers to maintain precise motor speeds.
@@ -43,6 +45,8 @@ public class ShooterSubsystem extends SubsystemBase {
   PIDController bottomShooterPid = new PIDController(ShooterPid.kP, ShooterPid.kI, ShooterPid.kD);
   PIDController greenShooterPid = new PIDController(ShooterPid.kP, ShooterPid.kI, ShooterPid.kD);
 
+  TreeMap<Double, Double> speedLookupTable = new TreeMap<Double, Double>();
+
   double m_targetSpeed;
 
   public boolean overrideDefault;
@@ -59,8 +63,19 @@ public class ShooterSubsystem extends SubsystemBase {
     // Configure the PID controllers to stop adjusting when close enough to the target.
     topShooterPid.setTolerance(ShooterPid.tolerance);
     bottomShooterPid.setTolerance(ShooterPid.tolerance);
+    speedLookupTable.put(0.3048, 0.22);
+    speedLookupTable.put(0.381, 0.28);
+    speedLookupTable.put(0.508, 0.33);
+    speedLookupTable.put(0.635, 0.37);
+    speedLookupTable.put(0.762, 0.4);
+    speedLookupTable.put(0.847725, 0.45);
+    speedLookupTable.put(0.889, 0.45);
+    speedLookupTable.put(1.016, 0.47);
+    speedLookupTable.put(1.143, 0.48);
+    speedLookupTable.put(1.27, 0.5);
+    speedLookupTable.put(1.524, 0.6);
+    speedLookupTable.put(1.778, 0.77);
 
-    SmartDashboard.putNumber("Shooter Speed", 0.45);
   }
 
   /**
@@ -82,9 +97,9 @@ public class ShooterSubsystem extends SubsystemBase {
     //greenShooterMotor.set(pidGreenOutput);
     //frontShooterMotor.set(pidOutputFront);
     //backShooterMotor.set(pidOutputBack);
-    //greenShooterMotor.set(-m_targetSpeed);
+    greenShooterMotor.set(-m_targetSpeed);
     frontShooterMotor.set(-m_targetSpeed);
-    backShooterMotor.set(-m_targetSpeed);
+    backShooterMotor.set(m_targetSpeed);
 
     // Check if both motors have reached the desired speed.
     return (topShooterPid.atSetpoint() && bottomShooterPid.atSetpoint());
@@ -132,5 +147,19 @@ public class ShooterSubsystem extends SubsystemBase {
     Logger.recordOutput("Shooter/Beambreak", beamBroken());
  
     // This method will be called once per scheduler run
+  }
+  public double lookupShootSpeed(double dist){
+    if(dist < 0.3048 || dist > 1.778){
+      System.out.println("Distance exceeds bounds. Returning default speed");
+      return Constants.Shooter.defaultSpeed;
+    }
+    Entry<Double, Double> lower = speedLookupTable.floorEntry(dist); // just copy-pasted from Zach's code
+    Entry<Double, Double> upper = speedLookupTable.ceilingEntry(dist);
+    if(lower == null)
+      return upper.getValue();
+    if(upper == null)
+      return lower.getValue();
+    double slope = (upper.getValue() - lower.getValue()) / (upper.getKey() - lower.getKey());
+    return (slope * (dist - lower.getKey()) + lower.getValue());
   }
 }
