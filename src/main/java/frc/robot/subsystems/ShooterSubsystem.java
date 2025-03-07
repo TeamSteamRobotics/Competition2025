@@ -151,6 +151,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public double lookupShootSpeed(double dist){
     if(dist < 0.3048 || dist > 1.778){
       System.out.println("Distance exceeds bounds. Returning default speed");
+      System.out.println(dist);
       return Constants.Shooter.defaultSpeed;
     }
     Entry<Double, Double> lower = speedLookupTable.floorEntry(dist); // just copy-pasted from Zach's code
