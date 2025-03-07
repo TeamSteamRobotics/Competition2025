@@ -211,12 +211,12 @@ public class RobotContainer {
     //controller.rightTrigger().whileTrue(new Roll(intake, -SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));
     //controller.rightTrigger().whileTrue(new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
 
-    controller.a().whileTrue(new ParallelCommandGroup(new RollGreen(shooter, -0.2, false), new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed)));
+    controller.a().whileTrue(new ParallelCommandGroup(new RollGreen(shooter, -0.2, true), new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed)));
      //Starts motor at default speed(from constants)/Stops motors
     controller.leftTrigger().whileTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
     controller.rightTrigger().whileTrue(new RollGreen(shooter, 0.2, true));
     controller.y().toggleOnTrue(new ParallelRaceGroup(new RollGreen(shooter, 0.2, false), new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed)));
-    // //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
+    //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
     controller.b().toggleOnTrue(new ShooterLimelightTest(shooter, SmartDashboard.getNumber("shooterSpeed", Constants.Shooter.defaultSpeed), vision));
  
     // operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
