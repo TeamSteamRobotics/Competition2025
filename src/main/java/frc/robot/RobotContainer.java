@@ -217,7 +217,7 @@ public class RobotContainer {
     controller.rightTrigger().whileTrue(new RollGreen(shooter, 0.2, true));
     controller.y().toggleOnTrue(new ParallelRaceGroup(new RollGreen(shooter, 0.2, false), new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed)));
     //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
-    controller.b().toggleOnTrue(new ShooterLimelightTest(shooter, SmartDashboard.getNumber("shooterSpeed", Constants.Shooter.defaultSpeed), vision));
+    controller.b().toggleOnTrue(new PrimeShooter(shooter, () -> shooter.lookupShootSpeed(vision.getGivenFiducialDistance(3))));
  
     // operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
     // operator.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
