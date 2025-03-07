@@ -98,6 +98,7 @@ public class Robot extends LoggedRobot {
     SmartDashboard.putNumber("test_mult", 0);
     SmartDashboard.putNumber("test-div", 0);
     SmartDashboard.putNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed);
+    SmartDashboard.putNumber("Climb Speed", 0);
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.

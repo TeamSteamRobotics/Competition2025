@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
-import frc.robot.commands.DriveCommands;
+//import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
 import frc.robot.commands.Climb.RaiseClimb;
 import frc.robot.commands.Climb.RetractClimb;
@@ -42,12 +42,12 @@ import frc.robot.commands.Shooter.PrimeShooter;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.drive.Drive;
+//import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
-import frc.robot.subsystems.drive.GyroIOPigeon2;
+//import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
-import frc.robot.subsystems.drive.ModuleIOTalonFX;
+//import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -58,7 +58,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  */
 public class RobotContainer {
   // Subsystems
-  private final Drive drive;
+  //private final Drive drive;
   private final IntakeSubsystem intake;
   private final ShooterSubsystem shooter;
   // Controller
@@ -81,62 +81,62 @@ public class RobotContainer {
 
     intake = new IntakeSubsystem();
     shooter = new ShooterSubsystem();
-    switch (Constants.currentMode) {
+    // switch (Constants.currentMode) {
        
-      case REAL:
-        // Real robot, instantiate hardware IO implementations
-        drive =
-        //TODO: Change 'TunerConstants' to 'Constants' (After we update the values on the motors as needed)
-            new Drive(
-                new GyroIOPigeon2(),
-                new ModuleIOTalonFX(TunerConstants.FrontLeft),
-                new ModuleIOTalonFX(TunerConstants.FrontRight),
-                new ModuleIOTalonFX(TunerConstants.BackLeft),
-                new ModuleIOTalonFX(TunerConstants.BackRight));
-        break;
+    //   case REAL:
+    //     // Real robot, instantiate hardware IO implementations
+    //     drive =
+    //     //TODO: Change 'TunerConstants' to 'Constants' (After we update the values on the motors as needed)
+    //         new Drive(
+    //             new GyroIOPigeon2(),
+    //             new ModuleIOTalonFX(TunerConstants.FrontLeft),
+    //             new ModuleIOTalonFX(TunerConstants.FrontRight),
+    //             new ModuleIOTalonFX(TunerConstants.BackLeft),
+    //             new ModuleIOTalonFX(TunerConstants.BackRight));
+    //     break;
 
-      case SIM:
-        // Sim robot, instantiate physics sim IO implementations
-        drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIOSim(TunerConstants.FrontLeft),
-                new ModuleIOSim(TunerConstants.FrontRight),
-                new ModuleIOSim(TunerConstants.BackLeft),
-                new ModuleIOSim(TunerConstants.BackRight));
-        break;
+    //   case SIM:
+    //     // Sim robot, instantiate physics sim IO implementations
+    //     drive =
+    //         new Drive(
+    //             new GyroIO() {},
+    //             new ModuleIOSim(TunerConstants.FrontLeft),
+    //             new ModuleIOSim(TunerConstants.FrontRight),
+    //             new ModuleIOSim(TunerConstants.BackLeft),
+    //             new ModuleIOSim(TunerConstants.BackRight));
+    //     break;
 
-      default:
-        // Replayed robot, disable IO implementations
-        drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {});
-        break;
-    }
+    //   default:
+    //     // Replayed robot, disable IO implementations
+    //     drive =
+    //         new Drive(
+    //             new GyroIO() {},
+    //             new ModuleIO() {},
+    //             new ModuleIO() {},
+    //             new ModuleIO() {},
+    //             new ModuleIO() {});
+    //     break;
+    // }
 
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     autoChooser.addOption("Pathfind Test", PathFind.toPose(new Pose2d(1.5, 6, new Rotation2d(0))));
     // Set up SysId routines
-    autoChooser.addOption(
-        "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
-    autoChooser.addOption(
-        "Drive Simple FF Characterization", DriveCommands.feedforwardCharacterization(drive));
-    autoChooser.addOption(
-        "Drive SysId (Quasistatic Forward)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Drive SysId (Quasistatic Reverse)",
-        drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-    autoChooser.addOption(
-        "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    // autoChooser.addOption(
+    //     "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
+    // autoChooser.addOption(
+    //     "Drive Simple FF Characterization", DriveCommands.feedforwardCharacterization(drive));
+    // autoChooser.addOption(
+    //     "Drive SysId (Quasistatic Forward)",
+    //     drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+    // autoChooser.addOption(
+    //     "Drive SysId (Quasistatic Reverse)",
+    //     drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+    // autoChooser.addOption(
+    //     "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+    // autoChooser.addOption(
+    //     "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -150,41 +150,41 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Default command, normal field-relative drive
-    drive.setDefaultCommand(
-        DriveCommands.joystickDrive(
-            drive,
-            () -> -controller.getLeftY(),
-            () -> -controller.getLeftX(),
-            () -> -controller.getRightX()));
+    // drive.setDefaultCommand(
+    //     DriveCommands.joystickDrive(
+    //         drive,
+    //         () -> -controller.getLeftY(),
+    //         () -> -controller.getLeftX(),
+    //         () -> -controller.getRightX()));
     //TODO: Bind to button
     //intake.setDefaultCommand(new Roll(intake, Roller.defaultSpeed));
     // Lock to 0° when A button is held
-    controller
-        .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -controller.getLeftY(),
-                () -> -controller.getLeftX(),
-                () -> new Rotation2d()));
+    //controller
+        // .a()
+        // .whileTrue(
+        //     DriveCommands.joystickDriveAtAngle(
+        //         drive,
+        //         () -> -controller.getLeftY(),
+        //         () -> -controller.getLeftX(),
+        //         () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
-    controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    //controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
     controller.rightBumper().onTrue(new RaiseClimb(climb));
-    controller.leftBumper().onTrue(new RetractClimb(climb)); //wtf
+    controller.leftBumper().whileTrue(new RetractClimb(climb)); 
     // Reset gyro to 0° when B button is pressed
-    controller
-        .b()
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-                    drive)
-                .ignoringDisable(true));
+    // controller
+    //     .b()
+    //     .onTrue(
+    //         Commands.runOnce(
+    //                 () ->
+    //                     drive.setPose(
+    //                         new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
+    //                 drive)
+    //             .ignoringDisable(true));
 
     //DeployButton
-    controller.leftBumper().onTrue(new Pivots(intake, Constants.IntakeMotors.pivotFinalPosition));  
+    //controller.leftBumper().onTrue(new Pivots(intake, Constants.IntakeMotors.pivotFinalPosition));  
     //RetreatButton
     controller.rightBumper().onTrue(new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));
     //IntakeButton
