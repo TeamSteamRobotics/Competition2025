@@ -62,5 +62,19 @@ public class VisionSubsystem extends SubsystemBase {
     
     return orderedDistances;
   }
+  public double getGivenFiducialDistance(int id){
+    if(id < 0 || id > 21){
+      return -1; //Out of Bounds
+    }
+    if(AprilTags[id] == null){
+      return -1; //Apriltag not seen
+    }
+    double rawDistance = getFiducialDistanceToCamera()[id];
+    double hOffset = AprilTags[id].processedAprilTag.tx;
+    double vOffset = AprilTags[id].processedAprilTag.ty; // angle offsets
+    double horizontalAdjustedDistance = rawDistance * Math.cos(Math.toRadians(hOffset));
+    double finalApproxDist = horizontalAdjustedDistance * Math.cos(Math.toRadians(vOffset));
+    return finalApproxDist; // TODO: [pray]
+  }
   //SmartDashboard.putNumber("Limelight Distance", orderedDistances);
 }
