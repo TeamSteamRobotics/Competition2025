@@ -30,10 +30,8 @@ public class VisionSubsystem extends SubsystemBase {
   public void periodic() {
     try{
       LimelightHelpers.LimelightTarget_Fiducial[] temp = LimelightHelpers.getLatestResults("").targets_Fiducials;
-    } catch (Exception e) { // god help me
-      return;
-    }
-    LimelightHelpers.LimelightTarget_Fiducial[] temp = LimelightHelpers.getLatestResults("").targets_Fiducials;
+   
+    //LimelightHelpers.LimelightTarget_Fiducial[] temp = LimelightHelpers.getLatestResults("").targets_Fiducials;
     for(int i = 0; i < 22; i++){
       AprilTags[i] = null; // You make me very unhappy. Please stop it. What could go wrong?
     }
@@ -48,6 +46,11 @@ public class VisionSubsystem extends SubsystemBase {
       // Wrong place specifically being 1 slot before it should be
       // If Java C-style typecasting works like C typecasting, it's weird.
       AprilTags[(int) temp[i].fiducialID - 1].rawAprilTag = LimelightHelpers.getRawFiducials("")[i];
+    }
+    } catch (Exception e) { // god help me
+      System.out.println("Is this us?");
+      System.out.println(e);
+      return;
     }
     // This method will be called once per scheduler run
   }
