@@ -12,23 +12,18 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class RollGreen extends Command {
   ShooterSubsystem m_shooter;
   double m_speed;
-  boolean m_ignoreBeambreak;
-
   /** Creates a new RollGreen. */
-  public RollGreen(ShooterSubsystem shooter, double speed, boolean ignoreBeambreak) {
+  public RollGreen(ShooterSubsystem shooter, double speed) {
     
     m_shooter = shooter;
     m_speed = speed;
-    m_ignoreBeambreak = ignoreBeambreak;
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -45,10 +40,6 @@ public class RollGreen extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_ignoreBeambreak){
-      return false;
-    }else{
-      return m_shooter.beamBroken();
-    }
+    return m_shooter.beamBroken();
   }
 }

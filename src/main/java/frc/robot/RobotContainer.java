@@ -25,8 +25,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -150,8 +148,8 @@ public class RobotContainer {
     // Pathplanner command registering
     NamedCommands.registerCommand("IntakeDeploy", new Pivots(intake, Constants.IntakeMotors.pivotFinalPosition));
     NamedCommands.registerCommand("IntakeRetract", new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));
-    //TODO: NamedCommands.registerCommand("RollerIn", new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed));
-    //TODO: NamedCommands.registerCommand("IntakeOut", new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
+    NamedCommands.registerCommand("RollerIn", new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed));
+    NamedCommands.registerCommand("IntakeOut", new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
 
     NamedCommands.registerCommand("ShooterDefault", new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
     NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
@@ -206,16 +204,14 @@ public class RobotContainer {
     //RetreatButton
     controller.rightBumper().toggleOnTrue(new Pivots(intake, Constants.IntakeMotors.pivotFinalPosition));
     //IntakeButton
-    //controller.leftTrigger().whileTrue(new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed)); // smartdashboard has brought nothing but pain to this codebase     
+    controller.leftTrigger().whileTrue(new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed)); // smartdashboard has brought nothing but pain to this codebase     
     //VomitButton
     //controller.rightTrigger().whileTrue(new Roll(intake, -SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));
-    //controller.rightTrigger().whileTrue(new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
+    controller.rightTrigger().whileTrue(new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
 
-    controller.a().whileTrue(new ParallelCommandGroup(new RollGreen(shooter, -0.2, false), new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed)));
      //Starts motor at default speed(from constants)/Stops motors
-    controller.leftTrigger().whileTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
-    controller.rightTrigger().whileTrue(new RollGreen(shooter, 0.2, true));
-    controller.y().toggleOnTrue(new ParallelRaceGroup(new RollGreen(shooter, 0.2, false), new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed)));
+    controller.a().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
+    controller.x().toggleOnTrue(new RollGreen(shooter, 0.2));
     // //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
     controller.b().toggleOnTrue(new ShooterLimelightTest(shooter, SmartDashboard.getNumber("shooterSpeed", Constants.Shooter.defaultSpeed), vision));
  
