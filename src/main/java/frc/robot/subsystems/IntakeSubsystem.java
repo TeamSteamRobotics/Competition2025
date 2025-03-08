@@ -53,7 +53,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {
 
     rollerMotor = new TalonFXMotor(Constants.IntakeMotors.rollerId, "rio");
-    pivotMotor = new SparkMaxMotor(Constants.IntakeMotors.pivotId, Constants.IntakeMotors.PivotPid.kP, Constants.IntakeMotors.PivotPid.kI, Constants.IntakeMotors.PivotPid.kD, -Constants.IntakeMotors.PivotPid.maxPower, Constants.IntakeMotors.PivotPid.kP);
+    pivotMotor = new SparkMaxMotor(Constants.IntakeMotors.pivotId, Constants.IntakeMotors.PivotPid.kP, Constants.IntakeMotors.PivotPid.kI, Constants.IntakeMotors.PivotPid.kD, -Constants.IntakeMotors.PivotPid.maxPower, Constants.IntakeMotors.PivotPid.maxPower);
 
     pivotMotor.overridePosition(0);
     

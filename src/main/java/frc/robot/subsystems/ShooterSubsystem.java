@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 import frc.robot.subsystems.Motors.GenericMotor;
 import frc.robot.subsystems.Motors.TalonFXMotor;
 import frc.robot.subsystems.Motors.SparkFlexMotor;
@@ -53,11 +54,14 @@ public class ShooterSubsystem extends SubsystemBase {
   DigitalInput beamBreak;
   TreeMap<Double, Double> speedLookupTable = new TreeMap<Double, Double>();
 
+  AprilVisionSubsystem vision;
+
   /**
    * Constructor: Sets up the shooter subsystem.
    * This includes initializing the encoders and configuring the PID controllers with a tolerance.
    */
   public ShooterSubsystem() {
+    vision = new AprilVisionSubsystem();
     beamBreak = new DigitalInput(4);
     overrideDefault = false;
     // Configure the PID controllers to stop adjusting when close enough to the target.
@@ -145,13 +149,15 @@ public class ShooterSubsystem extends SubsystemBase {
     Logger.recordOutput("Shooter/BackMotorSpeed", backShooterMotor.getVelocity());
 
     Logger.recordOutput("Shooter/Beambreak", beamBroken());
+
+    Logger.recordOutput("AprilTag4 Distance", vision.getCoordinates(4, ReturnTarget.TARGET).z);
  
     // This method will be called once per scheduler run
   }
   public double lookupShootSpeed(double dist){
     if(dist < 0.3048 || dist > 1.778){
-      System.out.println("Distance exceeds bounds. Returning default speed");
-      System.out.println(dist);
+      // System.out.println("Distance exceeds bounds. Returning default speed");
+      // System.out.println(dist);
       return Constants.Shooter.defaultSpeed;
     }
     Entry<Double, Double> lower = speedLookupTable.floorEntry(dist); // just copy-pasted from Zach's code

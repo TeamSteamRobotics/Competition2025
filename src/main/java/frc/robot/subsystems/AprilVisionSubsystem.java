@@ -40,14 +40,19 @@ public class AprilVisionSubsystem extends SubsystemBase {
        }
         return coordinate;
     }
+    /*public double straightDistance(int id){
+        double limeAngleOffset = Math.PI/6;
+        getCoordinates(id, ReturnTarget.TARGET);
+
+    }*/
 
     private void updateTargetCoordinates(int targetId) {
         String jsonString = tableEntry.getString("");
         limelightjson fetchedFiducial = gson.fromJson(jsonString, limelightjson.class);
         if(fetchedFiducial != null){
-        if (fetchedFiducial.Results.Fiducial.length != 0) {
-             for (int i = 0; i < fetchedFiducial.Results.Fiducial.length; i++) {
-                if(fetchedFiducial.Results.Fiducial[i].fID == targetId){
+        if (fetchedFiducial.Fiducial.length != 0) {
+             for (int i = 0; i < fetchedFiducial.Fiducial.length; i++) {
+                if(fetchedFiducial.Fiducial[i].fID == targetId){
                     fidLocation = i;
                     fidLocFound = true;
                     break;
@@ -59,12 +64,12 @@ public class AprilVisionSubsystem extends SubsystemBase {
                 SmartDashboard.putBoolean("Fiducial Found", false);
                 coordinate.aprilTagVisible = false;
             }else{
-                coordinate.x = fetchedFiducial.Results.Fiducial[fidLocation].t6t_rs[0];
-                coordinate.y = fetchedFiducial.Results.Fiducial[fidLocation].t6t_rs[1];
-                coordinate.z = fetchedFiducial.Results.Fiducial[fidLocation].t6t_rs[2];
-                coordinate.rx = fetchedFiducial.Results.Fiducial[fidLocation].t6t_rs[3];
-                coordinate.ry = fetchedFiducial.Results.Fiducial[fidLocation].t6t_rs[4];
-                coordinate.rz = fetchedFiducial.Results.Fiducial[fidLocation].t6t_rs[5];
+                coordinate.x = fetchedFiducial.Fiducial[fidLocation].t6t_rs[0];
+                coordinate.y = fetchedFiducial.Fiducial[fidLocation].t6t_rs[1];
+                coordinate.z = fetchedFiducial.Fiducial[fidLocation].t6t_rs[2];
+                coordinate.rx = fetchedFiducial.Fiducial[fidLocation].t6t_rs[3];
+                coordinate.ry = fetchedFiducial.Fiducial[fidLocation].t6t_rs[4];
+                coordinate.rz = fetchedFiducial.Fiducial[fidLocation].t6t_rs[5];
                 coordinate.aprilTagVisible = true;
                 SmartDashboard.putBoolean("Fiducial Found", true);
             } 
@@ -81,9 +86,9 @@ public class AprilVisionSubsystem extends SubsystemBase {
         String jsonString = tableEntry.getString("");
         limelightjson fetchedFiducial = gson.fromJson(jsonString, limelightjson.class);
         if(fetchedFiducial != null){
-        if (fetchedFiducial.Results.Fiducial.length != 0) {
-             for (int i = 0; i < fetchedFiducial.Results.Fiducial.length; i++) {
-                if(fetchedFiducial.Results.Fiducial[i].fID == targetId){
+        if (fetchedFiducial.Fiducial.length != 0) {
+             for (int i = 0; i < fetchedFiducial.Fiducial.length; i++) {
+                if(fetchedFiducial.Fiducial[i].fID == targetId){
                     fidLocation = i;
                     fidLocFound = true;
                     break;
@@ -94,12 +99,12 @@ public class AprilVisionSubsystem extends SubsystemBase {
                 SmartDashboard.putBoolean("Fiducial Found", false);
                 coordinate.aprilTagVisible = false;
             }else{
-                coordinate.x = fetchedFiducial.Results.Fiducial[fidLocation].t6r_ts[0];
-                coordinate.y = fetchedFiducial.Results.Fiducial[fidLocation].t6r_ts[1];
-                coordinate.z = fetchedFiducial.Results.Fiducial[fidLocation].t6r_ts[2];
-                coordinate.rx = fetchedFiducial.Results.Fiducial[fidLocation].t6r_ts[3];
-                coordinate.ry = fetchedFiducial.Results.Fiducial[fidLocation].t6r_ts[4];
-                coordinate.rz = fetchedFiducial.Results.Fiducial[fidLocation].t6r_ts[5];
+                coordinate.x = fetchedFiducial.Fiducial[fidLocation].t6r_ts[0];
+                coordinate.y = fetchedFiducial.Fiducial[fidLocation].t6r_ts[1];
+                coordinate.z = fetchedFiducial.Fiducial[fidLocation].t6r_ts[2];
+                coordinate.rx = fetchedFiducial.Fiducial[fidLocation].t6r_ts[3];
+                coordinate.ry = fetchedFiducial.Fiducial[fidLocation].t6r_ts[4];
+                coordinate.rz = fetchedFiducial.Fiducial[fidLocation].t6r_ts[5];
                 coordinate.aprilTagVisible = true;
                 SmartDashboard.putBoolean("Fiducial Found", true);
             } 
@@ -116,13 +121,13 @@ public class AprilVisionSubsystem extends SubsystemBase {
         String jsonString = tableEntry.getString("");
         limelightjson fetchedFiducial = gson.fromJson(jsonString, limelightjson.class);
         if(fetchedFiducial != null){
-        if (fetchedFiducial.Results.Fiducial.length != 0) {
-                coordinate.x = fetchedFiducial.Results.Fiducial[0].t6r_fs[0];
-                coordinate.y = fetchedFiducial.Results.Fiducial[0].t6r_fs[1];
-                coordinate.z = fetchedFiducial.Results.Fiducial[0].t6r_fs[2];
-                coordinate.rx = fetchedFiducial.Results.Fiducial[0].t6r_fs[3];
-                coordinate.ry = fetchedFiducial.Results.Fiducial[0].t6r_fs[4];
-                coordinate.rz = fetchedFiducial.Results.Fiducial[0].t6r_fs[5];
+        if (fetchedFiducial.Fiducial.length != 0) {
+                coordinate.x = fetchedFiducial.Fiducial[0].t6r_fs[0];
+                coordinate.y = fetchedFiducial.Fiducial[0].t6r_fs[1];
+                coordinate.z = fetchedFiducial.Fiducial[0].t6r_fs[2];
+                coordinate.rx = fetchedFiducial.Fiducial[0].t6r_fs[3];
+                coordinate.ry = fetchedFiducial.Fiducial[0].t6r_fs[4];
+                coordinate.rz = fetchedFiducial.Fiducial[0].t6r_fs[5];
                 coordinate.aprilTagVisible = true;
                 SmartDashboard.putBoolean("Fiducial Found", true);
         }else{
@@ -145,7 +150,8 @@ public class Coordinate {
 }
 
 class limelightjson{
-    public ResultJson Results;
+    //public ResultJson Results;
+    public FiducialJson[] Fiducial;
 }
 
 class ResultJson

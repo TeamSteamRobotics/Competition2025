@@ -11,6 +11,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -43,10 +44,38 @@ public class SparkMaxMotor extends SubsystemBase implements GenericMotor {
 
         sparkPid = motor.getClosedLoopController();
 
+        //SparkMaxConfig invert = new SparkBaseConfig().inverted(true);
+
         motor.configure(pidConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
         relativeEncoder = motor.getEncoder();
         absoluteEncoder = motor.getAbsoluteEncoder();
+        
+
+    
+    }
+    public SparkMaxMotor(int canID, double kP, double kI, double kD, double minPower, double maxPower, boolean inverted) {
+        motor = new SparkMax(canID, MotorType.kBrushless);
+        pidConfig = new SparkMaxConfig();
+        pidConfig.closedLoop
+            .p(kP)
+            .i(kI)
+            .d(kD)
+            .outputRange(minPower, maxPower);
+        
+        pidConfig.inverted(inverted);
+
+        sparkPid = motor.getClosedLoopController();
+
+
+
+        motor.configure(pidConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+
+        relativeEncoder = motor.getEncoder();
+        absoluteEncoder = motor.getAbsoluteEncoder();
+        
+
+    
     }
 
     @Override
