@@ -1,90 +1,87 @@
-package frc.robot.subsystems;
+// package frc.robot.subsystems;
+
+// import java.util.Map;
+// import java.util.TreeMap;
+
+// import edu.wpi.first.wpilibj2.command.SubsystemBase;
+// import frc.robot.LimelightHelpers;
+// import frc.robot.LimelightHelpers.RawFiducial;
+
+// public class VisionSubsystem extends SubsystemBase {
+
+//    public RawFiducial[] fiducials;
+//    TreeMap<Integer, processedAprilTag> AprilTags;
+
+//   class processedAprilTag{
+//     int id;
+//     double distToCamera;
+//     double distToRobot;
+//     double ambiguity;
+//     public processedAprilTag(int id, double dC, double dR, double ambig){
+//       this.id = id;
+//       distToCamera = dC;
+//       distToRobot = dR;
+//       ambiguity = ambig;
+//     }
+//   }
+//     // there is more then one data type and this is why we are packing them together here
+//     // It was exceedingly inconvenient to have to use both of them in different places
 
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.LimelightHelpers;
-import frc.robot.LimelightHelpers.RawFiducial;
-
-public class VisionSubsystem extends SubsystemBase {
-
-  public class FusedFiducialType {
-    public LimelightHelpers.LimelightTarget_Fiducial processedAprilTag;
-    public RawFiducial rawAprilTag;
-    public FusedFiducialType() {
-      processedAprilTag = null;
-      rawAprilTag = null;
-    }
-    // there is more then one data type and this is why we are packing them together here
-    // It was exceedingly inconvenient to have to use both of them in different places
-  } 
-  public FusedFiducialType[] AprilTags; // List of all apriltags on the field
-  // Seen ones are non-null, indexed by Apriltag ID - 1
+//   // List of all apriltags on the field
+//   // Seen ones are non-null, indexed by Apriltag ID - 1
   
-  public VisionSubsystem() {
-    AprilTags = new FusedFiducialType[22];
-    LimelightHelpers.setPipelineIndex("", 0); // 0 is 2D Fiducials, 1 is 3D fiducials
-  }
+//   public VisionSubsystem() {
+//     AprilTags = new TreeMap<Integer, processedAprilTag>();
+//     LimelightHelpers.setPipelineIndex("", 1); 
+    
+//     // 0 is 2D Fiducials, 1 is 3D fiducials
+//   }
 
 
-  @Override
-  public void periodic() {
-    try{
-      LimelightHelpers.LimelightTarget_Fiducial[] temp = LimelightHelpers.getLatestResults("").targets_Fiducials;
+//   @Override
+//   public void periodic() {
+//     fiducials = LimeLi
+
+//     for(int i = 0; i < fidi){
+//       AprilTags.put(fiducial.id, new processedAprilTag(fiducial.id, fiducial.distToCamera, fiducial.distToRobot, fiducial.ambiguity));
+//     }
+
+//     //try{
+//     //  LimelightHelpers.LimelightTarget_Fiducial[] temp = LimelightHelpers.getLatestResults("").targets_Fiducials;
    
-    //LimelightHelpers.LimelightTarget_Fiducial[] temp = LimelightHelpers.getLatestResults("").targets_Fiducials;
-    for(int i = 0; i < 22; i++){
-      AprilTags[i] = null; // You make me very unhappy. Please stop it. What could go wrong?
-    }
-    if(!LimelightHelpers.getTV("")){
-      return;
-    } // Early return to skip the below code if there is no valid target. Shouldn't be important, but may as well have it.
-    for(int i = 0; i < temp.length; i++)
-    {
-      
-      AprilTags[(int) temp[i].fiducialID - 1].processedAprilTag = temp[i]; // Reorders the temp array such that all Apriltags are in the array index correspondingly to their ID
-      // If Apriltag data is ending up in the wrong place, use Math.round before typecasting
-      // Wrong place specifically being 1 slot before it should be
-      // If Java C-style typecasting works like C typecasting, it's weird.
-      AprilTags[(int) temp[i].fiducialID - 1].rawAprilTag = LimelightHelpers.getRawFiducials("")[i];
-    }
-    } catch (Exception e) { // god help me
-      System.out.println("Is this us?");
-      System.out.println(e);
-      return;
-    }
-    // This method will be called once per scheduler run
-  }
+//     //LimelightHelpers.LimelightTarget_Fiducial[] temp = LimelightHelpers.getLatestResults("").targets_Fiducials;
+    
+//     // Early return to skip the below code if there is no valid target. Shouldn't be important, but may as well have it.
+    
+//     // This method will be called once per scheduler run
+//   }
   
-  public double[] getFiducialDistanceToCamera() 
-  {
-    // this is supposed to return the ordered distances to the Apriltags as an array
-    // indexed by AprilTag ID - 1
-    double[] orderedDistances = new double[22];
-    for(int i = 0; i < 22; i++)
-    {
-      if(AprilTags[i] == null){
-        continue; // Avoids errors for unseen apriltags
-      }
-      orderedDistances[i] = AprilTags[i].rawAprilTag.distToCamera;
-    }
+//   public double getFiducialDistanceToCamera(int id) 
+//   {
+//     if(!AprilTags.containsKey(id)){
+//       return -1;
+//     }
+//     return AprilTags.get(id).distToCamera;
+//   }
+//   public double getGivenFiducialDistance(int id){
+//     LimelightHelpers.getLatestResults("limelight").targets_Fiducials[]
     
-    return orderedDistances;
-  }
-  public double getGivenFiducialDistance(int id){
-    if(id < 0 || id > 21){
-      return -1; //Out of Bounds
-    }
+//   /*   if(id < 0 || id > 21){
+//       return -1; //Out of Bounds
+//     }
     
-    if(AprilTags[id] == null){
-      return -1; //Apriltag not seen
-    }
+//     if(AprilTags.get(id) == null){
+//       return -1; //Apriltag not seen
+//     }
     
-    double rawDistance = getFiducialDistanceToCamera()[id];
-    double hOffset = AprilTags[id].processedAprilTag.tx;
-    double vOffset = AprilTags[id].processedAprilTag.ty; // angle offsets
-    double horizontalAdjustedDistance = rawDistance * Math.cos(Math.toRadians(hOffset));
-    double finalApproxDist = horizontalAdjustedDistance * Math.cos(Math.toRadians(vOffset));
-    return finalApproxDist; // TODO: [pray]
-  }
-  //SmartDashboard.putNumber("Limelight Distance", orderedDistances);
-}
+//     double rawDistance = getFiducialDistanceToCamera(id);
+//     double hOffset = AprilTags.get(id);
+//     double vOffset = AprilTags[id].processedAprilTag.ty; // angle offsets
+//     double horizontalAdjustedDistance = rawDistance * Math.cos(Math.toRadians(hOffset));
+//     double finalApproxDist = horizontalAdjustedDistance * Math.cos(Math.toRadians(vOffset));
+//     return finalApproxDist; // TODO: [pray]
+//   }
+//   //SmartDashboard.putNumber("Limelight Distance", orderedDistances);*/
+// }
+// }

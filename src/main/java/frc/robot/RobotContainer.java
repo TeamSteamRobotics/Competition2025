@@ -44,11 +44,12 @@ import frc.robot.commands.Intake.Roll;
 import frc.robot.commands.Intake.Tests.PivotTest;
 import frc.robot.commands.Shooter.PrimeShooter;
 import frc.robot.commands.Shooter.RollGreen;
-import frc.robot.commands.Shooter.ShooterLimelightTest;
+//import frc.robot.commands.Shooter.ShooterLimelightTest;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
+import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -56,6 +57,7 @@ import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -68,7 +70,7 @@ public class RobotContainer {
   private final Drive drive;
   private final IntakeSubsystem intake;
   private final ShooterSubsystem shooter;
-  private final VisionSubsystem vision;
+  private final AprilVisionSubsystem vision;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
   //private final CommandXboxController operator = new CommandXboxController(1);
@@ -90,7 +92,7 @@ public class RobotContainer {
 
     intake = new IntakeSubsystem();
     shooter = new ShooterSubsystem();
-    vision = new VisionSubsystem();
+    vision = new AprilVisionSubsystem();
     switch (Constants.currentMode) {
        
       case REAL:
@@ -217,7 +219,7 @@ public class RobotContainer {
     controller.rightTrigger().whileTrue(new RollGreen(shooter, 0.2, true));
     controller.y().toggleOnTrue(new ParallelRaceGroup(new RollGreen(shooter, 0.2, false), new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed)));
     //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
-    controller.b().toggleOnTrue(new PrimeShooter(shooter, () -> shooter.lookupShootSpeed(vision.getGivenFiducialDistance(3)))); // dam zero-indexing
+    controller.b().toggleOnTrue(new PrimeShooter(shooter, () -> shooter.lookupShootSpeed(vision.getCoordinates(4, ReturnTarget.TARGET).z))); // dam zero-indexing
  
     // operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
     // operator.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));

@@ -112,6 +112,6 @@ public class PrimeShooter extends Command {
    */
   private double speedFromDistance(double distance) {
     // TODO: Implement this function to calculate the speed based on distance.
-    return 0; // Placeholder value; update with real logic.
+    return m_Shooter.lookupShootSpeed(distance); // Placeholder value; update with real logic.
   }
 }
