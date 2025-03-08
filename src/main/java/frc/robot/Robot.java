@@ -111,7 +111,7 @@ public class Robot extends LoggedRobot {
     robotContainer = new RobotContainer();
   }
 
-  /** This function is called periodically during all modes. */
+  /** This function is called periodically during all modes. */ 
   @Override
   public void robotPeriodic() {
     // Switch thread to high priority to improve loop timing
@@ -130,6 +130,9 @@ public class Robot extends LoggedRobot {
     // calculator.div();
 
     // calculator = null;
+    //for(int i = 0; i < 128; i++) {
+    //  System.out.println("heck youy"); // test code crash due to ram overrun TODO: fuckign deleter this
+    //}
 
     // Return to normal thread priority
     Threads.setCurrentThreadPriority(false, 10);
