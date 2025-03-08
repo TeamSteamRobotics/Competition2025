@@ -24,10 +24,10 @@ public class ClimbSubsystem extends SubsystemBase {
   public void retractClimb() {
     climbMotor.set(retractClimbSpeed); //Slowly increase speed
     if (retractClimbSpeed < 0.7) {
-    retractClimbSpeed = retractClimbSpeed + 0.05; // 0.05 = placeholder
+    retractClimbSpeed = retractClimbSpeed + 0.0001; // placeholder
     }
     try{
-      Thread.sleep(100);
+      Thread.sleep(1);
     }
     catch(InterruptedException ex){
       Thread.currentThread().interrupt();

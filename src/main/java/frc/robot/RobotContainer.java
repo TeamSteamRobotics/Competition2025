@@ -59,29 +59,27 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   //private final Drive drive;
-  private final IntakeSubsystem intake;
-  private final ShooterSubsystem shooter;
+  //private final IntakeSubsystem intake;
+  //private final ShooterSubsystem shooter;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
-  private final CommandPS5Controller psController = new CommandPS5Controller(0);
+  //private final CommandPS5Controller psController = new CommandPS5Controller(0);
   private final ClimbSubsystem climb;
  
 
   // Dashboard inputs
-  private final LoggedDashboardChooser<Command> autoChooser;
+  //private final LoggedDashboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-   // SmartDashboard.getnum
-
-
+    //SmartDashboard.getnum
 
     climb = new ClimbSubsystem();
 
-    intake = new IntakeSubsystem();
-    shooter = new ShooterSubsystem();
-    // switch (Constants.currentMode) {
+    //intake = new IntakeSubsystem();
+    //shooter = new ShooterSubsystem();
+    switch (Constants.currentMode){
        
     //   case REAL:
     //     // Real robot, instantiate hardware IO implementations
@@ -116,13 +114,13 @@ public class RobotContainer {
     //             new ModuleIO() {},
     //             new ModuleIO() {});
     //     break;
-    // }
+   }
 
     // Set up auto routines
-    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    //autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
-    autoChooser.addOption("Pathfind Test", PathFind.toPose(new Pose2d(1.5, 6, new Rotation2d(0))));
-    // Set up SysId routines
+    //autoChooser.addOption("Pathfind Test", PathFind.toPose(new Pose2d(1.5, 6, new Rotation2d(0))));
+    //Set up SysId routines
     // autoChooser.addOption(
     //     "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
     // autoChooser.addOption(
@@ -186,18 +184,18 @@ public class RobotContainer {
     //DeployButton
     //controller.leftBumper().onTrue(new Pivots(intake, Constants.IntakeMotors.pivotFinalPosition));  
     //RetreatButton
-    controller.rightBumper().onTrue(new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));
-    //IntakeButton
-    controller.leftTrigger().whileTrue(new Roll(intake, SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));     
-    //VomitButton
-    controller.rightTrigger().whileTrue(new Roll(intake, -SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));
+    // controller.rightBumper().onTrue(new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));
+    // IntakeButton
+    // controller.leftTrigger().whileTrue(new Roll(intake, SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));     
+    // VomitButton
+    // controller.rightTrigger().whileTrue(new Roll(intake, -SmartDashboard.getNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed)));
 
      //Starts motor at default speed(from constants)/Stops motors
-     controller.b().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
-     controller.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
+     //controller.b().toggleOnTrue(new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
+     //controller.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
  
-     controller.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
-     controller.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
+     //controller.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
+     //controller.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
   }
   
 
@@ -206,7 +204,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    return autoChooser.get();
-  }
+  // public Command getAutonomousCommand() {
+  //   return autoChooser.get();
+  // }
 }
