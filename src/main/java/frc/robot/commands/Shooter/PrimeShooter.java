@@ -29,14 +29,8 @@ public class PrimeShooter extends Command {
    */
   public PrimeShooter(ShooterSubsystem shooter, Supplier<Double> distanceSupplier) {
     m_Shooter = shooter;
-    m_Shooter.overrideDefault = true;
     this.distanceSupplier = distanceSupplier;
     hasDistanceSupplier = true; // Enable distance-based speed calculation.
-
-    
-
-    // Declare that this command requires the shooter subsystem.
-    addRequirements(shooter);
   }
 
   /**
@@ -51,9 +45,6 @@ public class PrimeShooter extends Command {
   //  inputSpeed = m_Shooter.overrideDefault ? m_Shooter.getTargetSpeed() : speed;
     
     hasDistanceSupplier = false; // Use the fixed speed instead of calculating from distance.
-
-    // Declare that this command requires the shooter subsystem.
-    addRequirements(shooter);
   }
 // change shooter speed in smart dashboard
 
@@ -74,7 +65,7 @@ public class PrimeShooter extends Command {
     speed = (hasDistanceSupplier ? speedFromDistance(distanceSupplier.get()) : inputSpeed);
 
     // Command the shooter subsystem to run at the calculated speed.
-    m_Shooter.ShootPID(speed);
+    m_Shooter.Shoot(speed);
     //double[] velArray = m_Shooter.getSpeeds();
 
   }
@@ -85,7 +76,7 @@ public class PrimeShooter extends Command {
    */
   @Override
   public void end(boolean interrupted) {
-    //TODO: CHANGE THIS
+    //TODO: CHANGE THIS?
     
     if(interrupted){
 

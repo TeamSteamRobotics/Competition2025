@@ -84,7 +84,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * @param targetSpeed The speed we want the motors to achieve (measured in RPM or similar).
    * @return True if both motors are at the target speed, false otherwise.
    */
-  public boolean ShootPID(double targetSpeed) {
+  public boolean Shoot(double targetSpeed) {
     m_targetSpeed = targetSpeed;
     // Calculate how much to adjust the motor speed to reach the target.
     double pidOutputFront = topShooterPid.calculate(frontShooterMotor.getVelocity(), m_targetSpeed);
