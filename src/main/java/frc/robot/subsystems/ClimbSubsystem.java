@@ -5,7 +5,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import frc.robot.Constants;
-import frc.robot.commands.Climb.RetractClimb;
+import frc.robot.commands.Climb.ClimbIn;
 import frc.robot.subsystems.Motors.GenericMotor;
 import frc.robot.subsystems.Motors.SparkFlexMotor;
 
@@ -15,11 +15,11 @@ public class ClimbSubsystem extends SubsystemBase {
     climbMotor = new SparkFlexMotor(Constants.ClimbMotors.climb);
 
   }
-  public void raiseClimb() {
+  public void climbOut() {
     climbMotor.set(-Constants.ClimbMotors.climbSpeed);
   }
 
-  public void retractClimb() {
+  public void climbIn() {
     climbMotor.set(Constants.ClimbMotors.climbSpeed);
   }
 
@@ -28,7 +28,7 @@ public class ClimbSubsystem extends SubsystemBase {
   }
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new RetractClimb(this));
+    setDefaultCommand(new ClimbIn(this));
 }
 
 }
