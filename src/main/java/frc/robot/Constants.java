@@ -36,6 +36,11 @@ public final class Constants {
   }
 
   //TODO: CHECK AND PROGRAM ALL IDS ACCORDING TO THIS CONSTANTS FILE!!!!
+
+  public class OperatorConstants{
+    public static final int kDriverControllerPort = 0;
+    public static final int kOperatorControllerPort = 1;
+  }
   public class DriveMotors {
     public class FrontLeft {
       public static final int driveId = 1;
