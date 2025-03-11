@@ -57,6 +57,7 @@ public class AgitatorSubsystem extends SubsystemBase {
 
     return false;
   }
+  //pivot of the arm
   public boolean rotatorPid(double position){
     targetRotatorPosition = position;
     elevatorMotor.setPosition(targetRotatorPosition);
