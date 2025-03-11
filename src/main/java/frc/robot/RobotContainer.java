@@ -40,6 +40,7 @@ import frc.robot.commands.PathFind;
 import frc.robot.commands.Climb.ClimbIn;
 import frc.robot.commands.Climb.ClimbOut;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.commands.Intake.Pivots;
 import frc.robot.commands.Intake.Roll;
@@ -50,6 +51,8 @@ import frc.robot.commands.Shooter.RollGreen;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.AprilVisionSubsystem.Coordinate;
+import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 //import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -57,6 +60,9 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+
+import java.util.function.Supplier;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -71,6 +77,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake;
   private final ShooterSubsystem m_shooter;
   private final ClimbSubsystem m_climb;
+  private final AprilVisionSubsystem m_vision;
   //private final VisionSubsystem vision;
   
   // Controllers
@@ -86,6 +93,9 @@ public class RobotContainer {
   private final Trigger climbIn = m_driverController.rightBumper();
   private final Trigger shooterRollers = m_operatorController.rightTrigger();
   private final Trigger greenRollers = m_operatorController.b();
+  private final Trigger shooterDistanceRollers = m_operatorController.x();
+
+  //Supplier<Coordinate> coordinateSupplier; // god help me :3
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -98,6 +108,9 @@ public class RobotContainer {
     m_intake = new IntakeSubsystem();
     m_shooter = new ShooterSubsystem();
     m_climb = new ClimbSubsystem();
+    m_vision = new AprilVisionSubsystem();
+
+    //coordinateSupplier = () -> m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET);
     //vision = new VisionSubsystem();
     switch (Constants.currentMode) {
        
@@ -229,6 +242,11 @@ public class RobotContainer {
 
     // Run green rollers
     greenRollers.onTrue(new RollGreen(m_shooter, Constants.Shooter.defaultSpeed, true));
+
+    //Run shooter based on distance
+
+    //shooterDistanceRollers.whileTrue(new PrimeShooter(m_shooter, coordinateSupplier.get().aprilTagVisible ? (() -> coordinateSupplier.get().z) : (() -> -1))); // TODO: Make it take  multiple IDs
+    // TODO: fix in general
 
     //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
     //.m_driverController.b().toggleOnTrue(new PrimeShooter(shooter, () -> shooter.lookupShootSpeed(vision.getGivenFiducialDistance(3)))); // dam zero-indexing
