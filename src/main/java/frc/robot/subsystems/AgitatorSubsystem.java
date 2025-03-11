@@ -41,7 +41,7 @@ public class AgitatorSubsystem extends SubsystemBase {
     Logger.recordOutput("Agitator/Rotator/PositionTarget", targetRotatorPosition);
     Logger.recordOutput("Agitator/Rotator/PositionActual", rotatorMotor.getPosition());
     Logger.recordOutput("Agitator/Roller/SpeedTarget", rollerSpeed);
-    Logger.recordOutput("Agitator/Roller/SpeedActual", rollerSpeed);
+    Logger.recordOutput("Agitator/Roller/SpeedActual", rollerMotor.getVelocity());
     // This method will be called once per scheduler run
   }
 
