@@ -69,6 +69,30 @@ public final class Constants {
     public static final int rotateId = 13;
     public static final int wheelId = 14;
     public static final int elevatorId = 15;
+    public static final double elevatorInitialPosition = 0.0; //MAY NEED UPDATED?
+    //TODO: FINAL POSITION
+    public static final double elevatorFinalPosition = 0.1; // safe value
+    public static final double elevatorMaxMarginOfError = Math.abs(elevatorFinalPosition - elevatorInitialPosition); // to avoid making it angry, abs
+    
+    public class ElevatorPid{
+      public static final double maxPower = 0.25;
+      public static final double tolerance = 0.05;
+      public static final double kP = maxPower / elevatorMaxMarginOfError;
+      public static final double kI = 0.0;
+      public static final double kD= 0.0;
+    }
+    public static final double rotatorInitialPosition = 0.0; //MAY NEED UPDATED?
+    //TODO: FINAL POSITION
+    public static final double rotatorFinalPosition = 0.1; // safe value
+    public static final double rotatorMaxMarginOfError = Math.abs(rotatorFinalPosition - rotatorInitialPosition); // to avoid making it angry, abs
+    
+    public class RotatorPid{
+      public static final double maxPower = 0.25;
+      public static final double tolerance = 0.05;
+      public static final double kP = maxPower / rotatorMaxMarginOfError;
+      public static final double kI = 0.0;
+      public static final double kD= 0.0;
+    }
   }
 
   public class ClimbMotors {
