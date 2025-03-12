@@ -9,28 +9,23 @@ import frc.robot.Constants;
 import frc.robot.commands.Climb.RetractClimb;
 import frc.robot.subsystems.Motors.GenericMotor;
 import frc.robot.subsystems.Motors.SparkFlexMotor;
+import frc.robot.subsystems.Motors.SparkMaxMotor;
 
 public class ClimbSubsystem extends SubsystemBase {
   private GenericMotor climbMotor;
   double retractClimbSpeed = Constants.ClimbMotors.climbSpeed;
   public ClimbSubsystem(){
-    climbMotor = new SparkFlexMotor(Constants.ClimbMotors.climb);
+    climbMotor = new SparkMaxMotor(Constants.ClimbMotors.climb);
   }
 
   public void raiseClimb() {
-    climbMotor.set(-Constants.ClimbMotors.climbSpeed); //make sure is SLOW, don't bend metal
+    climbMotor.set(Constants.ClimbMotors.climbSpeed); //make sure is SLOW, don't bend metal
   }
 
   public void retractClimb() {
-    climbMotor.set(retractClimbSpeed); //Slowly increase speed
-    if (retractClimbSpeed < 0.7) {
-    retractClimbSpeed = retractClimbSpeed + 0.0001; // placeholder
-    }
-    try{
-      Thread.sleep(1);
-    }
-    catch(InterruptedException ex){
-      Thread.currentThread().interrupt();
+    climbMotor.set(-retractClimbSpeed); //Slowly increase speed
+    if (retractClimbSpeed <= 1) {
+    retractClimbSpeed = Math.min(retractClimbSpeed + 0.004, 1); // placeholder
     }
     SmartDashboard.putNumber("Climb Speed", retractClimbSpeed);
   }

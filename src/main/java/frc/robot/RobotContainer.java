@@ -168,7 +168,7 @@ public class RobotContainer {
 
     // Switch to X pattern when X button is pressed
     //controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
-    controller.rightBumper().onTrue(new RaiseClimb(climb));
+    controller.rightBumper().whileTrue(new RaiseClimb(climb));
     controller.leftBumper().whileTrue(new RetractClimb(climb)); 
     // Reset gyro to 0° when B button is pressed
     // controller

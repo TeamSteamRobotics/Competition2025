@@ -111,19 +111,13 @@ public class Robot extends LoggedRobot {
     // Switch thread to high priority to improve loop timing
     Threads.setCurrentThreadPriority(true, 99);
 
-    ButtonTest calculator = new ButtonTest();
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled commands, running already-scheduled commands, removing
     // finished or interrupted commands, and running subsystem periodic() methods.
     // This must be called from the robot's periodic block in order for anything in
     // the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    calculator.add();
-    calculator.sub();
-    calculator.mult();
-    calculator.div();
 
-    calculator = null;
 
     // Return to normal thread priority
     Threads.setCurrentThreadPriority(false, 10);
