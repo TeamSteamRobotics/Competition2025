@@ -220,7 +220,7 @@ public class RobotContainer {
                 .ignoringDisable(true));
    
     // Climb out
-    climbOut.onTrue(new ClimbOut(m_climb));
+    climbOut.whileTrue(new ClimbOut(m_climb));
 
     //Climb in
     climbIn.whileTrue(new ClimbIn(m_climb));
