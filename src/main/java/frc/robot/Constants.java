@@ -35,12 +35,15 @@ public final class Constants {
     REPLAY
   }
   public static class AgitatorConsts {
-    public static int KrakenID = 9;
-    public static int WheelNeoID = 10;
-    public static int ElevatorNeoID = 11;
+    public static int AgitatorPivotID = 13;
+    public static int AgitatorWheelID = 14;
+    public static int AgitatorElevatorID = 15;
     public static double AgitatorRaiseSpeed = 0.2; // placeholder speeds
     public static double AgitatorWheelSpinSpeed = 0.2;
     public static double AgitatorRotateSpeed = 0.2;
+    // Want to raise by each level of algae.
+    public static double AgitatorLevelDistance = 1; //TODO: Calculate number rotations required to get to each level of agitator.
+    //12 to 1 ratio
     
     // for commands
     public static double AgitatorMaxHeight = 1; //TODO: Set atual value; Need agitator for this

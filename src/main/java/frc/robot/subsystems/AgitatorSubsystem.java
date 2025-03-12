@@ -9,57 +9,59 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.ctre.phoenix6.hardware.TalonFX;
 import frc.robot.Constants.AgitatorConsts;
 
 
 public class AgitatorSubsystem extends SubsystemBase {
-  TalonFX krakenMotor;
-  SparkMax neoWheel, neoElevator;
+ 
+  SparkMax agitatorPivot, agitatorWheel, agitatorElevator;
 
-  RelativeEncoder midEncoder; //we might need this for mid motor
+  RelativeEncoder elevatorEncoder; //we might need this for mid motor
   /** Creates a new AgitatorSubsystem. */
 
   public AgitatorSubsystem() {
-    krakenMotor = new TalonFX(AgitatorConsts.KrakenID);
-    neoWheel = new SparkMax(AgitatorConsts.WheelNeoID, MotorType.kBrushless);
-    neoElevator = new SparkMax(AgitatorConsts.ElevatorNeoID, MotorType.kBrushless);
-    midEncoder = neoElevator.getAlternateEncoder();
+    agitatorPivot = new SparkMax(AgitatorConsts.AgitatorPivotID, MotorType.kBrushless);
+    agitatorWheel = new SparkMax(AgitatorConsts.AgitatorWheelID, MotorType.kBrushless);
+    agitatorElevator = new SparkMax(AgitatorConsts.AgitatorElevatorID, MotorType.kBrushless);
+    elevatorEncoder = agitatorElevator.getAlternateEncoder();
   }
 
   //sets motor speeds
   public void raiseAgitator() {
-    neoElevator.set(AgitatorConsts.AgitatorRaiseSpeed);
+    agitatorElevator.set(AgitatorConsts.AgitatorRaiseSpeed);
   }
   public void runAgitatorRaiseMotor(double speed) {
-    neoElevator.set(speed);
+    agitatorElevator.set(speed);
   }
   public void lowerAgitator() {
-    neoElevator.set(-AgitatorConsts.AgitatorRaiseSpeed);
+    agitatorElevator.set(-AgitatorConsts.AgitatorRaiseSpeed);
   }
 
   //gets agitator position
   public double getAgitatorHeight(){
-    return midEncoder.getPosition();
-  }
-  public double getAgitatorRotation(){
-    return krakenMotor.getPosition().getValueAsDouble();
+    return elevatorEncoder.getPosition();
   }
 
+  /* 
+  public double getAgitatorRotation(){
+    return agitatorPivot.;
+  }
+  */
+
   public void spinWheels(){
-    neoWheel.set(AgitatorConsts.AgitatorWheelSpinSpeed);
+    agitatorWheel.set(AgitatorConsts.AgitatorWheelSpinSpeed);
   }
 
   public void stopWheels(){
-    neoWheel.set(0);
+    agitatorWheel.set(0);
   }
 
   public double getWheelSpeed(){
-    return neoWheel.get();
+    return agitatorWheel.get();
   }
 
   public void rotateAgitator(double speed){
-    krakenMotor.set(speed);
+    agitatorPivot.set(speed);
   }
   
   /*@Override
