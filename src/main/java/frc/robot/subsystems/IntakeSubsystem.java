@@ -123,9 +123,12 @@ public class IntakeSubsystem extends SubsystemBase {
     
     Logger.recordOutput("Intake/EncoderWithoutRatio", pivotMotor.getPosition());
     Logger.recordOutput("Intake/Currentspeed", pivotMotor.getVelocity());
+    //Logger.recordOutput("Intake/CommandedSpeed", pivotMotor);
+    //Logger.recordOutput("", null);
     Logger.recordOutput("Intake/RollerSpeed", rollerMotor.getVelocity());
     
     Logger.recordOutput("Intake/DistanceFromFinal", Constants.IntakeMotors.pivotFinalPosition - pivotMotor.getPosition());
+    Logger.recordOutput("Intake/DistanceFromInitial", Constants.IntakeMotors.pivotInitialPosition - pivotMotor.getPosition());
     Logger.recordOutput("Intake/pEstimate", (Constants.IntakeMotors.PivotPid.maxPower / Constants.IntakeMotors.pivotFinalPosition - pivotMotor.getPosition()));
     
     // This method will be called once per scheduler run

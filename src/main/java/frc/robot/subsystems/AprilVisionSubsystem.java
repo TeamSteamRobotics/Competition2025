@@ -90,7 +90,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
         }
     }else{
          coordinate.aprilTagVisible = false;
-         System.out.println("Fiducial is null");
+         //System.out.println("Fiducial is null");
     }
     }
     private void updateRobotCoordinates(int targetId) {
@@ -125,7 +125,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
         }
     }else{
          coordinate.aprilTagVisible = false;
-         System.out.println("Fiducial is null");
+         //System.out.println("Fiducial is null");
     }
     }
     private void updateFieldCoordinates(int targetId) {
@@ -147,7 +147,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
         }
     }else{
          coordinate.aprilTagVisible = false;
-         System.out.println("Fiducial is null");
+         //System.out.println("Fiducial is null");
     }
     }
 public class Coordinate {

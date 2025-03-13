@@ -86,9 +86,11 @@ public class RobotContainer {
 
   //private final CommandXboxController operator = new CommandXboxController(1);
 
-  private final Trigger intakePivot = m_operatorController.leftTrigger();
+  //private final Trigger intakePivot = m_operatorController.leftTrigger();
   private final Trigger intakeRollers = m_operatorController.leftTrigger(0.80);
-  private final Trigger vomit = m_operatorController.a();
+  private final Trigger intakePivot = m_operatorController.y();
+  //private final Trigger vomit = m_operatorController.a();
+  private final Trigger intakeOut = m_operatorController.a();
   private final Trigger climbOut = m_driverController.leftBumper();
   private final Trigger climbIn = m_driverController.rightBumper();
   private final Trigger shooterRollers = m_operatorController.rightTrigger();
@@ -169,8 +171,8 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
     // Pathplanner command registering
-    NamedCommands.registerCommand("IntakeDeploy", new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition));
-    NamedCommands.registerCommand("IntakeRetract", new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition));
+    NamedCommands.registerCommand("IntakeDeploy", new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "In"));
+    NamedCommands.registerCommand("IntakeRetract", new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "Out"));
     //TODO: NamedCommands.registerCommand("RollerIn", new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed));
     //TODO: NamedCommands.registerCommand("IntakeOut", new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
 
@@ -197,13 +199,13 @@ public class RobotContainer {
             () -> -m_driverController.getRightX()));
 
     // Lock to 0° when A button is held 
-    m_driverController.a()
-         .whileTrue(
-             DriveCommands.joystickDriveAtAngle(
-                 drive,
-                 () -> -m_driverController.getLeftY(),
-                 () -> -m_driverController.getLeftX(),
-                 () -> new Rotation2d()));
+    // m_driverController.a()
+    //      .whileTrue(
+    //          DriveCommands.joystickDriveAtAngle(
+    //              drive,
+    //              () -> -m_driverController.getLeftY(),
+    //              () -> -m_driverController.getLeftX(),
+    //              () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
     m_driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -226,22 +228,22 @@ public class RobotContainer {
     climbIn.whileTrue(new ClimbIn(m_climb));
 
     // Intake out
-    intakePivot.onTrue(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition));  
+    intakeOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  
 
     // Intake in
-    intakePivot.onFalse(new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition));  
+    intakePivot.onTrue(new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "In"));  
 
     // Roll intake wheels
     intakeRollers.whileTrue(new Roll(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
 
     // VomitButton
-    vomit.whileTrue(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed));
+    //vomit.whileTrue(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed));
 
     // Rev shooter rollers
     shooterRollers.whileTrue(new PrimeShooter(m_shooter, Constants.Shooter.defaultSpeed));
 
     // Run green rollers
-    greenRollers.onTrue(new RollGreen(m_shooter, Constants.Shooter.defaultSpeed, true));
+    greenRollers.whileTrue(new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, true));
 
     //Run shooter based on distance
 

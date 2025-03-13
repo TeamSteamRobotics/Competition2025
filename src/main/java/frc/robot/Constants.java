@@ -104,20 +104,20 @@ public final class Constants {
     public class IntakeMotors{
       public static final int pivotId = 17;
       public static final int pivotGearboxRatio = 17;
-      public static final double pivotInitialPosition = 0.0; //MAY NEED UPDATED?
+      public static final double pivotInitialPosition = -0.071428; //MAY NEED UPDATED?
       //TODO: FINAL POSITION
       public static final double pivotFinalPosition = -3.261902332305908; // should be -3.261902332305908, but code angry when final position negative
       public static final double maxMarginOfError = Math.abs(pivotFinalPosition - pivotInitialPosition); // to avoid making it angry, abs
       
     public class PivotPid{
       public static final double maxPower = 0.4;
-      public static final double tolerance = 0.0;
+      public static final double tolerance = 0.1;
       public static final double kP = maxPower / maxMarginOfError;
       public static final double kI = 0.0;
-      public static final double kD= 0.0;
+      public static final double kD= kP/2;
     }
     public static final int rollerId = 18;
-    public static final double defaultRollerSpeed = 0.2;
+    public static final double defaultRollerSpeed = 0.25;
   }
 
   public class Shooter{ 
@@ -125,6 +125,7 @@ public final class Constants {
     public static final int frontRollerId = 20;
     public static final int backRollerId = 21;
     public static final double defaultSpeed = 0.45;
+    public static final double rollerSpeed = 0.15;
     public static final double speedIncrement = 0.0;
 
     public class ShooterPid{
