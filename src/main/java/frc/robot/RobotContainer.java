@@ -42,6 +42,11 @@ import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.commands.Intake.Pivots;
 import frc.robot.commands.Intake.Roll;
 import frc.robot.commands.Intake.Tests.PivotTest;
+import frc.robot.commands.PathPlanner.GreenBeambreak;
+import frc.robot.commands.PathPlanner.StartGreen;
+import frc.robot.commands.PathPlanner.StartOrange;
+import frc.robot.commands.PathPlanner.StopGreen;
+import frc.robot.commands.PathPlanner.StopOrange;
 import frc.robot.commands.Shooter.PrimeShooter;
 import frc.robot.commands.Shooter.RollGreen;
 import frc.robot.commands.Shooter.ShooterLimelightTest;
@@ -68,7 +73,7 @@ public class RobotContainer {
   private final Drive drive;
   private final IntakeSubsystem intake;
   private final ShooterSubsystem shooter;
-  private final VisionSubsystem vision;
+  //private final VisionSubsystem vision;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
   //private final CommandXboxController operator = new CommandXboxController(1);
@@ -92,7 +97,7 @@ public class RobotContainer {
 
     intake = new IntakeSubsystem();
     shooter = new ShooterSubsystem();
-    vision = new VisionSubsystem();
+    //vision = new VisionSubsystem();
     switch (Constants.currentMode) {
        
       case REAL:
@@ -130,6 +135,19 @@ public class RobotContainer {
         break;
     }
 
+    // NamedCommands.registerCommand("IntakeDeploy", new Pivots(intake, Constants.IntakeMotors.pivotFinalPosition));
+    // NamedCommands.registerCommand("IntakeRetract", new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));
+    //TODO: NamedCommands.registerCommand("RollerIn", new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed));
+    //TODO: NamedCommands.registerCommand("IntakeOut", new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
+
+    NamedCommands.registerCommand("ShooterDefault", new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
+    NamedCommands.registerCommand("StartGreen", new StartGreen(shooter, 0.2));
+    NamedCommands.registerCommand("StopGreen", new StopGreen(shooter));
+    NamedCommands.registerCommand("StartOrange", new StartOrange(shooter, Constants.Shooter.defaultSpeed));
+    NamedCommands.registerCommand("StopOrange", new StopOrange(shooter));
+    NamedCommands.registerCommand("GreenBeambreak", new GreenBeambreak(shooter, 0.2));
+    // NamedCommands.registerCommand("ShooterDistance(UNIMPLEMENTED)", new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
+
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
@@ -150,14 +168,6 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
     // Pathplanner command registering
-    NamedCommands.registerCommand("IntakeDeploy", new Pivots(intake, Constants.IntakeMotors.pivotFinalPosition));
-    NamedCommands.registerCommand("IntakeRetract", new Pivots(intake, Constants.IntakeMotors.pivotInitialPosition));
-    //TODO: NamedCommands.registerCommand("RollerIn", new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed));
-    //TODO: NamedCommands.registerCommand("IntakeOut", new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
-
-    NamedCommands.registerCommand("ShooterDefault", new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
-    NamedCommands.registerCommand("ShooterDistance(UNIMPLEMENTED)", new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
-
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -219,7 +229,7 @@ public class RobotContainer {
     controller.rightTrigger().whileTrue(new RollGreen(shooter, 0.2, true));
     controller.y().toggleOnTrue(new ParallelRaceGroup(new RollGreen(shooter, 0.2, false), new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed)));
     //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
-    controller.b().toggleOnTrue(new PrimeShooter(shooter, () -> shooter.lookupShootSpeed(vision.getGivenFiducialDistance(3)))); // dam zero-indexing
+    //controller.b().toggleOnTrue(new PrimeShooter(shooter, () -> shooter.lookupShootSpeed(vision.getGivenFiducialDistance(3)))); // dam zero-indexing
  
     // operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
     // operator.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));

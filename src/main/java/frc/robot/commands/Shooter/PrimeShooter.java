@@ -47,7 +47,7 @@ public class PrimeShooter extends Command {
   public PrimeShooter(ShooterSubsystem shooter, double speed) {
     m_Shooter = shooter;
     //sets speed based on smartdashboard value
-    inputSpeed = SmartDashboard.getNumber("Shooter Speed", 0.45);
+    inputSpeed = speed;
   //  inputSpeed = m_Shooter.overrideDefault ? m_Shooter.getTargetSpeed() : speed;
     
     hasDistanceSupplier = false; // Use the fixed speed instead of calculating from distance.
@@ -62,7 +62,9 @@ public class PrimeShooter extends Command {
    * Use it for any setup needed before the command starts.
    */
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("You rang hoe?");
+  }
 
   /**
    * This method runs repeatedly while the command is scheduled.

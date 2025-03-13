@@ -19,7 +19,7 @@
         {
           "type": "named",
           "data": {
-            "name": "RollGreen"
+            "name": null
           }
         },
         {
@@ -43,7 +43,7 @@
         {
           "type": "named",
           "data": {
-            "name": "RollGreen"
+            "name": null
           }
         }
       ]

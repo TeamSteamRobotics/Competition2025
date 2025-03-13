@@ -13,13 +13,49 @@
         {
           "type": "named",
           "data": {
-            "name": "ShooterDefault"
+            "name": "GreenBeambreak"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "RollGreen"
+            "name": "StartOrange"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StartGreen"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopOrange"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopGreen"
           }
         }
       ]

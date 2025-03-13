@@ -109,6 +109,10 @@ public class ShooterSubsystem extends SubsystemBase {
   public void RunGreenRoller(double speed){
     greenShooterMotor.set(-speed);
   }
+  public void RunOrangeRollers(double speed){
+    frontShooterMotor.set(-speed);
+    backShooterMotor.set(-speed);
+  }
   
   /**
    * Stops the motors completely. This is used when the shooter is no longer needed.
