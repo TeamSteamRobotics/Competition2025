@@ -253,7 +253,7 @@ public class RobotContainer {
     //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
     //.m_driverController.b().toggleOnTrue(new PrimeShooter(shooter, () -> shooter.lookupShootSpeed(vision.getGivenFiducialDistance(3)))); // dam zero-indexing
     shooterDistanceRollers.whileTrue(new PrimeShooter(m_shooter, () -> (getDistance() + Constants.Shooter.limelightOffset)));
-    m_operatorController.y().whileTrue(new RollGreen(m_shooter, Constants.Shooter.greenSpeed, true)); // TODO: use parallel commands
+    m_operatorController.y().whileTrue(new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, true)); // TODO: use parallel commands
  
     // operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
     // operator.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
