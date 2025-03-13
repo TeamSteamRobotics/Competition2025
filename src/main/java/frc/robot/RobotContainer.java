@@ -72,8 +72,10 @@ public class RobotContainer {
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
   //private final CommandXboxController operator = new CommandXboxController(1);
+  
 
   //private final ClimbSubsystem climb;
+  
  
 
   // Dashboard inputs
@@ -154,7 +156,7 @@ public class RobotContainer {
     //TODO: NamedCommands.registerCommand("IntakeOut", new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
 
     NamedCommands.registerCommand("ShooterDefault", new PrimeShooter(shooter, Constants.Shooter.defaultSpeed));
-    NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
+    NamedCommands.registerCommand("ShooterDistance(UNIMPLEMENTED)", new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
 
     // Configure the button bindings
     configureButtonBindings();

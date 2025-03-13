@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "straight line"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterDefault"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "RollGreen"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
