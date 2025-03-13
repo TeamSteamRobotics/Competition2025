@@ -222,7 +222,7 @@ public class RobotContainer {
                 .ignoringDisable(true));
    
     // Climb out
-    climbOut.onTrue(new ClimbOut(m_climb));
+    climbOut.whileTrue(new ClimbOut(m_climb));
 
     //Climb in
     climbIn.whileTrue(new ClimbIn(m_climb));
@@ -252,12 +252,13 @@ public class RobotContainer {
 
     //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
     //.m_driverController.b().toggleOnTrue(new PrimeShooter(shooter, () -> shooter.lookupShootSpeed(vision.getGivenFiducialDistance(3)))); // dam zero-indexing
-    shooterDistanceRollers.whileTrue(new PrimeShooter(m_shooter, () -> getDistance()));
+    shooterDistanceRollers.whileTrue(new PrimeShooter(m_shooter, () -> (getDistance() + Constants.Shooter.limelightOffset)));
+    m_operatorController.y().whileTrue(new RollGreen(m_shooter, Constants.Shooter.greenSpeed, true)); // TODO: use parallel commands
  
     // operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
     // operator.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
   }
-  public double getDistance(){ // TODO: god help me :3
+  public double getDistance(){ // TODO: god help me again :3
     if(m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).aprilTagVisible){ // TODO: add fIDs for other side of barge
         return m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).z;
     }

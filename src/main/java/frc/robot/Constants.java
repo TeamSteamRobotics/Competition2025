@@ -100,7 +100,15 @@ public final class Constants {
     public static double climbSpeed = 0.05;
   }
 
-
+  // TODO: Limelight Notes:
+  // Limelight angle: 32 degrees up
+  // Limelight up: 21.25 inches above ground
+  // Limelight left: 9.25 inches left
+  // Limelight out unadjusted: 12.5 inches forwards
+  // robot is 14.5 inches wide along length
+  // set it at 0 point to get distance from limelight
+  // then subtract 2 to get distance from edge
+  // in code
     public class IntakeMotors{
       public static final int pivotId = 17;
       public static final int pivotGearboxRatio = 17;
@@ -127,6 +135,7 @@ public final class Constants {
     public static final double defaultSpeed = 0.45;
     public static final double rollerSpeed = 0.15;
     public static final double speedIncrement = 0.0;
+    public static final double limelightOffset = -0.3683; // offset to get distance from front edge. Currently half the robot length
 
     public class ShooterPid{
       public static final double kP = 0.08;
