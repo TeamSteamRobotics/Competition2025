@@ -127,6 +127,10 @@ public class ShooterSubsystem extends SubsystemBase {
     return !beamBreak.get();
   }
 
+  public void RunOrangeRollers(double speed){
+    frontShooterMotor.set(-speed);
+    backShooterMotor.set(-speed);
+  }
   /*public double[] getVelocities(){
     double[] returnValues = {greenShooterMotor.getVelocity(), frontShooterMotor.getVelocity(), backShooterMotor.getVelocity()};
     return returnValues;
