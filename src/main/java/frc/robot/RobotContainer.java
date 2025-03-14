@@ -65,6 +65,8 @@ import frc.robot.commands.PathPlanner.StartGreen;
 import frc.robot.commands.PathPlanner.StartOrange;
 import frc.robot.commands.PathPlanner.StopGreen;
 import frc.robot.commands.PathPlanner.StopOrange;
+import frc.robot.commands.PathPlanner.StartBlack;
+import frc.robot.commands.PathPlanner.StopBlack;
 
 import java.util.function.Supplier;
 
@@ -185,11 +187,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("StopGreen", new StopGreen(m_shooter));
     NamedCommands.registerCommand("StartOrange", new StartOrange(m_shooter, Constants.Shooter.defaultSpeed));
     NamedCommands.registerCommand("StopOrange", new StopOrange(m_shooter));
+    NamedCommands.registerCommand("StartBlack", new StartBlack(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
+    NamedCommands.registerCommand("StopBlack", new StopBlack(m_intake));
     NamedCommands.registerCommand("GreenBeambreak", new GreenBeambreak(m_shooter, 0.2));
     NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(m_shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
 
-
-    NamedCommands.registerCommand("");
     // Configure the button bindings
     configureButtonBindings();
   }
