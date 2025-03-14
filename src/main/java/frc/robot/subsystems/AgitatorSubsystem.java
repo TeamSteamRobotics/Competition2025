@@ -6,11 +6,17 @@ package frc.robot.subsystems;
 
 import java.lang.reflect.Parameter;
 import java.util.HashMap;
+import java.util.function.Supplier;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.Agitator.AgitatorDefault;
+import frc.robot.commands.Agitator.AgitatorGetCoral;
+import frc.robot.commands.Agitator.AgitatorPutCoral;
+import frc.robot.commands.Agitator.ExtendAgitator;
 import frc.robot.subsystems.AgitatorSubsystem.AgitatorState.RotatorParam;
 import frc.robot.subsystems.Motors.GenericMotor;
 import frc.robot.subsystems.Motors.SparkMaxMotor;
@@ -27,6 +33,7 @@ public class AgitatorSubsystem extends SubsystemBase {
   double rollerSpeed;
   double targetRotatorPosition;
   double elevatorSpeed;
+  public HashMap<String, Supplier<Command>> commandTable; // The things I do to avoid if statements
   public HashMap<String, AgitatorState> StateList;
   public AgitatorState currentState;
 
@@ -42,6 +49,7 @@ public class AgitatorSubsystem extends SubsystemBase {
     public double rotMotorParam;
     /** UNUSED */
     public double elevMotorPos;
+
     public AgitatorState(String f_name, double rotParam, double rolSpeed, double elePos, RotatorParam parameter){
       name = f_name;
       rotMotorParam = rotParam;
@@ -58,6 +66,12 @@ public class AgitatorSubsystem extends SubsystemBase {
     StateList.put("GET_CORAL", new AgitatorState("GET_CORAL", Constants.AgitatorMotors.rotatorGetCoralPosition, -Constants.AgitatorMotors.rollerSpeed, 0, RotatorParam.POSITION));
     StateList.put("PUT_CORAL", new AgitatorState("PUT_CORAL", Constants.AgitatorMotors.rotatorPutCoralPosition, Constants.AgitatorMotors.rollerSpeed, 0, RotatorParam.POSITION));
     currentState = StateList.get("INIT");
+    commandTable = new HashMap<>(); 
+    //Transit out of starting state immediately
+    commandTable.put("INIT", () -> new AgitatorDefault(this)); //I hope this works first try, because if it doesnt, we'll need to examine my shitty code
+    commandTable.put("DEFAULT", () -> new AgitatorDefault(this));
+    commandTable.put("GET_CORAL", () -> new AgitatorGetCoral(this));
+    commandTable.put("PUT_CORAL", () -> new AgitatorPutCoral(this));
   }
   /** Creates a new AgitatorSubsystem. */
   public AgitatorSubsystem() {
