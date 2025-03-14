@@ -82,8 +82,11 @@ public final class Constants {
       public static final double kD= 0.0;
     }
     public static final double rotatorInitialPosition = 0.0; //MAY NEED UPDATED?
+    public static final double rotatorDefaultPosition = 0.1;
+    public static final double rotatorGetCoralPosition = 0.1; //TODO: TUNE ALL VALUES
+    public static final double rotatorPutCoralPosition = 0.1;
     //TODO: FINAL POSITION
-    public static final double rotatorFinalPosition = 0.1; // safe value
+    public static final double rotatorFinalPosition = 0.2; // safe value
     public static final double rotatorMaxMarginOfError = Math.abs(rotatorFinalPosition - rotatorInitialPosition); // to avoid making it angry, abs
     
     public class RotatorPid{
@@ -93,6 +96,7 @@ public final class Constants {
       public static final double kI = 0.0;
       public static final double kD= 0.0;
     }
+    public static final double rollerSpeed = 0.2;
   }
 
   public class ClimbMotors {

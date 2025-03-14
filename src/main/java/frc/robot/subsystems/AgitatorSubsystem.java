@@ -4,10 +4,14 @@
 
 package frc.robot.subsystems;
 
+import java.lang.reflect.Parameter;
+import java.util.HashMap;
+
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.AgitatorSubsystem.AgitatorState.RotatorParam;
 import frc.robot.subsystems.Motors.GenericMotor;
 import frc.robot.subsystems.Motors.SparkMaxMotor;
 
@@ -23,13 +27,45 @@ public class AgitatorSubsystem extends SubsystemBase {
   double rollerSpeed;
   double targetRotatorPosition;
   double elevatorSpeed;
+  public HashMap<String, AgitatorState> StateList;
+  public AgitatorState currentState;
+
+  public class AgitatorState {
+    public String name;
+    public double rollMotorSpeed;
+    /** Dictates what the rotate motor parameter is */
+    public enum RotatorParam{
+      SPEED,
+      POSITION
+    }
+    RotatorParam rotateState;
+    public double rotMotorParam;
+    /** UNUSED */
+    public double elevMotorPos;
+    public AgitatorState(String f_name, double rotParam, double rolSpeed, double elePos, RotatorParam parameter){
+      name = f_name;
+      rotMotorParam = rotParam;
+      rollMotorSpeed = rolSpeed;
+      elevMotorPos = elePos;
+      rotateState = parameter;
+    }
+  }
+
+  private void initializeStates(){
+    StateList = new HashMap<String, AgitatorState>();
+    StateList.put("INIT", new AgitatorState("INIT", 0, 0, 0, RotatorParam.POSITION));
+    StateList.put("DEFAULT", new AgitatorState("DEFAULT", Constants.AgitatorMotors.rotatorDefaultPosition, 0, 0, RotatorParam.POSITION));
+    StateList.put("GET_CORAL", new AgitatorState("GET_CORAL", Constants.AgitatorMotors.rotatorGetCoralPosition, -Constants.AgitatorMotors.rollerSpeed, 0, RotatorParam.POSITION));
+    StateList.put("PUT_CORAL", new AgitatorState("PUT_CORAL", Constants.AgitatorMotors.rotatorPutCoralPosition, Constants.AgitatorMotors.rollerSpeed, 0, RotatorParam.POSITION));
+    currentState = StateList.get("INIT");
+  }
   /** Creates a new AgitatorSubsystem. */
   public AgitatorSubsystem() {
 
     elevatorMotor = new SparkMaxMotor(Constants.AgitatorMotors.elevatorId, Constants.AgitatorMotors.ElevatorPid.kP, Constants.AgitatorMotors.ElevatorPid.kI, Constants.AgitatorMotors.ElevatorPid.kD, -Constants.AgitatorMotors.ElevatorPid.maxPower, Constants.AgitatorMotors.ElevatorPid.maxPower, false);
     rollerMotor = new SparkMaxMotor(Constants.AgitatorMotors.wheelId);
     rotatorMotor = new SparkMaxMotor(Constants.AgitatorMotors.rotateId, Constants.AgitatorMotors.RotatorPid.kP, Constants.AgitatorMotors.RotatorPid.kI, Constants.AgitatorMotors.RotatorPid.kD, -Constants.AgitatorMotors.ElevatorPid.maxPower, Constants.AgitatorMotors.ElevatorPid.maxPower, false);
-
+    initializeStates();
   }
 
   @Override
