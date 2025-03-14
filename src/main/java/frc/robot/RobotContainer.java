@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -119,6 +120,21 @@ public class RobotContainer {
     m_climb = new ClimbSubsystem();
     m_vision = new AprilVisionSubsystem();
 
+
+      // Pathplanner command registering
+      NamedCommands.registerCommand("IntakeDeploy", new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "In"));
+      NamedCommands.registerCommand("IntakeRetract", new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "Out"));
+      //TODO: NamedCommands.registerCommand("RollerIn", new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed));
+      //TODO: NamedCommands.registerCommand("IntakeOut", new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
+      //NamedCommands.registerCommand("ShooterDefault", new PrimeShooter(m_shooter, Constants.Shooter.defaultSpeed));
+      NamedCommands.registerCommand("StartGreen", new StartGreen(m_shooter, 0.2));
+      NamedCommands.registerCommand("StopGreen", new StopGreen(m_shooter));
+      NamedCommands.registerCommand("StartOrange", new StartOrange(m_shooter, Constants.Shooter.defaultSpeed));
+      NamedCommands.registerCommand("StopOrange", new StopOrange(m_shooter));
+      NamedCommands.registerCommand("StartBlack", new StartBlack(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
+      NamedCommands.registerCommand("StopBlack", new StopBlack(m_intake));
+      NamedCommands.registerCommand("GreenBeambreak", new GreenBeambreak(m_shooter, 0.2));
+      //NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(m_shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
     //coordinateSupplier = () -> m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET);
     //vision = new VisionSubsystem();
     switch (Constants.currentMode) {
@@ -158,6 +174,7 @@ public class RobotContainer {
         break;
     }
 
+  
     // Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
@@ -177,20 +194,7 @@ public class RobotContainer {
         "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-    // Pathplanner command registering
-    NamedCommands.registerCommand("IntakeDeploy", new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "In"));
-    NamedCommands.registerCommand("IntakeRetract", new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "Out"));
-    //TODO: NamedCommands.registerCommand("RollerIn", new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed));
-    //TODO: NamedCommands.registerCommand("IntakeOut", new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
-    NamedCommands.registerCommand("ShooterDefault", new PrimeShooter(m_shooter, Constants.Shooter.defaultSpeed));
-    NamedCommands.registerCommand("StartGreen", new StartGreen(m_shooter, 0.2));
-    NamedCommands.registerCommand("StopGreen", new StopGreen(m_shooter));
-    NamedCommands.registerCommand("StartOrange", new StartOrange(m_shooter, Constants.Shooter.defaultSpeed));
-    NamedCommands.registerCommand("StopOrange", new StopOrange(m_shooter));
-    NamedCommands.registerCommand("StartBlack", new StartBlack(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
-    NamedCommands.registerCommand("StopBlack", new StopBlack(m_intake));
-    NamedCommands.registerCommand("GreenBeambreak", new GreenBeambreak(m_shooter, 0.2));
-    NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(m_shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
+  
 
     // Configure the button bindings
     configureButtonBindings();
