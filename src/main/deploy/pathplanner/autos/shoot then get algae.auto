@@ -1,0 +1,55 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "straight line"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterDefault"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": null
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "get algae"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "go shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterDefault"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": null
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

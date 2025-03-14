@@ -188,6 +188,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("GreenBeambreak", new GreenBeambreak(m_shooter, 0.2));
     NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(m_shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
 
+
+    NamedCommands.registerCommand("");
     // Configure the button bindings
     configureButtonBindings();
   }
