@@ -37,9 +37,11 @@ import frc.robot.Constants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
+import frc.robot.commands.Agitator.AgitatorStateMachine;
 import frc.robot.commands.Climb.ClimbIn;
 import frc.robot.commands.Climb.ClimbOut;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.AgitatorSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.commands.Intake.Pivots;
 import frc.robot.commands.Intake.Roll;
@@ -71,6 +73,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake;
   private final ShooterSubsystem m_shooter;
   private final ClimbSubsystem m_climb;
+  private final AgitatorSubsystem m_agit;
   //private final VisionSubsystem vision;
   
   // Controllers
@@ -86,18 +89,20 @@ public class RobotContainer {
   private final Trigger climbIn = m_driverController.rightBumper();
   private final Trigger shooterRollers = m_operatorController.rightTrigger();
   private final Trigger greenRollers = m_operatorController.b();
+  private final Trigger putCoralToggle = m_operatorController.leftBumper();
+  private final Trigger getCoralToggle = m_operatorController.rightBumper();
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
    // SmartDashboard.getnum
 
     m_intake = new IntakeSubsystem();
     m_shooter = new ShooterSubsystem();
     m_climb = new ClimbSubsystem();
+    m_agit = new AgitatorSubsystem();
     //vision = new VisionSubsystem();
     switch (Constants.currentMode) {
        
@@ -229,6 +234,9 @@ public class RobotContainer {
 
     // Run green rollers
     greenRollers.onTrue(new RollGreen(m_shooter, Constants.Shooter.defaultSpeed, true));
+
+    putCoralToggle.onTrue(AgitatorStateMachine.transitState("PUT_CORAL", m_agit));
+    getCoralToggle.onTrue(AgitatorStateMachine.transitState("GET_CORAL", m_agit));
 
     //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
     //.m_driverController.b().toggleOnTrue(new PrimeShooter(shooter, () -> shooter.lookupShootSpeed(vision.getGivenFiducialDistance(3)))); // dam zero-indexing

@@ -17,8 +17,11 @@ public class AgitatorStateMachine extends InstantCommand {
     m_AgitatorSubsystem = agitatorSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
   }
-  public Command transitState(String state){
-    return m_AgitatorSubsystem.commandTable.get(m_AgitatorSubsystem.StateList.get(state).name).get(); // worst line of code i ever wrote
+  public static Command transitState(String state, AgitatorSubsystem agit){
+    if(!state.equals(agit.currentState.name)){
+      return agit.commandTable.get(agit.StateList.get(state).name).get(); // worst line of code i ever wrote
+    }
+    return new AgitatorDefault(agit);
   }
 
   // Called when the command is initially scheduled.
