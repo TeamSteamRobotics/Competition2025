@@ -41,6 +41,7 @@ import frc.robot.commands.Agitator.AgitatorStateMachine;
 import frc.robot.commands.Climb.ClimbIn;
 import frc.robot.commands.Climb.ClimbOut;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.AgitatorSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.commands.Intake.Pivots;
@@ -52,6 +53,8 @@ import frc.robot.commands.Shooter.RollGreen;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.AprilVisionSubsystem.Coordinate;
+import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 //import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -59,6 +62,9 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+
+import java.util.function.Supplier;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -74,6 +80,7 @@ public class RobotContainer {
   private final ShooterSubsystem m_shooter;
   private final ClimbSubsystem m_climb;
   private final AgitatorSubsystem m_agit;
+  private final AprilVisionSubsystem m_vision;
   //private final VisionSubsystem vision;
   
   // Controllers
@@ -82,13 +89,18 @@ public class RobotContainer {
 
   //private final CommandXboxController operator = new CommandXboxController(1);
 
-  private final Trigger intakePivot = m_operatorController.leftTrigger();
+  //private final Trigger intakePivot = m_operatorController.leftTrigger();
   private final Trigger intakeRollers = m_operatorController.leftTrigger(0.80);
-  private final Trigger vomit = m_operatorController.a();
+  private final Trigger intakePivot = m_operatorController.y();
+  //private final Trigger vomit = m_operatorController.a();
+  private final Trigger intakeOut = m_operatorController.a();
   private final Trigger climbOut = m_driverController.leftBumper();
   private final Trigger climbIn = m_driverController.rightBumper();
   private final Trigger shooterRollers = m_operatorController.rightTrigger();
   private final Trigger greenRollers = m_operatorController.b();
+  private final Trigger shooterDistanceRollers = m_operatorController.x();
+
+  //Supplier<Coordinate> coordinateSupplier; // god help me :3
   private final Trigger putCoralToggle = m_operatorController.leftBumper();
   private final Trigger getCoralToggle = m_operatorController.rightBumper();
 
@@ -103,6 +115,9 @@ public class RobotContainer {
     m_shooter = new ShooterSubsystem();
     m_climb = new ClimbSubsystem();
     m_agit = new AgitatorSubsystem();
+    m_vision = new AprilVisionSubsystem();
+
+    //coordinateSupplier = () -> m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET);
     //vision = new VisionSubsystem();
     switch (Constants.currentMode) {
        
@@ -161,8 +176,8 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
     // Pathplanner command registering
-    NamedCommands.registerCommand("IntakeDeploy", new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition));
-    NamedCommands.registerCommand("IntakeRetract", new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition));
+    NamedCommands.registerCommand("IntakeDeploy", new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "In"));
+    NamedCommands.registerCommand("IntakeRetract", new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "Out"));
     //TODO: NamedCommands.registerCommand("RollerIn", new Roll(intake, Constants.IntakeMotors.defaultRollerSpeed));
     //TODO: NamedCommands.registerCommand("IntakeOut", new Roll(intake, -Constants.IntakeMotors.defaultRollerSpeed));
 
@@ -189,13 +204,13 @@ public class RobotContainer {
             () -> -m_driverController.getRightX()));
 
     // Lock to 0° when A button is held 
-    m_driverController.a()
-         .whileTrue(
-             DriveCommands.joystickDriveAtAngle(
-                 drive,
-                 () -> -m_driverController.getLeftY(),
-                 () -> -m_driverController.getLeftX(),
-                 () -> new Rotation2d()));
+    // m_driverController.a()
+    //      .whileTrue(
+    //          DriveCommands.joystickDriveAtAngle(
+    //              drive,
+    //              () -> -m_driverController.getLeftY(),
+    //              () -> -m_driverController.getLeftX(),
+    //              () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
     m_driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -212,37 +227,50 @@ public class RobotContainer {
                 .ignoringDisable(true));
    
     // Climb out
-    climbOut.onTrue(new ClimbOut(m_climb));
+    climbOut.whileTrue(new ClimbOut(m_climb));
 
     //Climb in
     climbIn.whileTrue(new ClimbIn(m_climb));
 
     // Intake out
-    intakePivot.onTrue(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition));  
+    intakeOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  
 
     // Intake in
-    intakePivot.onFalse(new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition));  
+    intakePivot.onTrue(new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "In"));  
 
     // Roll intake wheels
     intakeRollers.whileTrue(new Roll(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
 
     // VomitButton
-    vomit.whileTrue(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed));
+    //vomit.whileTrue(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed));
 
     // Rev shooter rollers
     shooterRollers.whileTrue(new PrimeShooter(m_shooter, Constants.Shooter.defaultSpeed));
 
     // Run green rollers
-    greenRollers.onTrue(new RollGreen(m_shooter, Constants.Shooter.defaultSpeed, true));
+    greenRollers.whileTrue(new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, true));
 
     putCoralToggle.onTrue(AgitatorStateMachine.transitState("PUT_CORAL", m_agit));
     getCoralToggle.onTrue(AgitatorStateMachine.transitState("GET_CORAL", m_agit));
 
+    //Run shooter based on distance
+
+    //shooterDistanceRollers.whileTrue(new PrimeShooter(m_shooter, coordinateSupplier.get().aprilTagVisible ? (() -> coordinateSupplier.get().z) : (() -> -1))); // TODO: Make it take  multiple IDs
+    // TODO: fix in general
+
     //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
     //.m_driverController.b().toggleOnTrue(new PrimeShooter(shooter, () -> shooter.lookupShootSpeed(vision.getGivenFiducialDistance(3)))); // dam zero-indexing
+    shooterDistanceRollers.whileTrue(new PrimeShooter(m_shooter, () -> (getDistance() + Constants.Shooter.limelightOffset)));
+    m_operatorController.y().whileTrue(new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, true)); // TODO: use parallel commands
  
     // operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
     // operator.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
+  }
+  public double getDistance(){ // TODO: god help me again :3
+    if(m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).aprilTagVisible){ // TODO: add fIDs for other side of barge
+        return m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).z;
+    }
+    return -1;
   }
   
 

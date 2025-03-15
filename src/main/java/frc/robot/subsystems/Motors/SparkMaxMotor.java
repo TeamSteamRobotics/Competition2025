@@ -22,11 +22,14 @@ public class SparkMaxMotor extends SubsystemBase implements GenericMotor {
     private final AbsoluteEncoder absoluteEncoder;
     SparkClosedLoopController sparkPid;
 
+    boolean isPid = false;
+
     int m_canId;
 
     SparkMaxConfig pidConfig;
 
     public SparkMaxMotor(int canID) {
+        isPid = false;
         m_canId = canID;
         motor = new SparkMax(canID, MotorType.kBrushless);
         relativeEncoder = motor.getEncoder();
@@ -34,6 +37,7 @@ public class SparkMaxMotor extends SubsystemBase implements GenericMotor {
     }
 
     public SparkMaxMotor(int canID, double kP, double kI, double kD, double minPower, double maxPower) {
+        isPid = true;
         motor = new SparkMax(canID, MotorType.kBrushless);
         pidConfig = new SparkMaxConfig();
         pidConfig.closedLoop
@@ -55,6 +59,7 @@ public class SparkMaxMotor extends SubsystemBase implements GenericMotor {
     
     }
     public SparkMaxMotor(int canID, double kP, double kI, double kD, double minPower, double maxPower, boolean inverted) {
+        isPid = true;
         motor = new SparkMax(canID, MotorType.kBrushless);
         pidConfig = new SparkMaxConfig();
         pidConfig.closedLoop
@@ -80,7 +85,7 @@ public class SparkMaxMotor extends SubsystemBase implements GenericMotor {
 
     @Override
     public void set(double output) {
-        sparkPid.setReference(0, ControlType.kDutyCycle);
+        if(isPid) { sparkPid.setReference(0, ControlType.kDutyCycle); }
         motor.set(output);
     }
 

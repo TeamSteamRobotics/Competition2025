@@ -11,10 +11,13 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class Pivots extends Command {
   private  IntakeSubsystem m_IntakeSubsystem; // The subsystem this command controls.
   private double m_targetPosition;
+  private String m_name = "Error";
   /** Creates a new Pivots. */
-  public Pivots(IntakeSubsystem intakeSubsystem, double targetPosition) {
+  public Pivots(IntakeSubsystem intakeSubsystem, double targetPosition, String name) {
     m_IntakeSubsystem = intakeSubsystem;
+    addRequirements(m_IntakeSubsystem);
     m_targetPosition = targetPosition;
+    m_name = name;
   }
 
   // Called when the command is initially scheduled.
@@ -25,6 +28,7 @@ public class Pivots extends Command {
   @Override
   public void execute() {
     m_IntakeSubsystem.pivotPID(m_targetPosition);
+    //System.out.println(m_name);
   }
 
   // Called once the command ends or is interrupted.

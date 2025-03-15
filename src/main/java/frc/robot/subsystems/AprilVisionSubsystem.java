@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LimelightHelpers;
 
 public class AprilVisionSubsystem extends SubsystemBase {
     Coordinate coordinate = new Coordinate();
@@ -26,6 +27,16 @@ public class AprilVisionSubsystem extends SubsystemBase {
         ROBOT,
         FIELD
     }
+    public Coordinate getCoordinates(int[] ids, ReturnTarget rt){
+        for(int i = 0; i < ids.length; i++){
+            getCoordinates(ids[i], rt);
+            if(coordinate.aprilTagVisible){
+                return coordinate;
+            }
+        }
+        return coordinate;
+    }
+
     public Coordinate getCoordinates(int targetId, ReturnTarget rt) {
        switch(rt){
         case TARGET:
@@ -36,7 +47,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
         break;
         case FIELD:
         updateFieldCoordinates(targetId);
-        break;
+        break; 
        }
         return coordinate;
     }
@@ -79,7 +90,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
         }
     }else{
          coordinate.aprilTagVisible = false;
-         System.out.println("Fiducial is null");
+         //System.out.println("Fiducial is null");
     }
     }
     private void updateRobotCoordinates(int targetId) {
@@ -114,7 +125,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
         }
     }else{
          coordinate.aprilTagVisible = false;
-         System.out.println("THIRTEENTH REASON IS NULL");
+         //System.out.println("Fiducial is null");
     }
     }
     private void updateFieldCoordinates(int targetId) {
@@ -136,7 +147,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
         }
     }else{
          coordinate.aprilTagVisible = false;
-         System.out.println("THIRTEENTH REASON IS NULL");
+         //System.out.println("Fiducial is null");
     }
     }
 public class Coordinate {

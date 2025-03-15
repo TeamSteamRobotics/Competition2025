@@ -101,27 +101,35 @@ public final class Constants {
 
   public class ClimbMotors {
     public static final int climb = 16;
-    public static double climbSpeed = 0.45;
+    public static double climbSpeed = 0.05;
   }
 
-
+  // TODO: Limelight Notes:
+  // Limelight angle: 32 degrees up
+  // Limelight up: 21.25 inches above ground
+  // Limelight left: 9.25 inches left
+  // Limelight out unadjusted: 12.5 inches forwards
+  // robot is 14.5 inches wide along length
+  // set it at 0 point to get distance from limelight
+  // then subtract 2 to get distance from edge
+  // in code
     public class IntakeMotors{
       public static final int pivotId = 17;
       public static final int pivotGearboxRatio = 17;
-      public static final double pivotInitialPosition = 0.0; //MAY NEED UPDATED?
+      public static final double pivotInitialPosition = -0.071428; //MAY NEED UPDATED?
       //TODO: FINAL POSITION
       public static final double pivotFinalPosition = -3.261902332305908; // should be -3.261902332305908, but code angry when final position negative
       public static final double maxMarginOfError = Math.abs(pivotFinalPosition - pivotInitialPosition); // to avoid making it angry, abs
       
     public class PivotPid{
-      public static final double maxPower = 0.25;
-      public static final double tolerance = 0.05;
+      public static final double maxPower = 0.4;
+      public static final double tolerance = 0.1;
       public static final double kP = maxPower / maxMarginOfError;
       public static final double kI = 0.0;
-      public static final double kD= 0.0;
+      public static final double kD= kP/2;
     }
     public static final int rollerId = 18;
-    public static final double defaultRollerSpeed = 0.2;
+    public static final double defaultRollerSpeed = 0.25;
   }
 
   public class Shooter{ 
@@ -129,7 +137,9 @@ public final class Constants {
     public static final int frontRollerId = 20;
     public static final int backRollerId = 21;
     public static final double defaultSpeed = 0.45;
+    public static final double rollerSpeed = 0.15;
     public static final double speedIncrement = 0.0;
+    public static final double limelightOffset = -0.3683; // offset to get distance from front edge. Currently half the robot length
 
     public class ShooterPid{
       public static final double kP = 0.08;

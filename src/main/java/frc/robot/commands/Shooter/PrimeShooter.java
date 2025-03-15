@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 /**
@@ -111,7 +112,9 @@ public class PrimeShooter extends Command {
    * @return The calculated speed.
    */
   private double speedFromDistance(double distance) {
-    // TODO: Implement this function to calculate the speed based on distance.
-    return m_Shooter.lookupShootSpeed(distance); // Placeholder value; update with real logic.
+    double f_speed = m_Shooter.lookupShootSpeed(distance);
+    SmartDashboard.putBoolean("In Range", f_speed != Constants.Shooter.defaultSpeed);
+    SmartDashboard.putNumber("Distance", distance);
+    return f_speed; // Placeholder value; update with real logic.
   }
 }
