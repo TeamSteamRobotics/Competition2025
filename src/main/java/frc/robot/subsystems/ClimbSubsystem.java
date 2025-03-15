@@ -26,9 +26,12 @@ public class ClimbSubsystem extends SubsystemBase {
 
   public void raiseClimb() {
     climbMotor.set(Constants.ClimbMotors.climbSpeed); //make sure is SLOW, don't bend metal
-    winchMotor.set(Constants.ClimbMotors.winchSpeed);
+    
   }
 
+  public void raiseWinch(){
+    winchMotor.set(Constants.ClimbMotors.winchSpeed);
+  }
   public void retractClimb() {
     climbMotor.set(-retractClimbSpeed); //Slowly increase speed
     

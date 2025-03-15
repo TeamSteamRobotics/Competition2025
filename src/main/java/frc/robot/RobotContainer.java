@@ -41,6 +41,7 @@ import frc.robot.commands.PathFind;
 import frc.robot.commands.Climb.RetractClimb;
 import frc.robot.commands.Climb.RetractWinch;
 import frc.robot.commands.Climb.RaiseClimb;
+import frc.robot.commands.Climb.RaiseWinch;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -100,14 +101,15 @@ public class RobotContainer {
   private final Trigger intakeRollers = m_operatorController.leftTrigger(0.80);
   private final Trigger intakePivot = m_operatorController.y();
   //private final Trigger vomit = m_operatorController.a();
-  private final Trigger intakeOut = m_operatorController.a();
-  private final Trigger climbOut = m_driverController.leftBumper();
-  private final Trigger climbIn = m_driverController.rightBumper();
+  //private final Trigger intakeOut = m_operatorController.a();
+  private final Trigger climbOut = m_driverController.a();
+  private final Trigger climbIn = m_driverController.b();
   private final Trigger shooterRollers = m_operatorController.rightTrigger();
   private final Trigger greenRollers = m_operatorController.b();
   private final Trigger shooterDistanceRollers = m_operatorController.x();
 
-  private final Trigger winchIn = m_operatorController.povRight();
+  private final Trigger winchIn = m_driverController.x();
+  private final Trigger winchOut = m_driverController.y();
 
   //Supplier<Coordinate> coordinateSupplier; // god help me :3
 
@@ -252,9 +254,11 @@ public class RobotContainer {
 
     //Winch in
     winchIn.whileTrue(new RetractWinch(m_climb));
+    //winchIn.whileTrue(new ParallelCommandGroup(new RetractWinch(m_climb)));
+    winchOut.whileTrue(new RaiseWinch(m_climb));
 
     // Intake out
-    intakeOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  
+    //intakeOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  
 
     // Intake in
     intakePivot.onTrue(new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "In"));  

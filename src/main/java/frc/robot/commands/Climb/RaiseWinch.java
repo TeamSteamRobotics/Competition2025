@@ -9,10 +9,10 @@ import frc.robot.Constants.ClimbMotors;
 import frc.robot.subsystems.ClimbSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RetractWinch extends Command {
+public class RaiseWinch extends Command {
   ClimbSubsystem m_climb;
   /** Creates a new RetractWinch. */
-  public RetractWinch(ClimbSubsystem climb) {
+  public RaiseWinch(ClimbSubsystem climb) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_climb = climb;
   }
@@ -24,8 +24,8 @@ public class RetractWinch extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_climb.retractWinch();
-    System.out.println("Winching it");
+    m_climb.raiseWinch();
+    System.out.println("Winching it, in reverse");
   }
 
   // Called once the command ends or is interrupted.
