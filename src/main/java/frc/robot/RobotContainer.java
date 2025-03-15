@@ -38,8 +38,8 @@ import frc.robot.Constants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
-import frc.robot.commands.Climb.ClimbIn;
-import frc.robot.commands.Climb.ClimbOut;
+import frc.robot.commands.Climb.RetractClimb;
+import frc.robot.commands.Climb.RaiseClimb;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -57,12 +57,12 @@ import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 //import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
-//import frc.robot.subsystems.drive.GyroIOPigeon2;
+import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import frc.robot.commands.PathPlanner.GreenBeambreak;
-import frc.robot.commands.PathPlanner.RaiseClimb;
+import frc.robot.commands.PathPlanner.RaiseClimbPathplanner;
 import frc.robot.commands.PathPlanner.StartGreen;
 import frc.robot.commands.PathPlanner.StartOrange;
 import frc.robot.commands.PathPlanner.StopGreen;
@@ -109,7 +109,7 @@ public class RobotContainer {
   //Supplier<Coordinate> coordinateSupplier; // god help me :3
 
   // Dashboard inputs
-  //private final LoggedDashboardChooser<Command> autoChooser;
+  private final LoggedDashboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -135,35 +135,35 @@ public class RobotContainer {
       NamedCommands.registerCommand("StartBlack", new StartBlack(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
       NamedCommands.registerCommand("StopBlack", new StopBlack(m_intake));
       NamedCommands.registerCommand("GreenBeambreak", new GreenBeambreak(m_shooter, 0.2));
-      NamedCommands.registerCommand("RaiseClimb", new RaiseClimb(m_climb));
+      NamedCommands.registerCommand("RaiseClimb", new RaiseClimbPathplanner(m_climb));
       //NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(m_shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
 
     //coordinateSupplier = () -> m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET);
     //vision = new VisionSubsystem();
     switch (Constants.currentMode) {
        
-    //   case REAL:
-    //     // Real robot, instantiate hardware IO implementations
-    //     drive =
-    //     //TODO: Change 'TunerConstants' to 'Constants' (After we update the values on the motors as needed)
-    //         new Drive(
-    //             new GyroIOPigeon2(),
-    //             new ModuleIOTalonFX(TunerConstants.FrontLeft),
-    //             new ModuleIOTalonFX(TunerConstants.FrontRight),
-    //             new ModuleIOTalonFX(TunerConstants.BackLeft),
-    //             new ModuleIOTalonFX(TunerConstants.BackRight));
-    //     break;
+      case REAL:
+        // Real robot, instantiate hardware IO implementations
+        drive =
+        //TODO: Change 'TunerConstants' to 'Constants' (After we update the values on the motors as needed)
+            new Drive(
+                new GyroIOPigeon2(),
+                new ModuleIOTalonFX(TunerConstants.FrontLeft),
+                new ModuleIOTalonFX(TunerConstants.FrontRight),
+                new ModuleIOTalonFX(TunerConstants.BackLeft),
+                new ModuleIOTalonFX(TunerConstants.BackRight));
+        break;
 
-    //   case SIM:
-    //     // Sim robot, instantiate physics sim IO implementations
-    //     drive =
-    //         new Drive(
-    //             new GyroIO() {},
-    //             new ModuleIOSim(TunerConstants.FrontLeft),
-    //             new ModuleIOSim(TunerConstants.FrontRight),
-    //             new ModuleIOSim(TunerConstants.BackLeft),
-    //             new ModuleIOSim(TunerConstants.BackRight));
-    //     break;
+      case SIM:
+        // Sim robot, instantiate physics sim IO implementations
+        drive =
+            new Drive(
+                new GyroIO() {},
+                new ModuleIOSim(TunerConstants.FrontLeft),
+                new ModuleIOSim(TunerConstants.FrontRight),
+                new ModuleIOSim(TunerConstants.BackLeft),
+                new ModuleIOSim(TunerConstants.BackRight));
+        break;
 
       default:
         // Replayed robot, disable IO implementations
@@ -179,7 +179,7 @@ public class RobotContainer {
 
   
     // Set up auto routines
-    //autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     autoChooser.addOption("Pathfind Test", PathFind.toPose(new Pose2d(1.5, 6, new Rotation2d(0))));
     // Set up SysId routines
@@ -242,10 +242,10 @@ public class RobotContainer {
                 .ignoringDisable(true));
    
     // Climb out
-    climbOut.whileTrue(new ClimbOut(m_climb));
+    climbOut.whileTrue(new RaiseClimb(m_climb));
 
     //Climb in
-    climbIn.whileTrue(new ClimbIn(m_climb));
+    climbIn.whileTrue(new RetractClimb(m_climb));
 
     // Intake out
     intakeOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  

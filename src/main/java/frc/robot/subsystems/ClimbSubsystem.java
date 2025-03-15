@@ -6,7 +6,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import frc.robot.Constants;
-import frc.robot.commands.Climb.ClimbIn;
 import frc.robot.commands.Climb.RetractClimb;
 import frc.robot.subsystems.Motors.GenericMotor;
 import frc.robot.subsystems.Motors.SparkFlexMotor;
@@ -63,9 +62,9 @@ public class ClimbSubsystem extends SubsystemBase {
     winchMotor.set(0);
     retractWinchSpeed = Constants.ClimbMotors.winchSpeed;
   }
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    setDefaultCommand(new RetractClimb(this));
-}
+//   public void initDefaultCommand() {
+//     // Set the default command for a subsystem here.
+//     setDefaultCommand(new RetractClimb(this));
+// }
 
 }
