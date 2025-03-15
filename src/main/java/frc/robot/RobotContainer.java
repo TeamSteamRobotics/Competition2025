@@ -37,10 +37,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
 import frc.robot.commands.Climb.ClimbIn;
 import frc.robot.commands.Climb.ClimbOut;
+import frc.robot.commands.Drive.BargeLock;
+import frc.robot.commands.Drive.DriveCommands;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -62,6 +63,7 @@ import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 
 import java.util.Optional;
+import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
@@ -111,12 +113,11 @@ public class RobotContainer {
   public RobotContainer() {
 
    // SmartDashboard.getnum
-
+    
     m_intake = new IntakeSubsystem();
     m_shooter = new ShooterSubsystem();
     m_climb = new ClimbSubsystem();
     m_vision = new AprilVisionSubsystem();
-
     //coordinateSupplier = () -> m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET);
     //vision = new VisionSubsystem();
     switch (Constants.currentMode) {
@@ -183,7 +184,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("ShooterDefault", new PrimeShooter(m_shooter, Constants.Shooter.defaultSpeed));
     NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(m_shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
-
+    NamedCommands.registerCommand("BargeDistance", new BargeLock(m_vision));
     // Configure the button bindings
     // SmartDashboard.putBoolean("On Blue Alliance?", true);
   }
@@ -203,14 +204,15 @@ public class RobotContainer {
             () -> -m_driverController.getLeftX(),
             () -> -m_driverController.getRightX()));
 
-    // Lock to 0° when A button is held 
-    // m_driverController.a()
-    //      .whileTrue(
-    //          DriveCommands.joystickDriveAtAngle(
-    //              drive,
-    //              () -> -m_driverController.getLeftY(),
-    //              () -> -m_driverController.getLeftX(),
-    //              () -> new Rotation2d()));
+    //Lock to 0° when A button is held 
+    m_driverController.a()
+          .whileTrue(
+            DriveCommands.joystickDrive(
+              drive,
+              () -> -0.0,
+              () -> -m_driverController.getLeftX(),
+              () -> -m_driverController.getRightX()));
+              
 
     // Switch to X pattern when X button is pressed
     m_driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -226,6 +228,7 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
    
+
     // Climb out
     climbOut.whileTrue(new ClimbOut(m_climb));
 

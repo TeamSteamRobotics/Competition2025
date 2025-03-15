@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 
 public class AprilVisionSubsystem extends SubsystemBase {
@@ -27,6 +28,10 @@ public class AprilVisionSubsystem extends SubsystemBase {
         ROBOT,
         FIELD
     }
+
+    double ShootDist = Constants.Shooter.shootingDistance;
+    double ShootOff = Constants.Shooter.shootingDistanceOffset;
+
     public Coordinate getCoordinates(int[] ids, ReturnTarget rt){
         for(int i = 0; i < ids.length; i++){
             getCoordinates(ids[i], rt);
@@ -149,7 +154,20 @@ public class AprilVisionSubsystem extends SubsystemBase {
          coordinate.aprilTagVisible = false;
          //System.out.println("Fiducial is null");
     }
+
     }
+    @Override
+    public void periodic() {
+        Coordinate position = this.getCoordinates(4,AprilVisionSubsystem.ReturnTarget.TARGET);
+        System.out.println(position);
+        double distance = position.z;
+    if ((ShootDist - ShootOff <= distance) && (distance <= ShootDist + ShootOff)) { //green
+        SmartDashboard.putBoolean("In Shooting Distance", true);
+    }else{//red
+        SmartDashboard.putBoolean("In Shooting Distance", false);
+    }
+    }
+
 public class Coordinate {
     public double x;
     public double y;

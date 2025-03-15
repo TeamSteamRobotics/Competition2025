@@ -136,6 +136,8 @@ public final class Constants {
     public static final double rollerSpeed = 0.15;
     public static final double speedIncrement = 0.0;
     public static final double limelightOffset = -0.3683; // offset to get distance from front edge. Currently half the robot length
+    public static final double shootingDistance = 1; //place holder for now
+    public static final double shootingDistanceOffset = 1; //place holder for now
 
     public class ShooterPid{
       public static final double kP = 0.08;
