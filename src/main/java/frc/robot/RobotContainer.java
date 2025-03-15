@@ -47,8 +47,6 @@ import frc.robot.commands.Intake.Roll;
 import frc.robot.commands.Intake.Tests.PivotTest;
 import frc.robot.commands.Shooter.PrimeShooter;
 import frc.robot.commands.Shooter.RollGreen;
-//import frc.robot.commands.Shooter.ShooterLimelightTest;
-import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.AprilVisionSubsystem.Coordinate;
@@ -252,7 +250,7 @@ public class RobotContainer {
 
     //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
     //.m_driverController.b().toggleOnTrue(new PrimeShooter(shooter, () -> shooter.lookupShootSpeed(vision.getGivenFiducialDistance(3)))); // dam zero-indexing
-    shooterDistanceRollers.whileTrue(new PrimeShooter(m_shooter, () -> (getDistance() + Constants.Shooter.limelightOffset)));
+    shooterDistanceRollers.whileTrue(new PrimeShooter(m_shooter, () -> getDistance()));
     m_operatorController.y().whileTrue(new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, true)); // TODO: use parallel commands
  
     // operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
@@ -260,7 +258,7 @@ public class RobotContainer {
   }
   public double getDistance(){ // TODO: god help me again :3
     if(m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).aprilTagVisible){ // TODO: add fIDs for other side of barge
-        return m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).z;
+        return m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).z + Constants.Shooter.limelightOffset;
     }
     return -1;
   }
