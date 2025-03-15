@@ -102,14 +102,14 @@ public class RobotContainer {
   private final Trigger intakePivot = m_operatorController.y();
   //private final Trigger vomit = m_operatorController.a();
   //private final Trigger intakeOut = m_operatorController.a();
-  private final Trigger climbOut = m_driverController.a();
-  private final Trigger climbIn = m_driverController.b();
+  private final Trigger climbOut = m_driverController.leftTrigger();
+  private final Trigger climbIn = m_driverController.rightTrigger();
   private final Trigger shooterRollers = m_operatorController.rightTrigger();
   private final Trigger greenRollers = m_operatorController.b();
   private final Trigger shooterDistanceRollers = m_operatorController.x();
 
-  private final Trigger winchIn = m_driverController.x();
-  private final Trigger winchOut = m_driverController.y();
+  private final Trigger winchIn = m_driverController.rightBumper();
+  private final Trigger winchOut = m_driverController.leftBumper();
 
   //Supplier<Coordinate> coordinateSupplier; // god help me :3
 

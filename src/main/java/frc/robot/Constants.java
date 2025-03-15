@@ -100,6 +100,7 @@ public final class Constants {
     public static final int winch = 22; // TODO: find actual CANID
     public static double climbSpeed = 0.05;
     public static final double winchSpeed = 1;
+    public static final double winchOutSpeed = 0.2;
     public static final int climbGearRatio = 80; //80:1
   }
 

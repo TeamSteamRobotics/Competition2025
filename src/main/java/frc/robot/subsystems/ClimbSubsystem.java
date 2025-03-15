@@ -30,7 +30,7 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void raiseWinch(){
-    winchMotor.set(Constants.ClimbMotors.winchSpeed);
+    winchMotor.set(Constants.ClimbMotors.winchOutSpeed);
   }
   public void retractClimb() {
     climbMotor.set(-retractClimbSpeed); //Slowly increase speed
