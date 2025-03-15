@@ -19,6 +19,8 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -59,6 +61,7 @@ import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
@@ -77,6 +80,8 @@ public class RobotContainer {
   private final ClimbSubsystem m_climb;
   private final AprilVisionSubsystem m_vision;
   //private final VisionSubsystem vision;
+
+  Optional<Alliance> ally;
   
   // Controllers
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -99,6 +104,8 @@ public class RobotContainer {
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
+
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -178,7 +185,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(m_shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
 
     // Configure the button bindings
-    configureButtonBindings();
+    // SmartDashboard.putBoolean("On Blue Alliance?", true);
   }
 
   /**
@@ -257,9 +264,24 @@ public class RobotContainer {
     // operator.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
   }
   public double getDistance(){ // TODO: god help me again :3
-    if(m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).aprilTagVisible){ // TODO: add fIDs for other side of barge
-        return m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).z + Constants.Shooter.limelightOffset;
+    // SmartDashboard.getBoolean("On Blue Alliance?", true);
+    // ally = DriverStation.getAlliance();
+    // if (ally.isPresent()) {
+    //   if (ally.get() == Alliance.Red) {
+    //     if(m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).aprilTagVisible){ // TODO: add fIDs for other side of barge
+    //       return m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).z + Constants.Shooter.limelightOffset;
+    //     }
+    //   }
+    //   if (ally.get() == Alliance.Blue) {
+    //     if(m_vision.getCoordinates(new int[]{14, 15}, ReturnTarget.TARGET).aprilTagVisible){ // TODO: add fIDs for other side of barge
+    //       return m_vision.getCoordinates(new int[]{14, 15}, ReturnTarget.TARGET).z + Constants.Shooter.limelightOffset;
+    //     }
+    //   }
+    // }
+    if(m_vision.getCoordinates(new int[]{4, 5, 14, 15}, ReturnTarget.TARGET).aprilTagVisible){ // TODO: add fIDs for other side of barge
+      return m_vision.getCoordinates(new int[]{4, 5, 14, 15}, ReturnTarget.TARGET).z + Constants.Shooter.limelightOffset;
     }
+    
     return -1;
   }
   
