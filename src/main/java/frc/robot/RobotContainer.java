@@ -101,7 +101,7 @@ public class RobotContainer {
   private final Trigger intakeRollers = m_operatorController.leftTrigger(0.80);
   private final Trigger intakePivot = m_operatorController.y();
   //private final Trigger vomit = m_operatorController.a();
-  //private final Trigger intakeOut = m_operatorController.a();
+  private final Trigger intakeOut = m_operatorController.a();
   private final Trigger climbOut = m_driverController.leftTrigger();
   private final Trigger climbIn = m_driverController.rightTrigger();
   private final Trigger shooterRollers = m_operatorController.rightTrigger();
@@ -258,7 +258,7 @@ public class RobotContainer {
     winchOut.whileTrue(new RaiseWinch(m_climb));
 
     // Intake out
-    //intakeOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  
+    intakeOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  
 
     // Intake in
     intakePivot.onTrue(new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "In"));  
@@ -301,7 +301,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-     public Command getAutonomousCommand() {
-     return autoChooser.get();
+  public Command getAutonomousCommand() {
+    return autoChooser.get();
   }
 }

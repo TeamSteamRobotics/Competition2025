@@ -5,12 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "get algae"
-          }
-        },
-        {
           "type": "wait",
           "data": {
             "waitTime": 0.2
