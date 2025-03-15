@@ -20,7 +20,7 @@ public class ClimbSubsystem extends SubsystemBase {
   
   public ClimbSubsystem(){
     climbMotor = new SparkMaxMotor(Constants.ClimbMotors.climb);
-    winchMotor = new SparkMaxMotor(Constants.ClimbMotors.winch);
+    winchMotor = new SparkFlexMotor(Constants.ClimbMotors.winch);
     // atFullSpeed = false;
   }
 

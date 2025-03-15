@@ -39,6 +39,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
 import frc.robot.commands.Climb.RetractClimb;
+import frc.robot.commands.Climb.RetractWinch;
 import frc.robot.commands.Climb.RaiseClimb;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AprilVisionSubsystem;
@@ -105,6 +106,8 @@ public class RobotContainer {
   private final Trigger shooterRollers = m_operatorController.rightTrigger();
   private final Trigger greenRollers = m_operatorController.b();
   private final Trigger shooterDistanceRollers = m_operatorController.x();
+
+  private final Trigger winchIn = m_operatorController.povRight();
 
   //Supplier<Coordinate> coordinateSupplier; // god help me :3
 
@@ -246,6 +249,9 @@ public class RobotContainer {
 
     //Climb in
     climbIn.whileTrue(new RetractClimb(m_climb));
+
+    //Winch in
+    winchIn.whileTrue(new RetractWinch(m_climb));
 
     // Intake out
     intakeOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  
