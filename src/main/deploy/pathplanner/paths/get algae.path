@@ -8,20 +8,34 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< Updated upstream:src/main/deploy/pathplanner/paths/get algae.path
         "x": 6.125090855188287,
         "y": 6.379977549952173
+=======
+        "x": 6.021916390728475,
+        "y": 6.353135347682119
+>>>>>>> Stashed changes:src/main/deploy/pathplanner/paths/get algae 1.path
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
+<<<<<<< Updated upstream:src/main/deploy/pathplanner/paths/get algae.path
         "x": 2.064119318181818,
         "y": 5.874730113636364
       },
       "prevControl": {
         "x": 3.7107063771874946,
         "y": 5.842542849451443
+=======
+        "x": 2.063,
+        "y": 5.837386175496688
+      },
+      "prevControl": {
+        "x": 5.162117177430294,
+        "y": 6.331758325332263
+>>>>>>> Stashed changes:src/main/deploy/pathplanner/paths/get algae 1.path
       },
       "nextControl": null,
       "isLocked": false,
