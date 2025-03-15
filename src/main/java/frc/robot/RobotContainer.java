@@ -62,6 +62,7 @@ import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import frc.robot.commands.PathPlanner.GreenBeambreak;
+import frc.robot.commands.PathPlanner.RaiseClimb;
 import frc.robot.commands.PathPlanner.StartGreen;
 import frc.robot.commands.PathPlanner.StartOrange;
 import frc.robot.commands.PathPlanner.StopGreen;
@@ -134,7 +135,9 @@ public class RobotContainer {
       NamedCommands.registerCommand("StartBlack", new StartBlack(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
       NamedCommands.registerCommand("StopBlack", new StopBlack(m_intake));
       NamedCommands.registerCommand("GreenBeambreak", new GreenBeambreak(m_shooter, 0.2));
+      NamedCommands.registerCommand("RaiseClimb", new RaiseClimb(m_climb));
       //NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(m_shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
+
     //coordinateSupplier = () -> m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET);
     //vision = new VisionSubsystem();
     switch (Constants.currentMode) {
