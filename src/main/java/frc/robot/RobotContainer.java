@@ -57,7 +57,7 @@ import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 //import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
-import frc.robot.subsystems.drive.GyroIOPigeon2;
+//import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
@@ -109,7 +109,7 @@ public class RobotContainer {
   //Supplier<Coordinate> coordinateSupplier; // god help me :3
 
   // Dashboard inputs
-  private final LoggedDashboardChooser<Command> autoChooser;
+  //private final LoggedDashboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -142,28 +142,28 @@ public class RobotContainer {
     //vision = new VisionSubsystem();
     switch (Constants.currentMode) {
        
-      case REAL:
-        // Real robot, instantiate hardware IO implementations
-        drive =
-        //TODO: Change 'TunerConstants' to 'Constants' (After we update the values on the motors as needed)
-            new Drive(
-                new GyroIOPigeon2(),
-                new ModuleIOTalonFX(TunerConstants.FrontLeft),
-                new ModuleIOTalonFX(TunerConstants.FrontRight),
-                new ModuleIOTalonFX(TunerConstants.BackLeft),
-                new ModuleIOTalonFX(TunerConstants.BackRight));
-        break;
+    //   case REAL:
+    //     // Real robot, instantiate hardware IO implementations
+    //     drive =
+    //     //TODO: Change 'TunerConstants' to 'Constants' (After we update the values on the motors as needed)
+    //         new Drive(
+    //             new GyroIOPigeon2(),
+    //             new ModuleIOTalonFX(TunerConstants.FrontLeft),
+    //             new ModuleIOTalonFX(TunerConstants.FrontRight),
+    //             new ModuleIOTalonFX(TunerConstants.BackLeft),
+    //             new ModuleIOTalonFX(TunerConstants.BackRight));
+    //     break;
 
-      case SIM:
-        // Sim robot, instantiate physics sim IO implementations
-        drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIOSim(TunerConstants.FrontLeft),
-                new ModuleIOSim(TunerConstants.FrontRight),
-                new ModuleIOSim(TunerConstants.BackLeft),
-                new ModuleIOSim(TunerConstants.BackRight));
-        break;
+    //   case SIM:
+    //     // Sim robot, instantiate physics sim IO implementations
+    //     drive =
+    //         new Drive(
+    //             new GyroIO() {},
+    //             new ModuleIOSim(TunerConstants.FrontLeft),
+    //             new ModuleIOSim(TunerConstants.FrontRight),
+    //             new ModuleIOSim(TunerConstants.BackLeft),
+    //             new ModuleIOSim(TunerConstants.BackRight));
+    //     break;
 
       default:
         // Replayed robot, disable IO implementations
@@ -179,7 +179,7 @@ public class RobotContainer {
 
   
     // Set up auto routines
-    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    //autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     autoChooser.addOption("Pathfind Test", PathFind.toPose(new Pose2d(1.5, 6, new Rotation2d(0))));
     // Set up SysId routines
@@ -291,7 +291,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    return autoChooser.get();
-  }
+  // public Command getAutonomousCommand() {
+  //   return autoChooser.get();
+  // }
 }
