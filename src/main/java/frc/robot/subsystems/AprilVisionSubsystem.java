@@ -156,17 +156,17 @@ public class AprilVisionSubsystem extends SubsystemBase {
     }
 
     }
-    @Override
+    /*@Override
     public void periodic() {
         Coordinate position = this.getCoordinates(4,AprilVisionSubsystem.ReturnTarget.TARGET);
-        System.out.println(position);
+        System.out.println(position.z);
         double distance = position.z;
     if ((ShootDist - ShootOff <= distance) && (distance <= ShootDist + ShootOff)) { //green
         SmartDashboard.putBoolean("In Shooting Distance", true);
     }else{//red
         SmartDashboard.putBoolean("In Shooting Distance", false);
     }
-    }
+    }*/
 
 public class Coordinate {
     public double x;

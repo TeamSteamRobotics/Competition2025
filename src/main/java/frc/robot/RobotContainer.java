@@ -184,7 +184,6 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("ShooterDefault", new PrimeShooter(m_shooter, Constants.Shooter.defaultSpeed));
     NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(m_shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
-    NamedCommands.registerCommand("BargeDistance", new BargeLock(m_vision));
     // Configure the button bindings
     // SmartDashboard.putBoolean("On Blue Alliance?", true);
   }
