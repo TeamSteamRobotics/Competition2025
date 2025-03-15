@@ -42,6 +42,7 @@ public class ClimbSubsystem extends SubsystemBase {
     //   atFullSpeed = true;
     // }
     
+    
     SmartDashboard.putNumber("Climb Speed", retractClimbSpeed);
   }
   public void retractWinch(){

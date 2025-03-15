@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -38,6 +39,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.PathFind;
+import frc.robot.commands.StopMotors;
 import frc.robot.commands.Climb.RetractClimb;
 import frc.robot.commands.Climb.RetractWinch;
 import frc.robot.commands.Climb.RaiseClimb;
@@ -100,7 +102,7 @@ public class RobotContainer {
   //private final Trigger intakePivot = m_operatorController.leftTrigger();
   private final Trigger intakeRollers = m_operatorController.leftTrigger(0.80);
   private final Trigger intakePivot = m_operatorController.y();
-  //private final Trigger vomit = m_operatorController.a();
+  private final Trigger vomit = m_operatorController.povLeft();
   private final Trigger intakeOut = m_operatorController.a();
   private final Trigger climbOut = m_driverController.leftTrigger();
   private final Trigger climbIn = m_driverController.rightTrigger();
@@ -117,7 +119,8 @@ public class RobotContainer {
   private final LoggedDashboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
+  public RobotContainer()
+   {
 
    // SmartDashboard.getnum
 
@@ -139,7 +142,7 @@ public class RobotContainer {
       NamedCommands.registerCommand("StopOrange", new StopOrange(m_shooter));
       NamedCommands.registerCommand("StartBlack", new StartBlack(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
       NamedCommands.registerCommand("StopBlack", new StopBlack(m_intake));
-      NamedCommands.registerCommand("GreenBeambreak", new GreenBeambreak(m_shooter, 0.2));
+      NamedCommands.registerCommand("GreenBeambreak", new GreenBeambreak(m_shooter, 0.25));
       NamedCommands.registerCommand("RaiseClimb", new RaiseClimbPathplanner(m_climb));
       //NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(m_shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
 
@@ -267,7 +270,7 @@ public class RobotContainer {
     intakeRollers.whileTrue(new Roll(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
 
     // VomitButton
-    //vomit.whileTrue(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed));
+    vomit.whileTrue(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed));
 
     // Rev shooter rollers
     shooterRollers.whileTrue(new PrimeShooter(m_shooter, Constants.Shooter.defaultSpeed));
@@ -303,5 +306,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autoChooser.get();
+  }
+
+  public void stopMotors(){
+    CommandScheduler.getInstance().schedule(new StopMotors(m_climb, m_intake, m_shooter));
   }
 }
