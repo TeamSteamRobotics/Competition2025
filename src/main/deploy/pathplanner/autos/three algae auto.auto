@@ -1,0 +1,163 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "straight line"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "get algae 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "go shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StartOrange"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StartGreen"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopOrange"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopGreen"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "get algae 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "go shoot 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StartOrange"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StartGreen"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopOrange"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopGreen"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "get algae 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "go shoot 3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StartOrange"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StartGreen"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopOrange"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopGreen"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

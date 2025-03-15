@@ -11,21 +11,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "ShooterDefault"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "get algae"
+            "pathName": "get algae 1"
           }
         },
         {
@@ -37,13 +25,25 @@
         {
           "type": "named",
           "data": {
-            "name": "ShooterDefault"
+            "name": "StartOrange"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": null
+            "name": "StartGreen"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopOrange"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopGreen"
           }
         }
       ]
