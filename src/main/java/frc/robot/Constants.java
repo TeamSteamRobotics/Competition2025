@@ -67,7 +67,9 @@ public final class Constants {
 
   public class ClimbMotors {
     public static final int climb = 16; //change back to 16!!!
+    public static final int winch = 22; // TODO: find actual CANID
     public static double climbSpeed = 0.2;
+    public static final double winchSpeed = -0.1;
     public static final int climbGearRatio = 80; //80:1
   }
 
