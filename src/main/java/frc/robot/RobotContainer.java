@@ -186,6 +186,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(m_shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
     // Configure the button bindings
     // SmartDashboard.putBoolean("On Blue Alliance?", true);
+
+    configureButtonBindings();
   }
 
   /**
