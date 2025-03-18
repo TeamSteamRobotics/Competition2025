@@ -227,13 +227,13 @@ public class RobotContainer {
             () -> -m_driverController.getRightX()));
 
     // Lock to 0° when A button is held 
-    // m_driverController.a()
-    //      .whileTrue(
-    //          DriveCommands.joystickDriveAtAngle(
-    //              drive,
-    //              () -> -m_driverController.getLeftY(),
-    //              () -> -m_driverController.getLeftX(),
-    //              () -> new Rotation2d()));
+    m_driverController.a()
+         .whileTrue(
+             DriveCommands.joystickDriveAtAngle(
+                 drive,
+                 () -> -m_driverController.getLeftY(),
+                 () -> -m_driverController.getLeftX(),
+                 () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
     m_driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -270,7 +270,7 @@ public class RobotContainer {
     intakeRollers.whileTrue(new Roll(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
 
     // VomitButton
-    vomit.whileTrue(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed));
+    vomit.whileTrue(new ParallelCommandGroup(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed), new RollGreen(m_shooter, -Constants.Shooter.rollerSpeed, true)));
 
     // Rev shooter rollers
     shooterRollers.whileTrue(new PrimeShooter(m_shooter, Constants.Shooter.defaultSpeed));
