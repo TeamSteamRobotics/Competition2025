@@ -143,7 +143,7 @@ public class RobotContainer {
       NamedCommands.registerCommand("StartBlack", new StartBlack(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
       NamedCommands.registerCommand("StopBlack", new StopBlack(m_intake));
       NamedCommands.registerCommand("GreenBeambreak", new GreenBeambreak(m_shooter, 0.25));
-      NamedCommands.registerCommand("RaiseClimb", new RaiseClimbPathplanner(m_climb));
+      NamedCommands.registerCommand("RaiseClimbPathplanner", new RaiseClimbPathplanner(m_climb));
       //NamedCommands.registerCommand("ShooterDistance (UNIMPLEMENTED)", new PrimeShooter(m_shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
 
     //coordinateSupplier = () -> m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET);
