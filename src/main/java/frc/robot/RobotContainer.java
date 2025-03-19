@@ -101,9 +101,9 @@ public class RobotContainer {
 
   //private final Trigger intakePivot = m_operatorController.leftTrigger();
   private final Trigger intakeRollers = m_operatorController.leftTrigger(0.80);
-  private final Trigger intakePivot = m_operatorController.y();
   private final Trigger vomit = m_operatorController.povLeft();
-  private final Trigger intakeOut = m_operatorController.a();
+  private final Trigger intakePivotIn = m_operatorController.y();
+  private final Trigger intakePivotOut = m_operatorController.a();
   private final Trigger climbOut = m_driverController.leftTrigger();
   private final Trigger climbIn = m_driverController.rightTrigger();
   private final Trigger shooterRollers = m_operatorController.rightTrigger();
@@ -262,10 +262,10 @@ public class RobotContainer {
     winchOut.whileTrue(new RaiseWinch(m_climb));
 
     // Intake out
-    intakeOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  
+    intakePivotOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  
 
     // Intake in
-    intakePivot.onTrue(new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "In"));  
+    intakePivotIn.onTrue(new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "In"));  
 
     // Roll intake wheels
     intakeRollers.whileTrue(new Roll(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
@@ -287,7 +287,7 @@ public class RobotContainer {
     //operator.a().toggleOnTrue(new PrimeShooter(shooter, /*TODO:CHANGE TO DISTANCE SENSOR*/null));
     //.m_driverController.b().toggleOnTrue(new PrimeShooter(shooter, () -> shooter.lookupShootSpeed(vision.getGivenFiducialDistance(3)))); // dam zero-indexing
     shooterDistanceRollers.whileTrue(new PrimeShooter(m_shooter, () -> (getDistance() + Constants.Shooter.limelightOffset)));
-    m_operatorController.y().whileTrue(new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, true)); // TODO: use parallel commands
+    //m_operatorController.y().whileTrue(new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, true)); // TODO: use parallel commands
  
     // operator.povUp().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() + Constants.Shooter.speedIncrement))));
     // operator.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
