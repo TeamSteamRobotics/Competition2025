@@ -25,6 +25,5 @@ public class StartBlack extends InstantCommand {
   @Override
   public void initialize() {
     m_intake.roller(m_speed);
-    System.out.println("Damn stormcloaks");
   }
 }
