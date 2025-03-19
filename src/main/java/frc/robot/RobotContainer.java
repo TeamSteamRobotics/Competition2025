@@ -99,19 +99,24 @@ public class RobotContainer {
 
   //private final CommandXboxController operator = new CommandXboxController(1);
 
+  //operator controls
   //private final Trigger intakePivot = m_operatorController.leftTrigger();
   private final Trigger intakeRollers = m_operatorController.leftTrigger(0.80);
   private final Trigger vomit = m_operatorController.povLeft();
   private final Trigger intakePivotIn = m_operatorController.y();
   private final Trigger intakePivotOut = m_operatorController.a();
-  private final Trigger climbOut = m_driverController.leftTrigger();
-  private final Trigger climbIn = m_driverController.rightTrigger();
   private final Trigger shooterRollers = m_operatorController.rightTrigger();
   private final Trigger greenRollers = m_operatorController.b();
   private final Trigger shooterDistanceRollers = m_operatorController.x();
 
+  //driver controls
+  private final Trigger climbOut = m_driverController.leftTrigger();
+  private final Trigger climbIn = m_driverController.rightTrigger();
   private final Trigger winchIn = m_driverController.rightBumper();
   private final Trigger winchOut = m_driverController.leftBumper();
+  private final Trigger axisLock = m_driverController.a();
+  private final Trigger reset = m_driverController.b();
+  private final Trigger Xlock = m_driverController.x();
 
   //Supplier<Coordinate> coordinateSupplier; // god help me :3
 
@@ -228,7 +233,7 @@ public class RobotContainer {
 
 
     //Side to side movement only while held
-    m_driverController.a()
+    axisLock
           .whileTrue(
             DriveCommands.joystickDrive(
                 drive,
@@ -237,11 +242,10 @@ public class RobotContainer {
                 () -> -m_driverController.getRightX()));
                      
     // Switch to X pattern when X button is pressed
-    m_driverController.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    Xlock.onTrue(Commands.runOnce(drive::stopWithX, drive));
     
      //Reset gyro to 0° when B button is pressed
-    m_driverController
-        .b()
+    reset
         .onTrue(
             Commands.runOnce(
                     () ->
