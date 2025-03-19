@@ -7,49 +7,55 @@
         {
           "type": "path",
           "data": {
-            "pathName": "circlely loop thang"
+            "pathName": "middle go to algae"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StartBlack"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeDeploy"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "IntakeRetract"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopBlack"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "circlely loop thang"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "circlely loop thang"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "circlely loop thang"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "circlely loop thang"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "circlely loop thang"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "circlely loop thang"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "circlely loop thang"
+            "pathName": "middle go shoot"
           }
         }
       ]
