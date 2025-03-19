@@ -25,7 +25,7 @@ public class RetractWinch extends Command {
   @Override
   public void execute() {
     m_climb.retractWinch();
-    System.out.println("Winching it");
+    //System.out.println("Winching it");
   }
 
   // Called once the command ends or is interrupted.

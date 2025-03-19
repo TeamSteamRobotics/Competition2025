@@ -56,6 +56,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   AprilVisionSubsystem vision;
 
+  double m_dist;
+
   /**
    * Constructor: Sets up the shooter subsystem.
    * This includes initializing the encoders and configuring the PID controllers with a tolerance.
@@ -90,6 +92,9 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public boolean Shoot(double targetSpeed) {
     m_targetSpeed = targetSpeed;
+    if(SmartDashboard.getBoolean("Use Test Shooter Speed", false)){
+      m_targetSpeed = SmartDashboard.getNumber("Shooter Speed", targetSpeed);
+    }
     // Calculate how much to adjust the motor speed to reach the target.
     double pidOutputFront = topShooterPid.calculate(frontShooterMotor.getVelocity(), m_targetSpeed);
     //FIXME: MAY BE THE OTHER WAY ARROUNDDD
@@ -159,19 +164,24 @@ public class ShooterSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   public double lookupShootSpeed(double dist){
-    if(dist < 0.3048 || dist > 1.778){
+    if(SmartDashboard.getBoolean("Use Test Distance", false)){
+      m_dist = SmartDashboard.getNumber("Test Distance", dist);
+    } else {
+      m_dist = dist;
+    }
+    if(m_dist < 0.3048 || m_dist > 1.778){
       // System.out.println("Distance exceeds bounds. Returning default speed");
       // System.out.println(dist);
       return Constants.Shooter.defaultSpeed;
     }
-    Entry<Double, Double> lower = speedLookupTable.floorEntry(dist); // just copy-pasted from Zach's code
-    Entry<Double, Double> upper = speedLookupTable.ceilingEntry(dist);
+    Entry<Double, Double> lower = speedLookupTable.floorEntry(m_dist); // just copy-pasted from Zach's code
+    Entry<Double, Double> upper = speedLookupTable.ceilingEntry(m_dist);
     if(lower == null)
       return upper.getValue();
     if(upper == null)
       return lower.getValue();
     double slope = (upper.getValue() - lower.getValue()) / (upper.getKey() - lower.getKey());
-    return (slope * (dist - lower.getKey()) + lower.getValue());
+    return (slope * (m_dist - lower.getKey()) + lower.getValue());
   }
 }
 
