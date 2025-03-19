@@ -55,10 +55,10 @@ public class DriveCommands {
   
     private static Translation2d getLinearVelocityFromJoysticks(double x, double y) {
       // Apply deadband
-      double speedMod = SmartDashboard.getNumber("speedMod",.80);
-      double linearMagnitude = MathUtil.applyDeadband(Math.hypot(x*speedMod, y*speedMod), DEADBAND);
+      //double speedMod = SmartDashboard.getNumber("speedMod", 1.0);
+      double linearMagnitude = MathUtil.applyDeadband(Math.hypot(x, y), DEADBAND);
       Rotation2d linearDirection = new Rotation2d(Math.atan2(y, x));
-      SmartDashboard.putNumber("speedMod", .80);
+      //SmartDashboard.putNumber("speedMod", 1.0);
       //SmartDashboard.putNumber("Limelight Distance", orderedDistance);
       //orderedDistance = SmartDashboard.getNumber("Limelight Distance", 0);
       // Square magnitude for more precise control
