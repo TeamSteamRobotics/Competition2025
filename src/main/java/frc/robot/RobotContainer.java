@@ -16,6 +16,7 @@ package frc.robot;
 import com.ctre.phoenix6.swerve.SwerveModule;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -121,7 +122,8 @@ public class RobotContainer {
   //Supplier<Coordinate> coordinateSupplier; // god help me :3
 
   // Dashboard inputs
-  private final LoggedDashboardChooser<Command> autoChooser;
+ private LoggedDashboardChooser<Command> autoChooser;
+  // private 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer()
@@ -191,7 +193,7 @@ public class RobotContainer {
     }
 
   
-    // Set up auto routines
+    //Set up auto routines
     autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
     autoChooser.addOption("Pathfind Test", PathFind.toPose(new Pose2d(1.5, 6, new Rotation2d(0))));
@@ -310,7 +312,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return autoChooser.get();
+    //return autoChooser.get();
+    return new PathPlannerAuto("Get Algae 1 then Shoot - Red - Tuner");
   }
 
   public void stopMotors(){

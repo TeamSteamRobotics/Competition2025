@@ -136,8 +136,8 @@ public final class Constants {
     public static final int greenRollerId = 19;
     public static final int frontRollerId = 20;
     public static final int backRollerId = 21;
-    public static final double defaultSpeed = 0.45;
-    public static final double rollerSpeed = 0.15;
+    public static final double defaultSpeed = 0.40;
+    public static final double rollerSpeed = 0.40;
     public static final double speedIncrement = 0.0;
     public static final double limelightOffset = -0.3683; // offset to get distance from front edge. Currently half the robot length
 

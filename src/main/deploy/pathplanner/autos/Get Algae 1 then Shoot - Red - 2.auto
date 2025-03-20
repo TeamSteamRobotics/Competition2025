@@ -1,0 +1,149 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "RaiseClimbPathplanner"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Get Algae 1 - Red - Start 2"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.75
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDeploy"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StartBlack"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StartGreen"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopBlack"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopGreen"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.75
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeRetract"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot Algae 1 - Red"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StartOrange"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StartGreen"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopGreen"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StartOrange"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Testable Autos - Red",
+  "choreoAuto": false
+}

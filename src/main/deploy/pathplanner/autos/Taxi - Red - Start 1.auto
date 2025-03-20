@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "RaiseClimbPathplanner"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Taxi - Red - Start 1"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Testable Autos - Red",
+  "choreoAuto": false
+}
