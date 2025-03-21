@@ -268,7 +268,7 @@ public class RobotContainer {
     winchOut.whileTrue(new RaiseWinch(m_climb));
 
     // Intake out
-    intakePivotOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  
+    intakePivotOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false, m_operatorController)));  
 
     // Intake in
     intakePivotIn.onTrue(new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "In"));  
@@ -277,13 +277,13 @@ public class RobotContainer {
     intakeRollers.whileTrue(new Roll(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
 
     // VomitButton
-    vomit.whileTrue(new ParallelCommandGroup(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed), new RollGreen(m_shooter, -Constants.Shooter.rollerSpeed, true)));
+    vomit.whileTrue(new ParallelCommandGroup(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed), new RollGreen(m_shooter, -Constants.Shooter.rollerSpeed, true, m_operatorController)));
 
     // Rev shooter rollers
     shooterRollers.whileTrue(new PrimeShooter(m_shooter, Constants.Shooter.defaultSpeed));
 
     // Run green rollers
-    greenRollers.whileTrue(new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, true));
+    greenRollers.whileTrue(new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, true, m_operatorController));
 
     //Run shooter based on distance
 
