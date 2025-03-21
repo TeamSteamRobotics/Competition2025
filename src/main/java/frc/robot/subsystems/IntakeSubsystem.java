@@ -117,12 +117,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    Logger.recordOutput("Intake/FinalComponentPoses", new Pose3d[]{
+    Logger.recordOutput("Intake/ComponentPose", new Pose3d[]{
       new Pose3d(-0.25, -0.3, 0.16, new Rotation3d(Math.toRadians(((pivotMotor.getPosition() / Constants.IntakeMotors.pivotGearboxRatio)* 360)), 0, 0))
     });
     
-    Logger.recordOutput("Intake/EncoderWithoutRatio", pivotMotor.getPosition());
-    Logger.recordOutput("Intake/Currentspeed", pivotMotor.getVelocity());
+    Logger.recordOutput("Intake/EncoderPosition", pivotMotor.getPosition());
+    Logger.recordOutput("Intake/PivotSpeed", pivotMotor.getVelocity());
     //Logger.recordOutput("Intake/CommandedSpeed", pivotMotor);
     //Logger.recordOutput("", null);
     Logger.recordOutput("Intake/RollerSpeed", rollerMotor.getVelocity());

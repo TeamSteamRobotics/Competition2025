@@ -19,7 +19,9 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -77,6 +79,7 @@ import frc.robot.commands.PathPlanner.StopBlack;
 
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -299,6 +302,20 @@ public class RobotContainer {
     // operator.povDown().whileTrue(new RepeatCommand(new InstantCommand(() -> shooter.ShootPID(shooter.getTargetSpeed() - Constants.Shooter.speedIncrement))));
   }
   public double getDistance(){ // TODO: god help me again :3
+
+    Logger.recordOutput("AprilTag/4/IsVisible", m_vision.getCoordinates(4, ReturnTarget.TARGET).aprilTagVisible);
+      if(m_vision.getCoordinates(4, ReturnTarget.TARGET).aprilTagVisible){
+        Coordinate tag4Coord = m_vision.getCoordinates(4, ReturnTarget.TARGET);
+        Logger.recordOutput("AprilTag/4/ZPosition", m_vision.getCoordinates(4, ReturnTarget.TARGET).z);
+        Logger.recordOutput("AprilTag/4/MarkerPosition", new Pose3d(tag4Coord.x, tag4Coord.y, tag4Coord.z, new Rotation3d(tag4Coord.rx, tag4Coord.ry, tag4Coord.rz)));
+      }
+    Logger.recordOutput("AprilTag/5/IsVisible", m_vision.getCoordinates(5, ReturnTarget.TARGET).aprilTagVisible);
+      if(m_vision.getCoordinates(5, ReturnTarget.TARGET).aprilTagVisible){
+        Coordinate tag5Coord = m_vision.getCoordinates(5, ReturnTarget.TARGET);
+        Logger.recordOutput("AprilTag/5/ZPosition", m_vision.getCoordinates(5, ReturnTarget.TARGET).z);
+        Logger.recordOutput("AprilTag/5/MarkerPosition", new Pose3d(tag5Coord.x, tag5Coord.y, tag5Coord.z, new Rotation3d(tag5Coord.rx, tag5Coord.ry, tag5Coord.rz)));
+      }
+
     if(m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).aprilTagVisible){ // TODO: add fIDs for other side of barge
         return m_vision.getCoordinates(new int[]{4, 5}, ReturnTarget.TARGET).z;
     }

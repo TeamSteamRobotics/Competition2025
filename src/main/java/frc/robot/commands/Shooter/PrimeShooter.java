@@ -7,6 +7,8 @@ package frc.robot.commands.Shooter;
 
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -43,6 +45,7 @@ public class PrimeShooter extends Command {
     m_Shooter = shooter;
     //sets speed based on smartdashboard value
     inputSpeed = SmartDashboard.getNumber("Shooter Speed", 0.45);
+
   //  inputSpeed = m_Shooter.overrideDefault ? m_Shooter.getTargetSpeed() : speed;
     
     hasDistanceSupplier = false; // Use the fixed speed instead of calculating from distance.
@@ -64,6 +67,8 @@ public class PrimeShooter extends Command {
   public void execute() {
     // Determine the speed: calculate it from distance or use the fixed input speed.
     speed = (hasDistanceSupplier ? speedFromDistance(distanceSupplier.get()) : inputSpeed);
+
+    Logger.recordOutput("Shooter/PrimeShooter/SetSpeed", speed);
 
     // Command the shooter subsystem to run at the calculated speed.
     m_Shooter.Shoot(speed);
@@ -112,7 +117,11 @@ public class PrimeShooter extends Command {
    * @return The calculated speed.
    */
   private double speedFromDistance(double distance) {
+    Logger.recordOutput("Shooter/PrimeShooter/LookUp_DistanceInput", distance);
+    
     double f_speed = m_Shooter.lookupShootSpeed(distance);
+    Logger.recordOutput("Shooter/PrimeShooter/LookUp_SpeedOutput", f_speed);
+
     SmartDashboard.putBoolean("In Range", f_speed != Constants.Shooter.defaultSpeed);
     SmartDashboard.putNumber("Distance", distance);
     return f_speed; // Placeholder value; update with real logic.

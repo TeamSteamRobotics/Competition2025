@@ -1,8 +1,13 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkMax;
+
+import org.littletonrobotics.junction.Logger;
+
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import frc.robot.Constants;
@@ -71,4 +76,15 @@ public class ClimbSubsystem extends SubsystemBase {
 //     setDefaultCommand(new RetractClimb(this));
 // }
 
+
+@Override
+public void periodic(){
+    Logger.recordOutput("Climber/ComponentPose", new Pose3d[]{
+    new Pose3d(-0.32, 0.03, 0.1, new Rotation3d(0.0, Math.toRadians(climbMotor.getPosition() / Constants.ClimbMotors.climbGearRatio), 0.0))
+    });
+    Logger.recordOutput("Climber/ClimbEncoderPosition", climbMotor.getPosition());
+    Logger.recordOutput("Climber/WinchEncoderPosition", winchMotor.getPosition());
+    Logger.recordOutput("Climber/ClimbSpeed", climbMotor.getVelocity());
+    Logger.recordOutput("Climber/WinchSpeed", winchMotor.getVelocity());
+}
 }
