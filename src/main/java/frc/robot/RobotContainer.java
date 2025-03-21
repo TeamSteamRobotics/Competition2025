@@ -194,7 +194,7 @@ public class RobotContainer {
 
   
     //Set up auto routines
-    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser("Taxi - Blue - Start 3"));
 
     autoChooser.addOption("Pathfind Test", PathFind.toPose(new Pose2d(1.5, 6, new Rotation2d(0))));
     // Set up SysId routines
@@ -312,8 +312,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    //return autoChooser.get();
-    return new PathPlannerAuto("Get Algae 1 then Shoot - Red - Tuner");
+    return autoChooser.get();
+    //return new PathPlannerAuto("Get Algae 1 then Shoot - Red - Tuner");
   }
 
   public void stopMotors(){

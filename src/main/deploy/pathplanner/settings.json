@@ -7,10 +7,8 @@
     "Comp Paths - Red"
   ],
   "autoFolders": [
-    "Working Autos - Red",
-    "Testable Autos - Blue",
-    "Testable Autos - Red",
-    "Working Autos - Blue"
+    "Autos - Blue",
+    "Autos - Red"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

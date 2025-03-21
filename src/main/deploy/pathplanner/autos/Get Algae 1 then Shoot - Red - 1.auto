@@ -5,9 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "RaiseClimbPathplanner"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "RaiseClimbPathplanner"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 3.5
+                }
+              }
+            ]
           }
         },
         {
@@ -57,7 +70,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 1.5
           }
         },
         {
@@ -113,7 +126,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 2.0
           }
         },
         {
@@ -144,6 +157,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Testable Autos - Red",
+  "folder": "Autos - Red",
   "choreoAuto": false
 }

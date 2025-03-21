@@ -13,6 +13,12 @@
                 "data": {
                   "name": "RaiseClimbPathplanner"
                 }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 3.5
+                }
               }
             ]
           }
@@ -27,6 +33,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Testable Autos - Blue",
+  "folder": "Autos - Blue",
   "choreoAuto": false
 }
