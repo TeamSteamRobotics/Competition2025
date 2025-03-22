@@ -13,6 +13,7 @@ public class RollGreen extends Command {
   ShooterSubsystem m_shooter;
   double m_speed;
   boolean m_ignoreBeambreak;
+  boolean beamBroken;
 
   /** Creates a new RollGreen. */
   public RollGreen(ShooterSubsystem shooter, double speed, boolean ignoreBeambreak) {
@@ -45,10 +46,11 @@ public class RollGreen extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    beamBroken = m_shooter.beamBroken();
     if(m_ignoreBeambreak){
       return false;
     }else{
-      return m_shooter.beamBroken();
+      return beamBroken;
     }
   }
 }

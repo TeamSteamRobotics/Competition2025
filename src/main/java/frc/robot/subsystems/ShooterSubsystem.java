@@ -111,6 +111,7 @@ public class ShooterSubsystem extends SubsystemBase {
     backShooterMotor.set(-m_targetSpeed);
 
     // Check if both motors have reached the desired speed.
+    SmartDashboard.putBoolean("Shooter At Speed", topShooterPid.atSetpoint() && bottomShooterPid.atSetpoint()); // Commentable
     return (topShooterPid.atSetpoint() && bottomShooterPid.atSetpoint());
     
   }
@@ -129,7 +130,13 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public boolean beamBroken(){
+    SmartDashboard.putBoolean("Beam Broken", !beamBreak.get());
     return !beamBreak.get();
+
+    // Option 1: Do smartdashboard stuff in here, which has the caveat of only updating while intaking, because only then is this method used
+    // Option 2: Put it in periodic for this subsystem, which seems unwise, but updates constantly
+    // Option 3: Put it here, and make green rollers always use this method and just discard the result when ignoring beambreak, to update whenever
+    // rolling green wheels
   }
 
   public void RunOrangeRollers(double speed){

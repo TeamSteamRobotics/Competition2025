@@ -26,7 +26,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Get Algae 1 - Red - Start 1"
+            "pathName": "Grab Algae 3 - Red - Start 4"
           }
         },
         {
@@ -70,7 +70,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 1.0
           }
         },
         {
@@ -114,7 +114,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Shoot Algae 1 - Red"
+            "pathName": "Shoot Algae 3 - Red"
           }
         },
         {

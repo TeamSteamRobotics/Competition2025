@@ -24,40 +24,72 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Grab Algae 3 - Red - Start 6"
+          }
+        },
+        {
           "type": "race",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "wait",
                 "data": {
-                  "pathName": "Get algae 1 - Blue - Start 1"
+                  "waitTime": 0.75
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeDeploy"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "StartGreen"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StartBlack"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StartGreen"
+                }
+              }
+            ]
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 1.0
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "StopGreen"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopBlack"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopGreen"
+                }
+              }
+            ]
           }
         },
         {
@@ -82,7 +114,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Shoot Algae 1 - Blue"
+            "pathName": "Shoot Algae 3 - Red"
           }
         },
         {
@@ -118,13 +150,13 @@
         {
           "type": "named",
           "data": {
-            "name": "StopOrange"
+            "name": "StartOrange"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Autos - Blue",
+  "folder": "Autos - Red",
   "choreoAuto": false
 }

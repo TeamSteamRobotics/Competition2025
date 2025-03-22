@@ -122,6 +122,7 @@ public final class Constants {
       public static final double maxMarginOfError = Math.abs(pivotFinalPosition - pivotInitialPosition); // to avoid making it angry, abs
       
     public class PivotPid{
+      
       public static final double maxPower = 0.4;
       public static final double tolerance = 0.1;
       public static final double kP = maxPower / maxMarginOfError;

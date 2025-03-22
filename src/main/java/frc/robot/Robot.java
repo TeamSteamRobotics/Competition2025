@@ -105,6 +105,8 @@ public class Robot extends LoggedRobot {
     SmartDashboard.putBoolean("Use Test Shooter Speed", false);
     SmartDashboard.putNumber("Test Distance", 0);
     SmartDashboard.putBoolean("Use Test Distance", false);
+    SmartDashboard.putBoolean("Beam Broken", false); // Commentable
+    SmartDashboard.putBoolean("Shooter At Speed", false); // Commentable
     
     // SmartDashboard.putNumber("intakeRollerSpeed", Constants.IntakeMotors.defaultRollerSpeed);
 
