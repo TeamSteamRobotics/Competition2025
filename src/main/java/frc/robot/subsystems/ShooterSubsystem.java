@@ -110,8 +110,7 @@ public class ShooterSubsystem extends SubsystemBase {
     frontShooterMotor.set(-m_targetSpeed);
     backShooterMotor.set(-m_targetSpeed);
 
-    // Check if both motors have reached the desired speed.
-    SmartDashboard.putBoolean("Shooter At Speed", topShooterPid.atSetpoint() && bottomShooterPid.atSetpoint()); // Commentable
+    // Check if both motors have reached the desired speed.//SmartDashboard.putBoolean("Shooter At Speed", topShooterPid.atSetpoint() && bottomShooterPid.atSetpoint()); // Commentable
     return (topShooterPid.atSetpoint() && bottomShooterPid.atSetpoint());
     
   }

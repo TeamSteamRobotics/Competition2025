@@ -22,6 +22,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -97,6 +98,7 @@ public class RobotContainer {
   // Controllers
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
+  private final CommandXboxController m_bluetoothController = new CommandXboxController(OperatorConstants.kBluetoothControllerPort);
 
   //private final CommandXboxController operator = new CommandXboxController(1);
 
@@ -118,6 +120,9 @@ public class RobotContainer {
   private final Trigger axisLock = m_driverController.a();
   private final Trigger reset = m_driverController.b();
   private final Trigger Xlock = m_driverController.x();
+
+  //Rumble Test
+  //private final Trigger rumbleTest = m_bluetoothController.rightTrigger();
 
   //Supplier<Coordinate> coordinateSupplier; // god help me :3
 
@@ -262,13 +267,17 @@ public class RobotContainer {
     //Climb in
     climbIn.whileTrue(new RetractClimb(m_climb));
 
+    //rumbleTest.whileTrue();
+    
     //Winch in
     winchIn.whileTrue(new RetractWinch(m_climb));
     //winchIn.whileTrue(new ParallelCommandGroup(new RetractWinch(m_climb)));
-    winchOut.whileTrue(new RaiseWinch(m_climb));
+    winchOut.whileTrue(new RaiseWinch(m_climb)); 
 
     // Intake out
-    intakePivotOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  
+    intakePivotOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false), new PrimeShooter(m_shooter, Constants.Shooter.vomitSpeed, "Vomit")));  
+    //intakePivotOut.onTrue(new ParallelCommandGroup(new Pivots(m_intake, Constants.IntakeMotors.pivotFinalPosition, "Out"), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, false)));  
+
 
     // Intake in
     intakePivotIn.onTrue(new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "In"));  
@@ -277,10 +286,11 @@ public class RobotContainer {
     intakeRollers.whileTrue(new Roll(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
 
     // VomitButton
-    vomit.whileTrue(new ParallelCommandGroup(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed), new RollGreen(m_shooter, -Constants.Shooter.rollerSpeed, true)));
+    vomit.whileTrue(new ParallelCommandGroup(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed), new RollGreen(m_shooter, -Constants.Shooter.rollerSpeed, true), new PrimeShooter(m_shooter, Constants.Shooter.vomitSpeed, "Vomit")));
+    //vomit.whileTrue(new ParallelCommandGroup(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed), new RollGreen(m_shooter, -Constants.Shooter.rollerSpeed, true)));
 
     // Rev shooter rollers
-    shooterRollers.whileTrue(new PrimeShooter(m_shooter, Constants.Shooter.defaultSpeed));
+    shooterRollers.whileTrue(new PrimeShooter(m_shooter, Constants.Shooter.defaultSpeed, "Shoot"));
 
     // Run green rollers
     greenRollers.whileTrue(new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, true));

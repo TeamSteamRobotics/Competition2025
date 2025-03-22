@@ -39,10 +39,14 @@ public class PrimeShooter extends Command {
    * @param shooter The shooter subsystem to control.
    * @param speed The fixed speed to use.
    */
-  public PrimeShooter(ShooterSubsystem shooter, double speed) {
+  public PrimeShooter(ShooterSubsystem shooter, double speed, String type) {
     m_Shooter = shooter;
     //sets speed based on smartdashboard value
-    inputSpeed = SmartDashboard.getNumber("Shooter Speed", 0.45);
+    if (type == "Shoot") {
+      inputSpeed = SmartDashboard.getNumber("Shooter Speed", 0.45);
+    } else {
+      inputSpeed = speed;
+    }
   //  inputSpeed = m_Shooter.overrideDefault ? m_Shooter.getTargetSpeed() : speed;
     
     hasDistanceSupplier = false; // Use the fixed speed instead of calculating from distance.

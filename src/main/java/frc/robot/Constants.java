@@ -40,6 +40,7 @@ public final class Constants {
   public class OperatorConstants{
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
+    public static final int kBluetoothControllerPort = 2; 
   }
   public class DriveMotors {
     public class FrontLeft {
@@ -118,7 +119,7 @@ public final class Constants {
       public static final int pivotGearboxRatio = 17;
       public static final double pivotInitialPosition = -0.071428; //MAY NEED UPDATED?
       //TODO: FINAL POSITION
-      public static final double pivotFinalPosition = -3.261902332305908; // should be -3.261902332305908, but code angry when final position negative
+      public static final double pivotFinalPosition = -2.7; // should be -3.261902332305908, but code angry when final position negative
       public static final double maxMarginOfError = Math.abs(pivotFinalPosition - pivotInitialPosition); // to avoid making it angry, abs
       
     public class PivotPid{
@@ -138,6 +139,7 @@ public final class Constants {
     public static final int frontRollerId = 20;
     public static final int backRollerId = 21;
     public static final double defaultSpeed = 0.40;
+    public static final double vomitSpeed = -0.1;
     public static final double rollerSpeed = 0.40;
     public static final double speedIncrement = 0.0;
     public static final double limelightOffset = -0.3683; // offset to get distance from front edge. Currently half the robot length
