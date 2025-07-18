@@ -1,0 +1,14 @@
+{
+  "NetworkTables Settings": {
+    "mode": "Client (NT4)",
+    "serverTeam": "5119"
+  },
+  "transitory": {
+    "CameraPublisher": {
+      "limelight": {
+        "open": true
+      },
+      "open": true
+    }
+  }
+}
