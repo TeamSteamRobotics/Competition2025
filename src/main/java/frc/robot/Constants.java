@@ -38,8 +38,8 @@ public final class Constants {
   //TODO: CHECK AND PROGRAM ALL IDS ACCORDING TO THIS CONSTANTS FILE!!!!
 
   public class OperatorConstants{
-    public static final int kDriverControllerPort = 0;
-    public static final int kOperatorControllerPort = 1;
+    public static final int kDriverControllerPort = 0;  
+    public static final int kOperatorControllerPort = 1; 
     public static final int kBluetoothControllerPort = 2; 
   }
   public class DriveMotors {
@@ -131,14 +131,15 @@ public final class Constants {
       public static final double kD= kP/2;
     }
     public static final int rollerId = 18;
-    public static final double defaultRollerSpeed = 0.25;
+    public static final double defaultRollerSpeed = 0.15;
+    public static final double intakeRollerSpeed = 0.25;
   }
 
   public class Shooter{ 
     public static final int greenRollerId = 19;
     public static final int frontRollerId = 20;
     public static final int backRollerId = 21;
-    public static final double defaultSpeed = 0.40;
+    public static final double defaultSpeed = 0.10;
     public static final double vomitSpeed = -0.1;
     public static final double rollerSpeed = 0.40;
     public static final double speedIncrement = 0.0;

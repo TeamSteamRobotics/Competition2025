@@ -105,7 +105,7 @@ public class RobotContainer {
   //operator controls
   //private final Trigger intakePivot = m_operatorController.leftTrigger();
   private final Trigger intakeRollers = m_operatorController.leftTrigger(0.80);
-  private final Trigger vomit = m_operatorController.povLeft();
+  private final Trigger vomit = m_driverController.povLeft();
   private final Trigger intakePivotIn = m_operatorController.y();
   private final Trigger intakePivotOut = m_operatorController.a();
   private final Trigger shooterRollers = m_operatorController.rightTrigger();
@@ -113,12 +113,12 @@ public class RobotContainer {
   private final Trigger shooterDistanceRollers = m_operatorController.x();
 
   //driver controls
-  private final Trigger climbOut = m_driverController.leftTrigger();
-  private final Trigger climbIn = m_driverController.rightTrigger();
+  private final Trigger climbOut = m_operatorController.povDown();
+  private final Trigger climbIn = m_operatorController.povUp();
   private final Trigger winchIn = m_driverController.rightBumper();
   private final Trigger winchOut = m_driverController.leftBumper();
   private final Trigger axisLock = m_driverController.a();
-  private final Trigger reset = m_driverController.b();
+  private final Trigger reset = m_operatorController.povLeft();
   private final Trigger Xlock = m_driverController.x();
 
   //Rumble Test
@@ -234,9 +234,9 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -m_driverController.getLeftY(),
-            () -> -m_driverController.getLeftX(),
-            () -> -m_driverController.getRightX()));
+            () -> -m_operatorController.getLeftY(),
+            () -> -m_operatorController.getLeftX(),
+            () -> -m_operatorController.getRightX()));
 
 
     //Side to side movement only while held
@@ -245,8 +245,8 @@ public class RobotContainer {
             DriveCommands.joystickDrive(
                 drive,
                 () -> -0.0,
-                () -> -m_driverController.getLeftX(),
-                () -> -m_driverController.getRightX()));
+                () -> -m_operatorController.getLeftX(),
+                () -> -m_operatorController.getRightX()));
                      
     // Switch to X pattern when X button is pressed
     Xlock.onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -271,7 +271,6 @@ public class RobotContainer {
     
     //Winch in
     winchIn.whileTrue(new RetractWinch(m_climb));
-    //winchIn.whileTrue(new ParallelCommandGroup(new RetractWinch(m_climb)));
     winchOut.whileTrue(new RaiseWinch(m_climb)); 
 
     // Intake out
@@ -283,7 +282,7 @@ public class RobotContainer {
     intakePivotIn.onTrue(new Pivots(m_intake, Constants.IntakeMotors.pivotInitialPosition, "In"));  
 
     // Roll intake wheels
-    intakeRollers.whileTrue(new Roll(m_intake, Constants.IntakeMotors.defaultRollerSpeed));
+    intakeRollers.whileTrue(new ParallelCommandGroup(new Roll(m_intake, Constants.IntakeMotors.intakeRollerSpeed), new RollGreen(m_shooter, Constants.Shooter.rollerSpeed, true)));
 
     // VomitButton
     vomit.whileTrue(new ParallelCommandGroup(new Roll(m_intake, -Constants.IntakeMotors.defaultRollerSpeed), new RollGreen(m_shooter, -Constants.Shooter.rollerSpeed, true), new PrimeShooter(m_shooter, Constants.Shooter.vomitSpeed, "Vomit")));
