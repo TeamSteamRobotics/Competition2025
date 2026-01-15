@@ -150,5 +150,12 @@ public final class Constants {
       public static final double kD = 3.0;
       public static final double tolerance = 0.1;     
     }
+
+    public class Prototype{
+      public static final int protoMotorId = 22;
+      
+    } 
+
+
   }
 }
