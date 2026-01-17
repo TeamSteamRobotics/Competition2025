@@ -112,12 +112,12 @@ public final class Constants {
   // Limelight out unadjusted: 12.5 inches forwards
   // robot is 14.5 inches wide along length
   // set it at 0 point to get distance from limelight
-  // then subtract 2 to get distance from edge
-  // in code
+  // then subtract 2 to get distance from edge in code
+
     public class IntakeMotors{
       public static final int pivotId = 17;
       public static final int pivotGearboxRatio = 17;
-      public static final double pivotInitialPosition = -0.071428; //MAY NEED UPDATED?
+      public static final double pivotInitialPosition = -0.071428; //UPDATED
       //TODO: FINAL POSITION
       public static final double pivotFinalPosition = -2.7; // should be -3.261902332305908, but code angry when final position negative
       public static final double maxMarginOfError = Math.abs(pivotFinalPosition - pivotInitialPosition); // to avoid making it angry, abs
@@ -153,7 +153,7 @@ public final class Constants {
 
     public class Prototype{
       public static final int protoMotorId = 22;
-      
+
     } 
 
 
